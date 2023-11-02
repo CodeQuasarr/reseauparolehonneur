@@ -11,7 +11,7 @@ export default {
   ],
   theme: {
     fontFamily: {
-      'poppins': ['Poppins', 'sans-serif'],
+      'barlow': ['Barlow Condensed', 'sans-serif'],
     },
     backgroundImage: {
       'bg-circleStart': "url('/images/circleStart.webp')",

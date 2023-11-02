@@ -6,7 +6,9 @@ import NavbarComponent from "~/components/templates/NavbarComponent.vue";
 <template>
     <div>
         <div >
-            <NavbarComponent />
+            <div class="bg-white fixed w-full z-30">
+                <NavbarComponent />
+            </div>
             <slot />
         </div>
     </div>
