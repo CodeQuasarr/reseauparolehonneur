@@ -6,40 +6,51 @@ import {
     FwbNavbarLink,
     FwbNavbarLogo,
 } from 'flowbite-vue'
+
+const showMenu = ref(false);
+
+const toggleMenu = () => {
+    showMenu.value = !showMenu.value;
+}
 </script>
 
 <template>
     <div class="container mx-auto">
         <div class="flex items-center">
-            <fwb-navbar class="flex-grow">
-                <template #logo="{}">
-                    <a class="flex items-center" href="#">
-                        <img src="~/assets/images/logos/logo.webp" alt="Logo" class="mr-3 h-6 sm:h-10">
-                        <span class="self-center text-xl font-semibold whitespace-nowrap dark:text-white">
-                        RESEAU PAROLE HONNEUR
-                    </span>
+
+            <nav class="flex-grow bg-white border-gray-200 dark:bg-gray-900">
+                <div class="max-w-screen-xl flex flex-wrap items-center justify-between mx-auto p-4">
+                    <a href="https://flowbite.com/" class="flex items-center">
+<!--                        <img src="https://flowbite.com/docs/images/logo.svg" class="h-8 mr-3" alt="Flowbite Logo" />-->
+                        <span class="self-center text-2xl font-semibold whitespace-nowrap dark:text-white">Réseau Parole Honneur</span>
                     </a>
-                </template>
-                <template #default="{isShowMenu}">
-                    <fwb-navbar-collapse :is-show-menu="isShowMenu">
-                        <fwb-navbar-link is-active link="#">
-                            Home
-                        </fwb-navbar-link>
-                        <fwb-navbar-link link="#">
-                            Services
-                        </fwb-navbar-link>
-                        <fwb-navbar-link link="#">
-                            Pricing
-                        </fwb-navbar-link>
-                        <fwb-navbar-link link="#">
-                            Contact
-                        </fwb-navbar-link>
-                    </fwb-navbar-collapse>
-                </template>
-            </fwb-navbar>
-            <div class="ml-auto">
-                <NuxtLink to="/" class="flex items-center xl:p-2 xl:bg-purple-700 xl:text-white xl:rounded"> <!-- Add classes to NuxtLink -->
-                    <span class="xl:mr-2"><Icon name="ic:baseline-person-2" /></span> <span class="hidden xl:block">Se connecter</span>
+                    <button @click="toggleMenu()" data-collapse-toggle="navbar-default" type="button" class="inline-flex items-center p-2 w-10 h-10 justify-center text-sm text-gray-500 rounded-lg md:hidden hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-gray-200" aria-controls="navbar-default" aria-expanded="false">
+                        <span class="sr-only">Open main menu</span>
+                        <Icon class="w-5 h-5" name="fluent:navigation-24-filled" />
+                    </button>
+                    <div
+                        :class="{'hidden': !showMenu,  'w-full md:block md:w-auto': true}" id="navbar-default">
+                        <ul class="font-medium flex flex-col p-4 md:p-0 mt-4 border border-gray-100 rounded-lg bg-gray-50 md:flex-row md:space-x-8 md:mt-0 md:border-0 md:bg-white dark:bg-gray-800 md:dark:bg-gray-900 dark:border-gray-700">
+                            <li>
+                                <NuxtLink to="/" class="block py-2 pl-3 pr-4 text-white bg-blue-700 rounded md:bg-transparent md:text-blue-700 md:p-0 dark:text-white md:dark:text-blue-500" aria-current="page">Accueil</NuxtLink>
+                            </li>
+                            <li>
+                                <NuxtLink to="/about" class="block py-2 pl-3 pr-4 text-gray-900 rounded hover:bg-gray-100 md:hover:bg-transparent md:border-0 md:hover:text-blue-700 md:p-0 dark:text-white md:dark:hover:text-blue-500 dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent">À Propos</NuxtLink>
+                            </li>
+                            <li>
+                                <NuxtLink to="/event" class="block py-2 pl-3 pr-4 text-gray-900 rounded hover:bg-gray-100 md:hover:bg-transparent md:border-0 md:hover:text-blue-700 md:p-0 dark:text-white md:dark:hover:text-blue-500 dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent">Conférence à venir</NuxtLink>
+                            </li>
+                            <li>
+                                <NuxtLink to="/" class="block py-2 pl-3 pr-4 text-gray-900 rounded hover:bg-gray-100 md:hover:bg-transparent md:border-0 md:hover:text-blue-700 md:p-0 dark:text-white md:dark:hover:text-blue-500 dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent">Contact</NuxtLink>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </nav>
+            <div class=" ml-auto mr-2">
+                <NuxtLink to="/" class="flex items-center justify-center p-2 w-10 h-10 xl:w-full xl:h-full rounded-lg hover:bg-gray-100 xl:bg-purple-700 xl:text-white xl:rounded"> <!-- Add classes to NuxtLink -->
+                    <span class="xl:mr-2"><Icon name="ic:baseline-person-2" /></span>
+                    <span class="hidden xl:block">Se connecter</span>
                 </NuxtLink>
             </div>
         </div>

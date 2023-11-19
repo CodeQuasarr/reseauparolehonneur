@@ -4,3 +4,9 @@
 @tailwind components;
 @tailwind utilities;
 
+@layer base {
+  /*.section-card {*/
+  /*  @apply w-full min-h-[600px] mb-20*/
+  /*}*/
+}
+
