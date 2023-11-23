@@ -3,8 +3,12 @@ import Sidebar from "~/components/navbars/Sidebar.vue";
 import PrivateNavbar from "~/components/navbars/PrivateNavbar.vue";
 import PrivateFooter from "~/components/navbars/PrivateFooter.vue";
 import {useGlobalStore} from "~/stores/globalStore";
+import { initFlowbite } from 'flowbite'
 
-const sideBarOpen = useGlobalStore().getSideBarOpen
+// initialize components based on data attribute selectors
+onMounted(() => {
+    initFlowbite();
+})
 
 </script>
 

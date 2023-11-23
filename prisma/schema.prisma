@@ -1,0 +1,89 @@
+generator client {
+    provider = "prisma-client-js"
+}
+
+datasource db {
+    provider = "mongodb"
+    url      = env("DATABASE_URL")
+}
+
+model User {
+    id           String        @id @default(auto()) @map("_id") @db.ObjectId
+    role         Role          @default(USER)
+    email        String        @unique
+    firstName    String
+    lastName     String
+    password     String
+    isVerified   Boolean       @default(false)
+    isBanned     Boolean       @default(false)
+    birthDate    DateTime?
+    job          String?
+    description  String?
+    address      String?
+    city         String?
+    country      String?
+    phone        String?
+    avatar       String?
+    language_1   String?
+    language_2   String?
+    Subscription Subscription?
+    evenementId  String?       @db.ObjectId
+    Evenement    Evenement?    @relation(fields: [evenementId], references: [id])
+    sessions     Session[]
+    createdAt    DateTime      @default(now())
+    updatedAt    DateTime      @updatedAt
+}
+
+model Evenement {
+    id        String   @id @default(auto()) @map("_id") @db.ObjectId
+    title     String
+    content   String
+    date      DateTime
+    address   String
+    users     User[]
+    createdAt DateTime @default(now())
+    updatedAt DateTime @updatedAt
+}
+
+enum Role {
+    ADMIN
+    MANAGER
+    PLAYER
+    USER
+}
+
+model Session {
+    id           String    @id @default(auto()) @map("_id") @db.ObjectId
+    userId       String    @unique @db.ObjectId
+    user         User      @relation(fields: [userId], references: [id]) // relation one to one
+    refreshToken String
+    lastUsed     DateTime?
+    createdAt    DateTime  @default(now())
+    updatedAt    DateTime  @updatedAt
+}
+
+model LockoutInformation {
+    id           String   @id @default(auto()) @map("_id") @db.ObjectId
+    userEmail    String
+    lockoutUntil DateTime
+}
+
+model FailedLoginAttempts {
+    id        String @id @default(auto()) @map("_id") @db.ObjectId
+    userEmail String
+    attempts  Int
+}
+
+model Subscription {
+    id            String  @id @default(auto()) @map("_id") @db.ObjectId
+    userId        String  @unique @db.ObjectId
+    user          User    @relation(fields: [userId], references: [id])
+    stripeId      String  @unique
+    stripeStatus  String?
+    stripePriceId String?
+    quantity      Int?
+    trialEndsAt   Int?
+    endsAt        Int?
+    startDate     Int
+    lastEventDate Int
+}
