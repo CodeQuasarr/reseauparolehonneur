@@ -1,9 +1,10 @@
 <script setup lang="ts">
 import Sidebar from "~/components/navbars/Sidebar.vue";
 import PrivateNavbar from "~/components/navbars/PrivateNavbar.vue";
-import HeaderStats from "~/components/navbars/HeaderStats.vue";
 import PrivateFooter from "~/components/navbars/PrivateFooter.vue";
+import {useGlobalStore} from "~/stores/globalStore";
 
+const sideBarOpen = useGlobalStore().getSideBarOpen
 
 </script>
 
@@ -13,7 +14,7 @@ import PrivateFooter from "~/components/navbars/PrivateFooter.vue";
 
             <Sidebar />
 
-            <div class="w-full bg-gray-100 pl-0 lg:pl-64 min-h-screen" :class="sideBarOpen ? 'overlay' : ''" id="main-content">
+            <div class="w-full bg-gray-100 pl-0 lg:pl-64 min-h-screen" :class="useGlobalStore().getSideBarOpen ? 'overlay' : ''" id="main-content">
 
                 <PrivateNavbar />
 

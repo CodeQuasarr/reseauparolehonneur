@@ -1,4 +1,5 @@
 @import url('https://fonts.googleapis.com/css2?family=Barlow+Condensed:display=swap');
+@import url('https://fonts.googleapis.com/css?family=Poppins:300,400,500,600,700');
 
 @tailwind base;
 @tailwind components;
@@ -9,4 +10,30 @@
   /*  @apply w-full min-h-[600px] mb-20*/
   /*}*/
 }
+body {
+    font-family: Poppins, sans-serif;
+}
 
+body::-webkit-scrollbar {
+    display: none;
+}
+
+.overlay {
+    position: relative;
+}
+
+/* 1024 -1 so it doesnt show when it hits 1024px */
+@media only screen and (max-width: 1023px) {
+    .overlay:after {
+        content: " ";
+        z-index: 29;
+        display: block;
+        height: 100%;
+        top: 80px;
+        left: 0;
+        right: 0;
+        background: rgba(0, 0, 0, 0.55);
+        pointer-events: none;
+        position: fixed;
+    }
+}
