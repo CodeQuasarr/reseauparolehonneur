@@ -47,7 +47,7 @@
                         <div class="ftco-footer-widget mb-4">
                             <h2 class="text-white text-[22px] font-bold uppercase mb-[30px]">Get Your Seat</h2>
                             <p>A small river named Duden flows by their place and supplies it with the necessary regelialia.</p>
-                            <a href="#" class="btn btn-primary px-3 py-2">Buy Ticket</a>
+                            <a href="#" class="btn btn-indigo px-3 py-2">Buy Ticket</a>
                         </div>
                     </div>
                     <div class="w-full sm:w-full md:w-auto mb-5 xl:mb-0">
