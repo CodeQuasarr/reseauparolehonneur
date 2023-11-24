@@ -7,22 +7,23 @@ import {
     validateLastName,
     validatePassword, validateTerms
 } from "~/utils/config/formValidationsRules";
+import {registerWithEmail} from "~/composables/useAuth";
 
 definePageMeta({ layout: false, })
 
 //---------------------------------- Variables ----------------------------------//
+
+const errors: Ref<Map<string, { message: InputValidation; }> | undefined> = ref(new Map<string, { message: InputValidation }>())
+let response: FormValidation
+
 let loading = ref(false);
 const error = ref('');
-const message = ref({
-    statusCode: 0,
-    statusMessage: ''
-});
 const user = ref({
-    firstName: '',
-    lastName: '',
-    email: '',
-    password: '',
-    confirmPassword: '',
+    firstName: '' as string,
+    lastName: '' as string,
+    email: '' as string,
+    password: '' as string,
+    confirmPassword: '' as string,
 })
 
 //---------------------------------- Methods -----------------------------------//
@@ -34,20 +35,9 @@ const onSubmit = async () => {
         return;
     }
 
-    // try {
-    //     loading.value = true
-    //     const data = await useAuth().signUp(user.value)  as any
-    //     message.value = data;
-    //     if (data.statusCode === 200) {
-    //         setInterval(() => {
-    //             navigateTo('/signin')
-    //         }, 3000)
-    //     }
-    // } catch (e) {
-    //     console.error('error', e)
-    // } finally {
-    //     loading.value = false
-    // }
+    response = await registerWithEmail(user.value);
+    errors.value = response.errors
+    console.log('errors.value', response.errors?.size)
 }
 
 </script>
@@ -68,16 +58,13 @@ const onSubmit = async () => {
                     Créez votre compte pour accéder à votre espace personnel.
                 </p>
             </div>
-            <div v-if="message.statusCode"
-                 :class="{ 'text-green-800 bg-green-50': message.statusCode === 200, 'text-red-800 bg-red-50': message.statusCode !== 200}"
-                 class="flex items-center p-4 mb-4 text-sm text-center text-green-800 bg-green-50 rounded-lg dark:bg-gray-800 dark:text-green-400"
-                 role="alert"
-            >
-                <Icon aria-hidden="true" class="flex-shrink-0 inline w-4 h-4 mr-3" name="ph:envelope-bold" size="30"/>
-                <span class="sr-only">Info</span>
-                <div class="font-medium text-center ">
-                    {{ message.statusMessage }}
-                </div>
+            <div v-if="errors && errors?.size"
+                 class="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded relative mt-3" role="alert">
+                <ul class="block sm:inline">
+                    <li v-for="[key, value] in errors">
+                        {{ value.message }}
+                    </li>
+                </ul>
             </div>
             <Form class="mt-8 space-y-6" @submit="onSubmit">
                 <div>
@@ -192,7 +179,7 @@ const onSubmit = async () => {
                     Suivant
                 </button>
                 <div class="text-sm font-medium text-gray-500 dark:text-gray-400">
-                    Vous avez déjà un compte ? <NuxtLink class="text-indigo-700 hover:underline dark:text-indigo-500" to="/signin">
+                    Vous avez déjà un compte ? <NuxtLink class="text-indigo-700 hover:underline dark:text-indigo-500" to="/register">
                     Inscrivez-vous
                 </NuxtLink>
                 </div>
