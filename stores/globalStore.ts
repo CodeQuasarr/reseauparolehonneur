@@ -5,7 +5,6 @@ export const useGlobalStore = defineStore('global', {
     actions: {
         toggleSidebar() {
             this.$state.sideBarOpen = !this.$state.sideBarOpen;
-            console.log(this.sideBarOpen)
         }
     },
     getters: {

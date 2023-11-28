@@ -1,5 +1,7 @@
 import {RegisterRequestType} from "~/server/app/formRequests/ReegisterRequest";
 import {getUserByEmail} from "~/server/database/repositories/userRepository";
+import {User} from "@prisma/client";
+import * as argon2 from "argon2";
 
 class GlobalService {
     private static instance: GlobalService;
@@ -16,6 +18,34 @@ class GlobalService {
         }
 
         return errors
+    }
+
+    static async validateLogin(key: string, value: string): Promise<InputValidation> {
+        const check: InputValidation = {
+            value: '',
+            isBlank: false,
+            lenghtMin8: true,
+            key: '',
+            hasError: false
+        }
+
+
+        // if (!user) {
+        //     check.hasError = true
+        //     check.errorMessage = `Email or password is incorrect`
+        // }
+        //
+        // if (!user.isVerified) {
+        //     check.hasError = true
+        //     check.errorMessage = `Please verify your email to login`
+        // }
+        // const verifiedPassword = await argon2.verify(user.password, data.password);
+        // if (!verifiedPassword) {
+        //     check.hasError = true
+        //     check.errorMessage = `Email or password is incorrect`
+        // }
+
+        return check
     }
 
     static async validateRegistration(key: string, value: string, password: string): Promise<InputValidation> {
@@ -43,7 +73,6 @@ class GlobalService {
             }
             check.lenghtMin8 = false
             if (value !== password) {
-                console.log("password", password)
                 check.hasError = true
                 check.errorMessage = `passwords must match`
             }

@@ -1,4 +1,6 @@
 import useErrorMapper from "~/composables/useErrorMapper";
+import type {IUser} from "~/types/IUser";
+import {useUserStore} from "~/stores/userStore";
 
 export async function registerWithEmail(user: any): Promise<FormValidation> {
 
@@ -8,11 +10,28 @@ export async function registerWithEmail(user: any): Promise<FormValidation> {
             body:  user
         })
 
-        console.log("data", data)
-
         // if (data) {
         //     await useRouter().push('/login')
         // }
+
+        return { hasErrors: false, loggedIn: true }
+    } catch (error: any) {
+        return useErrorMapper(error.data.data)
+    }
+}
+
+
+export async function loginWithEmail(loginInfo: IUser) {
+    try {
+        const result: IUser = await $fetch('/api/auth/login', {
+            method: 'POST',
+            body:  loginInfo
+        })
+
+        if (result) {
+            useUserStore().setUserInStore(result)
+            await useRouter().push('/private')
+        }
 
         return { hasErrors: false, loggedIn: true }
     } catch (error: any) {

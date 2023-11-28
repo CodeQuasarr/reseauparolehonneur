@@ -37,7 +37,6 @@ const onSubmit = async () => {
 
     response = await registerWithEmail(user.value);
     errors.value = response.errors
-    console.log('errors.value', response.errors?.size)
 }
 
 </script>

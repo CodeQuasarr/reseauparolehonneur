@@ -8,6 +8,11 @@ export default defineNuxtConfig({
     'nuxt-icon',
     '@vueuse/motion/nuxt'
   ],
+  runtimeConfig: {
+    baseUrl: process.env.BASE_URL || 'http://localhost:3000',
+    sessionKey: process.env.SESSION_KEY,
+    tokenKey: process.env.TOKEN_SECRET_KEY
+  },
   css: ['~/assets/css/main.css'],
   postcss: {
     plugins: {
