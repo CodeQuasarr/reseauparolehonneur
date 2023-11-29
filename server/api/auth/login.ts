@@ -9,8 +9,8 @@ export default eventHandler(async (event: H3Event) => {
     try {
         const data = await validateLoginRequest(event);
 
-        const user: User | null = await getUserByEmail(data.email);
-        const validation = await UserService.validateUserLogin(user, data.password);
+        const userInfo: User | null = await getUserByEmail(data.email);
+        const validation = await UserService.validateUserLogin(userInfo, data.password);
 
         if (validation.hasErrors && validation.errors) {
             const errors = JSON.stringify(Object.fromEntries(validation.errors))
@@ -18,11 +18,11 @@ export default eventHandler(async (event: H3Event) => {
         }
 
         const config = useRuntimeConfig();
-        const accessToken = SessionService.generateToken({userId: user?.id}, (60 * 5)); // 5 minutes
-        const refreshToken = SessionService.generateToken({userId: user?.id}, 2592000); // 30 days
+        const authToken = SessionService.generateToken({userId: userInfo?.id}, (60 * 5)); // 5 minutes
+        const refreshToken = SessionService.generateToken({userId: userInfo?.id}, 2592000); // 30 days
         //const session = await SessionService.setSession(user?.id as string, refreshToken);
-        const sessionUser = await SessionService.makeSessionCookie(event, {token: accessToken}, config.sessionKey);
-        return sessionUser?.user
+        const {user, accessToken} = await SessionService.makeSessionCookie(event, {token: authToken}, config.sessionKey);
+        return { user, accessToken }
 
     } catch (e: any) {
         return {

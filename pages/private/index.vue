@@ -1,9 +1,14 @@
 <script setup lang="ts">
+import UseFetchWithApi from "~/composables/useFetchWithApi";
+
 definePageMeta({
     title: 'Private',
-    auth: true,
     layout: 'private'
 })
+const stats = await UseFetchWithApi<any>('/api/protected/setting', {
+    method: 'GET',
+});
+
 </script>
 
 <template>
@@ -71,7 +76,7 @@ definePageMeta({
 
                     <div class="text-gray-700">
                         <p class="font-semibold text-3xl">1,653</p>
-                        <p>Product Views</p>
+                        <p>Utilisateurs</p>
                     </div>
 
                 </div>

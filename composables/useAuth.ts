@@ -23,13 +23,14 @@ export async function registerWithEmail(user: any): Promise<FormValidation> {
 
 export async function loginWithEmail(loginInfo: IUser) {
     try {
-        const result: IUser = await $fetch('/api/auth/login', {
+        const result: {user: IUser, accessToken: string} = await $fetch('/api/auth/login', {
             method: 'POST',
             body:  loginInfo
         })
 
         if (result) {
-            useUserStore().setUserInStore(result)
+            useUserStore().setUserInStore(result?.user)
+            useUserStore().setAuthToken(result?.accessToken)
             await useRouter().push('/private')
         }
 

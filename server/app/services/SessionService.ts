@@ -18,6 +18,15 @@ class SessionService {
         return jwt.decode(token);
     }
 
+    public static verifyToken(tokenData: any): boolean {
+        const currentTimeInSeconds = Math.floor(Date.now() / 1000);
+        console.log(tokenData.exp, currentTimeInSeconds)
+        if (!tokenData || tokenData.exp < currentTimeInSeconds) {
+            return false;
+        }
+        return true;
+    }
+
     static getTokenFromQuery(event: any): string {
         const token = event.query.token;
         if (!token) {
@@ -100,13 +109,36 @@ class SessionService {
     }
 
     static async makeSessionCookie(event: H3Event, session: any, secretKey: string) {
-        const authToken = this.secureSerialize(session, secretKey);
-        setCookie(event, 'authToken', authToken, {path: '/', httpOnly: true, secure: true, sameSite: 'strict'});
-        return await this.getUserSessionByAuthToken(authToken);
+        const accessToken = this.secureSerialize(session, secretKey);
+        setCookie(event, 'authToken', accessToken, {path: '/', httpOnly: true, secure: true, sameSite: 'strict'});
+        const sessionUser = await this.getUserSessionByAuthToken(accessToken);
+        return {user: sessionUser?.user, accessToken};
     }
 
-    deleteSession() {
-        return "token";
+    static secureSerializeToken(token: string): string {
+        try {
+            const tokenBuffer = Buffer.from(token);
+
+            // Créer un objet d'initialisation aléatoire (IV)
+            const iv = crypto.randomBytes(16);
+
+            // Créer un objet de chiffrement avec l'algorithme AES-256-CBC
+            const cipher = crypto.createCipheriv('aes-256-cbc', useRuntimeConfig().sessionKey, iv);
+
+            // Chiffrer le token
+            const encryptedToken = Buffer.concat([cipher.update(tokenBuffer), cipher.final()]);
+
+            // Concaténer l'IV avec le token chiffré
+            const resultBuffer = Buffer.concat([iv, encryptedToken]);
+
+            // Encoder le résultat en base64 pour une transmission plus sûre
+            const base64Result = resultBuffer.toString('base64');
+
+            return base64Result;
+        } catch (error) {
+            console.error('Erreur lors de la sérialisation sécurisée du token :', error);
+            throw new Error('Échec de la sérialisation sécurisée du token.');
+        }
     }
 
 

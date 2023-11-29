@@ -10,8 +10,11 @@ export default defineNuxtConfig({
   ],
   runtimeConfig: {
     baseUrl: process.env.BASE_URL || 'http://localhost:3000',
-    sessionKey: process.env.SESSION_KEY,
-    tokenKey: process.env.TOKEN_SECRET_KEY
+    sessionKey: process.env.SESSION_SECRET_KEY,
+    tokenKey: process.env.TOKEN_SECRET_KEY,
+    public: {
+      sessionKey: process.env.SESSION_SECRET_KEY,
+    }
   },
   css: ['~/assets/css/main.css'],
   postcss: {
