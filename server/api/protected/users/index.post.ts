@@ -1,5 +1,6 @@
 import UserService from "~/server/app/services/userService";
 import {createUser} from "~/server/database/repositories/userRepository";
+import {sendDefaultErrorResponse} from "~/server/app/errors";
 
 export default defineEventHandler(async (event) => {
     try {
@@ -14,7 +15,9 @@ export default defineEventHandler(async (event) => {
         if (data.avatar) {
             const fileName = await UserService.downloadAndCheckImage(data.avatar);
             if (!fileName) {
-                return sendError(event, createError({ statusCode: 400, data: [{'avatar': {'message' : 'Une erreur est survenue lors de la création d\'image'} }] }))
+                const errors = new Map<string, { message: string | undefined }>()
+                errors.set('avatar', {'message': `Une erreur est survenue lors de la création d'image`})
+                return sendError(event, createError({ statusCode: 400, data: errors }))
             }
             data.avatar = fileName;
         }
@@ -31,9 +34,6 @@ export default defineEventHandler(async (event) => {
         return {id: user.id};
 
     } catch (e: any) {
-        return sendError(event, createError({
-            statusCode: 400,
-            statusMessage: e.message,
-        }));
+        return await sendDefaultErrorResponse(event, 'oops', 500, e)
     }
 });
