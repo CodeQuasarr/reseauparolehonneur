@@ -47,8 +47,8 @@ model Evenement {
 
 enum Role {
     ADMIN
-    MANAGER
-    PLAYER
+    REDACTOR
+    SPEAKER
     USER
 }
 

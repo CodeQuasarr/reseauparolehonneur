@@ -113,4 +113,8 @@ export const validateTerms = (value: any) => {
         return true;
     }
 
+export const isHexadecimalString = (value: string): boolean => {
+    const regex = /^[0-9a-fA-F]{24}$/;
+    return regex.test(value);
+}
 

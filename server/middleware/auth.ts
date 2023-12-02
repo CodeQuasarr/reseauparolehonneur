@@ -1,5 +1,4 @@
 import SessionService from "~/server/app/services/SessionService";
-import UserService from "~/server/app/services/userService";
 import {getUserById} from "~/server/database/repositories/userRepository";
 
 
