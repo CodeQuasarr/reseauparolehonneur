@@ -7,7 +7,7 @@ export default defineEventHandler(async (event) => {
 
     try {
         const data = await readBody(event);
-        const validation = await UserService.validationUserDataFields(data);
+        const validation = await UserService.validationUserDataFields(data, false);
         if (validation.hasErrors && validation.errors) {
             const errors = JSON.stringify(Object.fromEntries(validation.errors))
             return sendError(event, createError({statusCode: 422, data: errors}))
@@ -37,6 +37,6 @@ export default defineEventHandler(async (event) => {
         }
         return userUpdate;
     } catch (e: any) {
-        return await sendDefaultErrorResponse(event, 'oops', 500, e)
+        return await sendDefaultErrorResponse(event, 'oops', 500, e.message)
     }
 });

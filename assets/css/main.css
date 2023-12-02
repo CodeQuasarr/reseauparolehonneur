@@ -1,5 +1,7 @@
 @import url('https://fonts.googleapis.com/css2?family=Barlow+Condensed:display=swap');
 @import url('https://fonts.googleapis.com/css?family=Poppins:300,400,500,600,700');
+@import 'vue3-toastify/dist/index.css';
+
 
 @tailwind base;
 @tailwind components;

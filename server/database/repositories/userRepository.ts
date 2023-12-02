@@ -47,6 +47,8 @@ export async function countUsers(): Promise<number> {
 }
 
 export async function updateUser(id: string, data: any): Promise<User> {
+    delete data.id
+    console.log('data', data)
     return prisma.user.update({
         where: {
             id: id

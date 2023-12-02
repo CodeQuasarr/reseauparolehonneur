@@ -58,16 +58,18 @@ class UserService {
         return data;
     }
 
-    static async validationUserDataFields(data: any) {
+    static async validationUserDataFields(data: any, forCreation: boolean = true): Promise<any> {
         const errors = new Map<string, { message: string | undefined }>()
 
         if (!data) {
             errors.set('user', {'message': `Tous les champs sont obligatoires`})
         } else {
             for (const key of this.fields) {
-                if (key === 'email' || key === 'password' || key === 'firstName' || key === 'lastName' || key === 'role') {
-                    if (!data[key]) {
-                        errors.set(key, {'message': `Le champ ${key} est obligatoire`})
+                if (forCreation) {
+                    if (key === 'email' || key === 'password' || key === 'firstName' || key === 'lastName' || key === 'role') {
+                        if (!data[key]) {
+                            errors.set(key, {'message': `Le champ ${key} est obligatoire`})
+                        }
                     }
                 }
                 if (data[key]) {
