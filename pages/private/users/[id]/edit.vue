@@ -47,7 +47,6 @@ if (error.value) {
 if (data.value) {
     user.value = data.value
 }
-console.log('data', data.value);
 
 
 let currentImage =`~/assets/images/users/${user.value.avatar}`;
@@ -70,7 +69,6 @@ const handleFileUpload = (event: any) => {
 
         reader.onload = () => {
             user.value.avatar = reader.result;
-            console.log(user.value.avatar)
         };
 
         reader.onerror = (error) => {
@@ -101,7 +99,6 @@ const updateInformation = async () => {
 
         if (error.value) {
             errors.value = useErrorMapper(error.value.data.data).errors
-            console.log('error.value', errors.value)
         }
     } catch (e) {
         console.log('errorcatch', e)

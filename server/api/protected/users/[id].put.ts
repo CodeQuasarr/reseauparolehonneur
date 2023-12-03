@@ -28,14 +28,26 @@ export default defineEventHandler(async (event) => {
             data.password = await UserService.hashedPassword(data.password);
         }
 
-        if (data.avatar && data.avatar !== user.avatar) {
-            const fileName = await UserService.downloadAndCheckImage(data.avatar);
-            if (!fileName) {
-                const errors = new Map<string, { message: string | undefined }>()
-                errors.set('avatar', {'message': `Une erreur est survenue lors de la création d'image`})
-                return sendError(event, createError({ statusCode: 400, data: errors }))
+        if (data.avatar) {
+            if (user.avatar && data.avatar !== user.avatar) {
+                console.log('replace image')
+                const fileName = await UserService.replaceImage(user.avatar, data.avatar);
+                if (!fileName) {
+                    const errors = new Map<string, { message: string | undefined }>()
+                    errors.set('avatar', {'message': `Une erreur est survenue lors de la création d'image`})
+                    return sendError(event, createError({ statusCode: 400, data: errors }))
+                }
+                data.avatar = fileName;
             }
-            data.avatar = fileName;
+            else {
+                const fileName = await UserService.downloadAndCheckImage(data.avatar);
+                if (!fileName) {
+                    const errors = new Map<string, { message: string | undefined }>()
+                    errors.set('avatar', {'message': `Une erreur est survenue lors de la création d'image`})
+                    return sendError(event, createError({ statusCode: 400, data: errors }))
+                }
+                data.avatar = fileName;
+            }
         }
 
         const userUpdate = await updateUser(id, data);

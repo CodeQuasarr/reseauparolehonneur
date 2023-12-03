@@ -8,6 +8,6 @@ export const useGlobalStore = defineStore('global', {
         }
     },
     getters: {
-        getSideBarOpen: (state) => { console.log('state.sideBarOpen', state.sideBarOpen); return state.sideBarOpen;},
+        getSideBarOpen: (state) =>  state.sideBarOpen,
     }
 });

@@ -51,7 +51,6 @@ const handleFileUpload = (event: { target: { files: any[]; }; }) => {
 
     reader.onload = () => {
         user.value.avatar = reader.result;
-        console.log(user.value.avatar)
     };
 
     reader.onerror = (error) => {
@@ -67,7 +66,6 @@ const updateInformation = async () => {
             body: user.value
         });
         if (data.value) {
-            console.log('data.value', data.value)
             await useRouter().push(`/private/users/${data.value.id}/edit`)
         }
         if (error.value) {

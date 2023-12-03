@@ -20,7 +20,6 @@ class SessionService {
 
     public static verifyToken(tokenData: any): boolean {
         const currentTimeInSeconds = Math.floor(Date.now() / 1000);
-        console.log(tokenData.exp, currentTimeInSeconds)
         if (!tokenData || tokenData.exp < currentTimeInSeconds) {
             return false;
         }

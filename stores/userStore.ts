@@ -11,6 +11,7 @@ export const useUserStore = defineStore('user', {
     }),
     actions: {
         setUserInStore(user: IUser) {
+            console.log('user', user)
             this.$state.user = user;
         },
 

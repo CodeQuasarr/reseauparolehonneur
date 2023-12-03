@@ -20,9 +20,12 @@ export default eventHandler(async (event: H3Event) => {
         const config = useRuntimeConfig();
         const authToken = SessionService.generateToken({userId: userInfo?.id}, (60 * 5)); // 5 minutes
         const refreshToken = SessionService.generateToken({userId: userInfo?.id}, 2592000); // 30 days
-        //const session = await SessionService.setSession(user?.id as string, refreshToken);
+        const session = await SessionService.setSession(userInfo?.id as string, refreshToken);
         const {user, accessToken} = await SessionService.makeSessionCookie(event, {token: authToken}, config.sessionKey);
-        return { user, accessToken }
+        return {
+            user: user,
+            accessToken
+        }
 
     } catch (e: any) {
         return {

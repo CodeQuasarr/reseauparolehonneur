@@ -125,6 +125,32 @@ class UserService {
         return fileName;
     }
 
+    public static async replaceImage(oldFileName: string, newPicture: string): Promise<string> {
+        // Supprimer l'ancienne image
+        const oldImagePath = path.join(process.cwd(), 'assets', 'images/users', oldFileName);
+        fs.unlinkSync(oldImagePath);
+
+        // Enregistrer la nouvelle image
+        const extension = newPicture.split(';')[0].split('/')[1];
+        const pictureName = Math.floor(Math.random() * 1000000).toString();
+        const fileName = `${pictureName}.${extension}`;
+
+        // Télécharger la nouvelle image depuis l'URL
+        const pictureUrl = await fetch(newPicture);
+        const imageData = await pictureUrl.arrayBuffer();
+        const buffer = Buffer.from(imageData);
+
+        if (!buffer.byteLength) {
+            throw new Error('La taille de l\'image est trop grande');
+        }
+
+        const destPath = path.join(process.cwd(), 'assets', 'images/users', fileName);
+        // Enregistrer la nouvelle image sur le système de fichiers
+        fs.writeFileSync(destPath, buffer);
+
+        return fileName;
+    }
+
     public static sanitizeUserForFrontend(user: any | undefined): User | undefined {
         if (!user) {
             return user;

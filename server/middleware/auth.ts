@@ -18,7 +18,6 @@ export default defineEventHandler(async (event) => {
     const {token} = SessionService.secureDeserialize(CookieToken.trim(), useRuntimeConfig().sessionKey);
     const decodedToken = SessionService.decodeToken(token);
     const isValidToken = SessionService.verifyToken(decodedToken);
-    console.log('isValidToken', isValidToken);
 
     const user = await getUserById(decodedToken.userId);
 
