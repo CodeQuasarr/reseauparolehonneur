@@ -57,6 +57,14 @@ export async function updateUser(id: string, data: any): Promise<User> {
     });
 }
 
+export async function deleteUser(id: string) {
+    return prisma.user.delete({
+        where: {
+            id: id
+        }
+    });
+}
+
 // export async function getUserByUserName(username: string) {
 //     return prisma.user.findUnique({
 //         where: {

@@ -28,6 +28,16 @@ export default defineEventHandler(async (event) => {
             data.password = await UserService.hashedPassword(data.password);
         }
 
+        if (data.avatar && data.avatar !== user.avatar) {
+            const fileName = await UserService.downloadAndCheckImage(data.avatar);
+            if (!fileName) {
+                const errors = new Map<string, { message: string | undefined }>()
+                errors.set('avatar', {'message': `Une erreur est survenue lors de la création d'image`})
+                return sendError(event, createError({ statusCode: 400, data: errors }))
+            }
+            data.avatar = fileName;
+        }
+
         const userUpdate = await updateUser(id, data);
         if (!userUpdate) {
             return sendError(event, createError({

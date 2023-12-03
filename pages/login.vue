@@ -113,7 +113,7 @@ const onSubmit = async () => {
                 <button  class="w-full px-5 py-3 text-base font-medium text-center text-white bg-indigo-700 rounded-lg hover:bg-indigo-800 focus:ring-4 focus:ring-indigo-300 sm:w-auto dark:bg-indigo-600 dark:hover:bg-indigo-700 dark:focus:ring-indigo-800">Se connecter</button>
                 <div class="text-sm font-medium text-gray-500 dark:text-gray-400">
                     Vous n'êtes pas inscrit ?
-                    <NuxtLink class="text-indigo-700 hover:underline dark:text-indigo-500" to="/signup">
+                    <NuxtLink class="text-indigo-700 hover:underline dark:text-indigo-500" to="/register">
                         Créer un compte
                     </NuxtLink>
                 </div>

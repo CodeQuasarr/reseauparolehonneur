@@ -1,6 +1,7 @@
 import useErrorMapper from "~/composables/useErrorMapper";
 import type {IUser} from "~/types/IUser";
 import {useUserStore} from "~/stores/userStore";
+import {notifySuccess} from "~/utils/config";
 
 export async function registerWithEmail(user: any): Promise<FormValidation> {
 
@@ -10,9 +11,10 @@ export async function registerWithEmail(user: any): Promise<FormValidation> {
             body:  user
         })
 
-        // if (data) {
-        //     await useRouter().push('/login')
-        // }
+        if (data) {
+            notifySuccess('Votre compte a bien été créé')
+            await useRouter().push('/login')
+        }
 
         return { hasErrors: false, loggedIn: true }
     } catch (error: any) {

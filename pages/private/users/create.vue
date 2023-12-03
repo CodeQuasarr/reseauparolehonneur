@@ -1,12 +1,18 @@
 <script lang="ts" setup>
 import {FwbSelect} from 'flowbite-vue'
 import {ErrorMessage, Field, Form} from "vee-validate"
-import { validateConfirmedPassword, validateEmail, validateFirstName, validateLastName, validatePassword } from "~/utils/config/formValidationsRules";
+import {
+    validateConfirmedPassword,
+    validateEmail,
+    validateFirstName,
+    validateLastName,
+    validatePassword
+} from "~/utils/config/formValidationsRules";
 import FrontBreadcrumbComponent from "~/components/breadcrumbs/FrontBreadcrumbComponent.vue";
 import {LANGUAGES, ROLES} from "~/utils/statics/static-filter-data";
 
 definePageMeta({
-    pageTransition: { name: 'page', mode: 'out-in' },
+    pageTransition: {name: 'page', mode: 'out-in'},
     title: 'Créer un nouveau utilisateur ',
     layout: "private",
 })
@@ -56,7 +62,7 @@ const handleFileUpload = (event: { target: { files: any[]; }; }) => {
 const updateInformation = async () => {
     try {
         loading.value = true
-        const { data, error } = await useFetchWithToken<any>('/api/protected/users', {
+        const {data, error} = await useFetchWithToken<any>('/api/protected/users', {
             method: 'POST',
             body: user.value
         });
@@ -81,17 +87,28 @@ const updateInformation = async () => {
     <div class="px-4 pt-6">
         <div>
             <div class="mb-4 col-span-full xl:mb-2">
-                <FrontBreadcrumbComponent :items="[{name: 'Utilisateurs', link: '/protected/users'}, {name: 'Nouveau utilisateur'}]" />
-                <div class="w-full flex items-center justify-between">
+                <FrontBreadcrumbComponent
+                    :items="[{name: 'Utilisateurs', link: '/private/users'}, {name: 'Nouveau utilisateur'}]"/>
+                <div class="w-full flex items-center justify-between px-4">
                     <h1 class="text-xl font-semibold text-gray-900 sm:text-2xl dark:text-white">Nouveau utilisateur</h1>
                     <div class="col-span-6 sm:col-full">
-                        <NuxtLink class="text-white bg-indigo-700 hover:bg-indigo-800 focus:ring-4 focus:ring-indigo-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-indigo-600 dark:hover:bg-indigo-700 dark:focus:ring-indigo-800" to="/protected/users" type="submit">Retour</NuxtLink>
+                        <div class="flex items-center justify-end gap-3">
+                            <button
+                                class="text-white bg-indigo-900 hover:bg-indigo-800 focus:ring-4 focus:ring-indigo-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-indigo-600 dark:hover:bg-indigo-700 dark:focus:ring-indigo-800"
+                                type="submit">Tout Enrégistrer
+                            </button>
+                            <NuxtLink
+                                class="text-white bg-indigo-700 hover:bg-indigo-800 focus:ring-4 focus:ring-indigo-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-indigo-600 dark:hover:bg-indigo-700 dark:focus:ring-indigo-800"
+                                to="/private/users" type="submit">Retour
+                            </NuxtLink>
+                        </div>
                     </div>
                 </div>
                 <div v-if="errors" class="px-4 pt-6">
-                    <div class="p-4 mb-4 text-sm text-red-800 rounded-lg bg-red-50 dark:bg-gray-800 dark:text-red-400" role="alert">
+                    <div class="p-4 mb-4 text-sm text-red-800 rounded-lg bg-red-50 dark:bg-gray-800 dark:text-red-400"
+                         role="alert">
                         <ul>
-                            <li v-for="(error, field) in errors" :key="field" >
+                            <li v-for="(error, field) in errors" :key="field">
                                 <span class="font-medium">{{ error }}</span>
                             </li>
                         </ul>
@@ -101,15 +118,19 @@ const updateInformation = async () => {
             </div>
             <!-- Right Content -->
             <div class="relative w-full">
-                <LoadingComponent v-if="loading" />
-                <Form  @submit="updateInformation()">
+                <LoadingComponent v-if="loading"/>
+                <Form @submit="updateInformation()">
                     <div class="grid grid-cols-1 px-4 pt-6 xl:grid-cols-3 xl:gap-4 dark:bg-gray-900">
                         <div class="col-span-full xl:col-auto">
-                            <div class="p-4 mb-4 bg-white border border-gray-200 rounded-lg shadow-sm 2xl:col-span-2 dark:border-gray-700 sm:p-6 dark:bg-gray-800">
-                                <div class="items-center sm:flex xl:block 2xl:flex sm:space-x-4 xl:space-x-0 2xl:space-x-4">
-                                    <img alt="Jese avatar" class="mb-4 rounded-lg w-28 h-28 sm:mb-0 xl:mb-4 2xl:mb-0" src="~/assets/images/users/default.jpg">
+                            <div
+                                class="p-4 mb-4 bg-white border border-gray-200 rounded-lg shadow-sm 2xl:col-span-2 dark:border-gray-700 sm:p-6 dark:bg-gray-800">
+                                <div
+                                    class="items-center sm:flex xl:block 2xl:flex sm:space-x-4 xl:space-x-0 2xl:space-x-4">
+                                    <img alt="Jese avatar" class="mb-4 rounded-lg w-28 h-28 sm:mb-0 xl:mb-4 2xl:mb-0"
+                                         src="~/assets/images/users/default.jpg">
                                     <div>
-                                        <h3 class="mb-1 text-xl font-bold text-gray-900 dark:text-white">Photo de profil</h3>
+                                        <h3 class="mb-1 text-xl font-bold text-gray-900 dark:text-white">Photo de
+                                            profil</h3>
                                         <div class="mb-4 text-sm text-gray-500 dark:text-gray-400">
                                             JPG, GIF or PNG. Taille maximale de 800K
                                         </div>
@@ -117,7 +138,7 @@ const updateInformation = async () => {
                                             <Field
                                                 id="user_avatar"
                                                 aria-describedby="user_avatar_help"
-                                                class="block w-full text-sm text-gray-900 border border-gray-300 rounded-lg cursor-pointer bg-gray-50 dark:text-gray-400 focus:outline-none dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400"
+                                                class="block w-full text-sm text-indigo-900 border border-gray-300 rounded-lg cursor-pointer bg-gray-50 dark:text-gray-400 focus:outline-none"
                                                 name="upload"
                                                 type="file"
                                                 @change="handleFileUpload"
@@ -126,10 +147,12 @@ const updateInformation = async () => {
                                     </div>
                                 </div>
                             </div>
-                            <div class="p-4 mb-4 bg-white border border-gray-200 rounded-lg shadow-sm 2xl:col-span-2 dark:border-gray-700 sm:p-6 dark:bg-gray-800">
+                            <div
+                                class="p-4 mb-4 bg-white border border-gray-200 rounded-lg shadow-sm 2xl:col-span-2 dark:border-gray-700 sm:p-6 dark:bg-gray-800">
                                 <h3 class="mb-4 text-xl font-semibold dark:text-white">Langue</h3>
                                 <div class="mb-4">
-                                    <label class="block mb-2 text-sm font-medium text-gray-900 dark:text-white" for="settings-language_1">Selectionner la langue courante</label>
+                                    <label class="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
+                                           for="settings-language_1">Selectionner la langue courante</label>
                                     <FwbSelect
                                         v-model="user.language_1"
                                         :options="LANGUAGES"
@@ -138,7 +161,8 @@ const updateInformation = async () => {
                                     />
                                 </div>
                                 <div class="mb-6">
-                                    <label class="block mb-2 text-sm font-medium text-gray-900 dark:text-white" for="settings-language_2">Selectionner deuxième langue</label>
+                                    <label class="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
+                                           for="settings-language_2">Selectionner deuxième langue</label>
                                     <FwbSelect
                                         v-model="user.language_2"
                                         :options="LANGUAGES"
@@ -147,7 +171,8 @@ const updateInformation = async () => {
                                     />
                                 </div>
                             </div>
-                            <div class="p-4 mb-4 bg-white border border-gray-200 rounded-lg shadow-sm 2xl:col-span-2 dark:border-gray-700 sm:p-6 dark:bg-gray-800">
+                            <div
+                                class="p-4 mb-4 bg-white border border-gray-200 rounded-lg shadow-sm 2xl:col-span-2 dark:border-gray-700 sm:p-6 dark:bg-gray-800">
                                 <div class="flow-root">
                                     <h3 class="text-xl font-semibold dark:text-white">Biographie</h3>
                                     <Field
@@ -163,12 +188,14 @@ const updateInformation = async () => {
                             </div>
                         </div>
                         <div class="col-span-2">
-                            <div class="p-4 mb-4 bg-white border border-gray-200 rounded-lg shadow-sm 2xl:col-span-2 dark:border-gray-700 sm:p-6 dark:bg-gray-800">
+                            <div
+                                class="p-4 mb-4 bg-white border border-gray-200 rounded-lg shadow-sm 2xl:col-span-2 dark:border-gray-700 sm:p-6 dark:bg-gray-800">
                                 <h3 class="mb-4 text-xl font-semibold dark:text-white">Information General</h3>
                                 <div>
                                     <div class="grid grid-cols-6 gap-6">
                                         <div class="col-span-6 sm:col-span-3">
-                                            <label class="block mb-2 text-sm font-medium text-gray-900 dark:text-white" for="first-name">Nom</label>
+                                            <label class="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
+                                                   for="first-name">Nom</label>
                                             <Field
                                                 id="first-name"
                                                 v-model="user.lastName"
@@ -182,7 +209,8 @@ const updateInformation = async () => {
                                             <ErrorMessage class="text-red-500" name="first-name"/>
                                         </div>
                                         <div class="col-span-6 sm:col-span-3">
-                                            <label class="block mb-2 text-sm font-medium text-gray-900 dark:text-white" for="last-name">Prénom</label>
+                                            <label class="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
+                                                   for="last-name">Prénom</label>
                                             <Field
                                                 id="last-name"
                                                 v-model="user.firstName"
@@ -196,7 +224,8 @@ const updateInformation = async () => {
                                             <ErrorMessage class="text-red-500" name="last-name"/>
                                         </div>
                                         <div class="col-span-6 sm:col-span-3">
-                                            <label class="block mb-2 text-sm font-medium text-gray-900 dark:text-white" for="country">Pays</label>
+                                            <label class="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
+                                                   for="country">Pays</label>
                                             <Field
                                                 id="country"
                                                 v-model="user.country"
@@ -208,7 +237,8 @@ const updateInformation = async () => {
                                             />
                                         </div>
                                         <div class="col-span-6 sm:col-span-3">
-                                            <label class="block mb-2 text-sm font-medium text-gray-900 dark:text-white" for="city">Ville</label>
+                                            <label class="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
+                                                   for="city">Ville</label>
                                             <Field
                                                 id="city"
                                                 v-model="user.city"
@@ -233,7 +263,8 @@ const updateInformation = async () => {
                                             />
                                         </div>
                                         <div class="col-span-6 sm:col-span-3">
-                                            <label class="block mb-2 text-sm font-medium text-gray-900 dark:text-white" for="email">Email</label>
+                                            <label class="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
+                                                   for="email">Email</label>
                                             <Field
                                                 id="email"
                                                 v-model="user.email"
@@ -247,7 +278,8 @@ const updateInformation = async () => {
                                             <ErrorMessage class="text-red-500" name="email"/>
                                         </div>
                                         <div class="col-span-6 sm:col-span-3">
-                                            <label class="block mb-2 text-sm font-medium text-gray-900 dark:text-white" for="phone-number">Numéro de téléphone</label>
+                                            <label class="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
+                                                   for="phone-number">Numéro de téléphone</label>
                                             <Field
                                                 id="phone-number"
                                                 v-model="user.phone"
@@ -259,7 +291,8 @@ const updateInformation = async () => {
                                             />
                                         </div>
                                         <div class="col-span-6 sm:col-span-3">
-                                            <label class="block mb-2 text-sm font-medium text-gray-900 dark:text-white" for="birthday">Anniversaire</label>
+                                            <label class="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
+                                                   for="birthday">Anniversaire</label>
                                             <Field
                                                 id="birthday"
                                                 v-model="user.birthDate"
@@ -270,7 +303,8 @@ const updateInformation = async () => {
                                             />
                                         </div>
                                         <div class="col-span-6 sm:col-span-3">
-                                            <label class="block mb-2 text-sm font-medium text-gray-900 dark:text-white" for="organization">Métier actuel</label>
+                                            <label class="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
+                                                   for="organization">Métier actuel</label>
                                             <Field
                                                 id="organization"
                                                 v-model="user.job"
@@ -282,25 +316,31 @@ const updateInformation = async () => {
                                             />
                                         </div>
                                         <div class="col-span-6 sm:col-span-3">
-                                            <label class="block mb-2 text-sm font-medium text-gray-900 dark:text-white" for="role">Role</label>
+                                            <label class="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
+                                                   for="role">Role</label>
                                             <Field
                                                 id="settings-timezone"
                                                 v-model="user.role"
                                                 as="select"
                                                 class="bg-gray-50 border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-indigo-500 focus:border-indigo-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-indigo-500 dark:focus:border-indigo-500"
                                                 name="countries">
-                                                <option v-for="role in ROLES" :key="role.value" :value="role.value"> {{ role.name }} </option>
+                                                <option v-for="role in ROLES" :key="role.value" :value="role.value">
+                                                    {{ role.name }}
+                                                </option>
                                             </Field>
                                         </div>
                                     </div>
                                 </div>
                             </div>
-                            <div class="p-4 mb-4 bg-white border border-gray-200 rounded-lg shadow-sm 2xl:col-span-2 dark:border-gray-700 sm:p-6 dark:bg-gray-800">
-                                <h3 class="mb-4 text-xl font-semibold dark:text-white">Informations sur le mot de passe</h3>
+                            <div
+                                class="p-4 mb-4 bg-white border border-gray-200 rounded-lg shadow-sm 2xl:col-span-2 dark:border-gray-700 sm:p-6 dark:bg-gray-800">
+                                <h3 class="mb-4 text-xl font-semibold dark:text-white">Informations sur le mot de
+                                    passe</h3>
                                 <div>
                                     <div class="grid grid-cols-6 gap-6">
                                         <div class="col-span-6 sm:col-span-3">
-                                            <label class="block mb-2 text-sm font-medium text-gray-900 dark:text-white" for="password">Nouveau mot de passe</label>
+                                            <label class="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
+                                                   for="password">Nouveau mot de passe</label>
                                             <Field
                                                 id="password"
                                                 v-model="user.password"
@@ -314,7 +354,8 @@ const updateInformation = async () => {
                                             <ErrorMessage class="text-red-500" name="password"/>
                                         </div>
                                         <div class="col-span-6 sm:col-span-3">
-                                            <label class="block mb-2 text-sm font-medium text-gray-900 dark:text-white" for="confirm-password">Confirmer le mot de passe</label>
+                                            <label class="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
+                                                   for="confirm-password">Confirmer le mot de passe</label>
                                             <Field
                                                 id="confirm-password"
                                                 v-model="user.confirmPassword"
@@ -327,10 +368,19 @@ const updateInformation = async () => {
                                             />
                                             <ErrorMessage class="text-red-500" name="confirm-password"/>
                                         </div>
-                                        <div class="col-span-6 sm:col-full">
-                                            <button class="text-white bg-indigo-700 hover:bg-indigo-800 focus:ring-4 focus:ring-indigo-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-indigo-600 dark:hover:bg-indigo-700 dark:focus:ring-indigo-800" type="submit">Tout Enrégistrer</button>
-                                        </div>
                                     </div>
+                                </div>
+                            </div>
+                            <div class="col-span-6 sm:col-full pt-6">
+                                <div class="flex items-center justify-end gap-3">
+                                    <button
+                                        class="text-white bg-indigo-900 hover:bg-indigo-800 focus:ring-4 focus:ring-indigo-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-indigo-600 dark:hover:bg-indigo-700 dark:focus:ring-indigo-800"
+                                        type="submit">Tout Enrégistrer
+                                    </button>
+                                    <NuxtLink
+                                        class="text-white bg-indigo-700 hover:bg-indigo-800 focus:ring-4 focus:ring-indigo-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-indigo-600 dark:hover:bg-indigo-700 dark:focus:ring-indigo-800"
+                                        to="/private/users" type="submit">Retour
+                                    </NuxtLink>
                                 </div>
                             </div>
                         </div>
