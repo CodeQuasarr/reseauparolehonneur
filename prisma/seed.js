@@ -36,7 +36,7 @@ async function seedUsers () {
                     city: cities[Math.floor(Math.random() * cities.length)],
                     country: "France",
                     phone: "0" + Math.floor(Math.random() * 1000000000).toString().padStart(9, '0'),
-                    avatar: "default.jpg",
+                    avatar: "default.png",
                     language_1: languages[Math.floor(Math.random() * languages.length)],
                     language_2: languages[Math.floor(Math.random() * languages.length)],
                 }

@@ -28,8 +28,10 @@ export default defineEventHandler(async (event) => {
             data.password = await UserService.hashedPassword(data.password);
         }
 
-        if (data.avatar) {
-            if (user.avatar && data.avatar !== user.avatar) {
+
+
+        if (data.avatar && !(data.avatar === user.avatar)) {
+            if (user.avatar && user.avatar !== 'default.png' && data.avatar !== user.avatar ) {
                 console.log('replace image')
                 const fileName = await UserService.replaceImage(user.avatar, data.avatar);
                 if (!fileName) {

@@ -20,6 +20,8 @@ export default defineEventHandler(async (event) => {
                 return sendError(event, createError({ statusCode: 400, data: errors }))
             }
             data.avatar = fileName;
+        } else {
+            data.avatar = 'default.png';
         }
 
         delete data.confirmPassword;

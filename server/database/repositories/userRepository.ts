@@ -24,10 +24,17 @@ export async function getUserById(id: string): Promise<User|null> {
     });
 }
 
-export async function getAllUsers(take: number = 0, skip: number = 0): Promise<IUser[]> {
+export async function getAllUsers(take: number = 0, skip: number = 0, q: string = ''): Promise<IUser[]> {
     return prisma.user.findMany({
         take,
         skip,
+        where: {
+            OR: [
+                {email: {contains: q}},
+                {firstName: {contains: q}},
+                {lastName: {contains: q}},
+            ]
+        },
         orderBy: { lastName: 'asc' },
         select: {
             id: true,
@@ -38,12 +45,20 @@ export async function getAllUsers(take: number = 0, skip: number = 0): Promise<I
             isVerified: true,
             job: true,
             avatar: true,
-        }
+        },
     });
 }
 
-export async function countUsers(): Promise<number> {
-    return prisma.user.count();
+export async function countUsers(q: string = ''): Promise<number> {
+    return prisma.user.count({
+        where: {
+            OR: [
+                {email: {contains: q}},
+                {firstName: {contains: q}},
+                {lastName: {contains: q}},
+            ]
+        },
+    });
 }
 
 export async function updateUser(id: string, data: any): Promise<User> {
