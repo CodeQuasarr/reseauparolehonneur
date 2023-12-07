@@ -1,6 +1,7 @@
-import {User} from "@prisma/client";
+import {Role, User} from "@prisma/client";
 import {prisma} from "~/server/database";
 import {IUser} from "~/types/IUser";
+import {Filter} from "~/types/Filter";
 
 export async function getUserByEmail(emailOrEmail: string): Promise<User|null> {
     return prisma.user.findFirst({
@@ -24,17 +25,28 @@ export async function getUserById(id: string): Promise<User|null> {
     });
 }
 
-export async function getAllUsers(take: number = 0, skip: number = 0, q: string = ''): Promise<IUser[]> {
+export async function getAllUsers(take: number = 0, skip: number = 0, q: string = '', status: string | null, role: null | string): Promise<IUser[]> {
+
+    const whereClause: any = {
+        OR: [
+            { email: { contains: q } },
+            { firstName: { contains: q } },
+            { lastName: { contains: q } },
+        ],
+    };
+
+    if (role && role.trim() !== '') {
+        console.log('roleqqqqqqqqqqqqq', role)
+        whereClause['role'] = Role[role.toUpperCase() as keyof typeof Role];
+    }
+    if (status && status.trim() !== '') {
+        whereClause['isVerified'] = status === 'active';
+    }
+
     return prisma.user.findMany({
         take,
         skip,
-        where: {
-            OR: [
-                {email: {contains: q}},
-                {firstName: {contains: q}},
-                {lastName: {contains: q}},
-            ]
-        },
+        where: whereClause,
         orderBy: { lastName: 'asc' },
         select: {
             id: true,
@@ -48,6 +60,7 @@ export async function getAllUsers(take: number = 0, skip: number = 0, q: string 
         },
     });
 }
+
 
 export async function countUsers(q: string = ''): Promise<number> {
     return prisma.user.count({

@@ -5,6 +5,7 @@ import type {IUser} from "~/types/IUser";
 import {ROLES, STATUS} from "~/utils/statics/static-filter-data";
 import {notifySuccess} from "~/utils/config";
 import {VueAwesomePaginate} from "vue-awesome-paginate";
+import FrontBreadcrumbComponent from "~/components/breadcrumbs/FrontBreadcrumbComponent.vue";
 
 
 definePageMeta({
@@ -13,51 +14,64 @@ definePageMeta({
     auth: true,
     layout: 'private'
 })
-const appUrl = useRuntimeConfig().public.baseUrl
-const currentUserId = ref('')
-const users = ref<IUser[]>([{
-    id: '1',
-    avatar: null,
-    firstName: 'test',
-    lastName: 'test',
-    email: '',
-    role: 'USER',
-    job: 'test',
-}]);
 
+const appUrl: string = useRuntimeConfig().public.baseUrl;
+const users = ref<IUser[]>([]);
+const currentUserId = ref<string>('')
+const openFilter = ref<boolean>(true);
 
-const defaultImg = 'default.png'
-let currentPage = ref(1)
-let perPage = ref(5)
-let usersCount = ref(0)
-let pagesCount = ref(0)
-let firstItemIndex = ref(1)
-let lastItemIndex = ref(6)
-const search = ref('')
+const perPage = ref<number>(5)
+const usersCount = ref<number>(0)
+const pagesCount = ref<number>(0)
+const currentPage = ref<number>(1)
 
+const search = ref<string>('')
+const status = ref<string>('')
+const role = ref<string>('')
 
-const { data, error } = await UseFetchWithToken<any>('/api/protected/users?page=1', {
+const toggleOpenFilter = () => { openFilter.value = !openFilter.value; };
+
+const initFilters = () => {
+    currentPage.value = 1
+    search.value = ''
+    status.value = ''
+    role.value = ''
+}
+
+watch([currentPage, search, status, role], async ([newPage, newSearch, newStatus, newRole]) => {
+
+    const url = `/api/protected/users?page=1&currentPage=${newPage}&role=${newRole}&status=${newStatus}&q=${newSearch}`
+    const {data, error} = await UseFetchWithToken<any>(url, {
+        method: 'GET',
+    });
+    if (data.value) {
+        users.value = data.value?.users
+        usersCount.value = data.value.usersCount
+        pagesCount.value = data.value.pagesCount
+        perPage.value = data.value.perPage
+    }
+});
+
+const filters = JSON.stringify({
+    perPage: 6,
+    page: 1,
+    q: '',
+    role: null,
+    status: null,
+});
+const url = `/api/protected/users?page=1&currentPage=${currentPage.value}&role=${role.value}&status=${status.value}&q=${search.value}`
+const { data, error } = await UseFetchWithToken<any>(url, {
     method: 'GET',
 });
 if (data.value) {
-    console.log('data', data.value)
     users.value = data.value?.users
     usersCount.value = data.value.usersCount
     pagesCount.value = data.value.pagesCount
     perPage.value = data.value.perPage
 }
 
-const openFilter = ref(true);
-
-const userFilter = ref({
-    status: '',
-    role: '',
-});
 
 
-const toggleOpenFilter = () => {
-    openFilter.value = !openFilter.value;
-};
 
 const deleteUser = async () => {
     users.value = users.value.filter(user => user.id !== currentUserId.value)
@@ -80,7 +94,6 @@ const onClickHandler = async (page: number) => {
         method: 'GET',
     });
     if (data.value) {
-        console.log('data', data.value)
         users.value = data.value?.users
         usersCount.value = data.value.usersCount
         pagesCount.value = data.value.pagesCount
@@ -98,76 +111,85 @@ const handleInputChange = (event: any) => {
 
 <template>
     <div>
-        <div class="sm:flex">
+        <div class="mb-4 col-span-full xl:mb-2">
+           <FrontBreadcrumbComponent />
+            <div class="w-full flex items-center justify-between px-4">
+                <h1 class="text-xl font-semibold text-gray-900 sm:text-2xl dark:text-white">Nouveau utilisateur</h1>
+                <div class="col-span-6 sm:col-full">
+                    <div class="flex items-center justify-end gap-3">
+                        <NuxtLink
+                            class="text-white bg-indigo-700 hover:bg-indigo-800 focus:ring-4 focus:ring-indigo-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-indigo-600 dark:hover:bg-indigo-700 dark:focus:ring-indigo-800"
+                            to="/private/users/create" type="submit">Créer
+                        </NuxtLink>
+                    </div>
+                </div>
+            </div>
+        </div>
 
+        <div class=" bg-white px-2 py-3 my-5">
             <div class="items-center hidden mb-3 sm:flex sm:divide-x sm:divide-gray-100 sm:mb-0 dark:divide-gray-700">
                 <form class="lg:pr-3" action="#" method="GET">
                     <label for="users-search" class="sr-only">Search</label>
                     <div class="relative mt-1 lg:w-64 xl:w-96">
                         <input
-                            @input="handleInputChange($event)"
+                            v-model="search"
                             type="text"
                             name="email"
                             id="users-search"
                             class="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-indigo-500 focus:border-indigo-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-indigo-500 dark:focus:border-indigo-500"
-                            placeholder="Search for users"
+                            placeholder="Rechercher un utilisateur"
                         >
                     </div>
                 </form>
                 <div class="flex pl-0 mt-3 space-x-1 sm:pl-2 sm:mt-0">
                     <button @click="toggleOpenFilter()" class="inline-flex justify-center p-1 text-gray-500 rounded cursor-pointer hover:text-gray-900 hover:bg-gray-100 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white">
-                        <svg class="w-6 h-6" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path d="M10 6a2 2 0 110-4 2 2 0 010 4zM10 12a2 2 0 110-4 2 2 0 010 4zM10 18a2 2 0 110-4 2 2 0 010 4z"></path></svg>
+                        <span v-show="openFilter"><Icon name="material-symbols:close-fullscreen" class="w-6 h-6" /></span>
+                        <span v-show="!openFilter"><Icon name="ic:outline-open-in-new" class="w-6 h-6" /></span>
+                    </button>
+                    <button @click="initFilters()" class="inline-flex justify-center p-1 text-gray-500 rounded cursor-pointer hover:text-gray-900 hover:bg-gray-100 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white">
+                        <span><Icon name="system-uicons:reset-forward" class="w-6 h-6" /></span>
                     </button>
                 </div>
             </div>
-            <div class="flex items-center ml-auto space-x-2 sm:space-x-3">
-                <NuxtLink to="/private/users/create"  class="inline-flex items-center justify-center w-1/2 px-3 py-2 text-sm font-medium text-center text-white rounded-lg bg-indigo-700 hover:bg-indigo-800 focus:ring-4 focus:ring-indigo-300 sm:w-auto dark:bg-indigo-600 dark:hover:bg-indigo-700 dark:focus:ring-indigo-800">
-                    <svg class="w-5 h-5 mr-2 -ml-1" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M10 5a1 1 0 011 1v3h3a1 1 0 110 2h-3v3a1 1 0 11-2 0v-3H6a1 1 0 110-2h3V6a1 1 0 011-1z" clip-rule="evenodd"></path></svg>
-                    Ajouter un utilisateur
-                </NuxtLink>
-<!--                <a href="#" class="inline-flex items-center justify-center w-1/2 px-3 py-2 text-sm font-medium text-center text-gray-900 bg-white border border-gray-300 rounded-lg hover:bg-gray-100 focus:ring-4 focus:ring-indigo-300 sm:w-auto dark:bg-gray-800 dark:text-gray-400 dark:border-gray-600 dark:hover:text-white dark:hover:bg-gray-700 dark:focus:ring-gray-700">-->
-<!--                    <svg class="w-5 h-5 mr-2 -ml-1" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M6 2a2 2 0 00-2 2v12a2 2 0 002 2h8a2 2 0 002-2V7.414A2 2 0 0015.414 6L12 2.586A2 2 0 0010.586 2H6zm5 6a1 1 0 10-2 0v3.586l-1.293-1.293a1 1 0 10-1.414 1.414l3 3a1 1 0 001.414 0l3-3a1 1 0 00-1.414-1.414L11 11.586V8z" clip-rule="evenodd"></path></svg>-->
-<!--                    Export-->
-<!--                </a>-->
-            </div>
-        </div>
-
-        <div v-if="openFilter" class="flex flex-col my-5">
-            <div class="overflow-x-auto flex flex-wrap">
-                <div class="inline-block align-middle">
-                    <div class="overflow-hidden">
-                        <div class="mb-4">
-                            <label
-                                class="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
-                                for="settings-language_1"
-                            >
-                                Satuts
-                            </label>
-                            <FwbSelect
-                                v-model="userFilter.status"
-                                :options="STATUS"
-                                class="bg-gray-50 border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-indigo-500 focus:border-indigo-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-indigo-500 dark:focus:border-indigo-500"
-                                name="settings-language_1"
-                            />
+            <div v-if="openFilter" class="flex flex-col my-5 px-3">
+                <div class="overflow-x-auto flex flex-wrap">
+                    <div class="inline-block align-middle">
+                        <div class="overflow-hidden">
+                            <div class="mb-4">
+                                <label
+                                    class="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
+                                    for="settings-language_1"
+                                >
+                                    Satuts
+                                </label>
+                                <FwbSelect
+                                    v-model="status"
+                                    :options="STATUS"
+                                    class="bg-gray-50 border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-indigo-500 focus:border-indigo-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-indigo-500 dark:focus:border-indigo-500"
+                                    name="settings-language_1"
+                                    placeholder="Selectionner un status"
+                                />
+                            </div>
                         </div>
                     </div>
-                </div>
 
-                <div class="inline-block align-middle">
-                    <div class="overflow-hidden">
-                        <div class="mb-4">
-                            <label
-                                class="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
-                                for="settings-language_1"
-                            >
-                                Rôles
-                            </label>
-                            <FwbSelect
-                                v-model="userFilter.role"
-                                :options="ROLES"
-                                class="bg-gray-50 border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-indigo-500 focus:border-indigo-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-indigo-500 dark:focus:border-indigo-500"
-                                name="settings-language_1"
-                            />
+                    <div class="inline-block align-middle">
+                        <div class="overflow-hidden">
+                            <div class="mb-4">
+                                <label
+                                    class="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
+                                    for="settings-language_1"
+                                >
+                                    Rôles
+                                </label>
+                                <FwbSelect
+                                    v-model="role"
+                                    :options="ROLES"
+                                    class="bg-gray-50 border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-indigo-500 focus:border-indigo-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-indigo-500 dark:focus:border-indigo-500"
+                                    name="settings-language_1"
+                                    placeholder="Selectionner un rôle"
+                                />
+                            </div>
                         </div>
                     </div>
                 </div>

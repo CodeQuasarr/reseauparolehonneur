@@ -85,14 +85,13 @@ const updateInformation = async () => {
     <div class="px-4 pt-6">
         <div>
             <div class="mb-4 col-span-full xl:mb-2">
-                <FrontBreadcrumbComponent
-                    :items="[{name: 'Utilisateurs', link: '/private/users'}, {name: 'Nouveau utilisateur'}]"/>
+                <FrontBreadcrumbComponent />
                 <div class="w-full flex items-center justify-between px-4">
                     <h1 class="text-xl font-semibold text-gray-900 sm:text-2xl dark:text-white">Nouveau utilisateur</h1>
                     <div class="col-span-6 sm:col-full">
                         <div class="flex items-center justify-end gap-3">
                             <button
-                                class="text-white bg-indigo-900 hover:bg-indigo-800 focus:ring-4 focus:ring-indigo-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-indigo-600 dark:hover:bg-indigo-700 dark:focus:ring-indigo-800"
+                                class="text-white bg-gray-900 hover:bg-indigo-800 focus:ring-4 focus:ring-indigo-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-indigo-600 dark:hover:bg-indigo-700 dark:focus:ring-indigo-800"
                                 type="submit">Tout Enrégistrer
                             </button>
                             <NuxtLink
@@ -112,7 +111,6 @@ const updateInformation = async () => {
                         </ul>
                     </div>
                 </div>
-
             </div>
             <!-- Right Content -->
             <div class="relative w-full">
