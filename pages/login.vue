@@ -27,8 +27,15 @@ const user = ref({
 //---------------------------------- Methods -----------------------------------//
 
 const onSubmit = async () => {
-    response = await loginWithEmail(user.value);
-    errors.value = response.errors
+    try {
+        loading.value = true;
+        response = await loginWithEmail(user.value);
+        errors.value = response.errors
+    } catch (e: any) {
+        error.value = e.message
+    } finally {
+        loading.value = false;
+    }
 }
 
 </script>
@@ -57,67 +64,71 @@ const onSubmit = async () => {
                     </li>
                 </ul>
             </div>
-            <Form class="mt-8 space-y-6" @submit="onSubmit()">
-                <div>
-                    <label class="block mb-2 text-sm font-medium text-gray-900 dark:text-white" for="email">Votre
-                        email</label>
-                    <Field
-                        id="email"
-                        v-model="user.email"
-                        :rules="validateEmail"
-                        class="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-indigo-500 focus:border-indigo-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-indigo-500 dark:focus:border-indigo-500"
-                        name="email"
-                        placeholder="adresse@mail.com"
-                        required
-                        type="email"
-                    />
-                    <ErrorMessage class="text-red-500" name="email"/>
-
-                </div>
-                <div>
-                    <label class="block mb-2 text-sm font-medium text-gray-900 dark:text-white" for="password">Votre mot
-                        de passe</label>
-                    <Field
-                        id="password"
-                        v-model="user.password"
-                        :rules="validatePassword"
-                        class="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-indigo-500 focus:border-indigo-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-indigo-500 dark:focus:border-indigo-500"
-                        name="password"
-                        placeholder="••••••••"
-                        required
-                        type="password"
-                    />
-                    <ErrorMessage class="text-red-500" name="password"/>
-                </div>
-
-                <div class="flex items-start">
-                    <div class="flex items-center h-5">
-                        <Field id="rememberMe"
-                               v-model="user.rememberMe"
-                               :value="true"
-                               aria-describedby="rememberMe"
-                               class="w-4 h-4 border-gray-300 rounded bg-gray-50 focus:ring-3 focus:ring-indigo-300 dark:focus:ring-indigo-600 dark:ring-offset-gray-800 dark:bg-gray-700 dark:border-gray-600"
-                               name="rememberMe"
-                               required
-                               type="checkbox"
+            <div class="relative w-full">
+                <LoadingComponent v-if="loading"/>
+                <Form class="mt-8 space-y-6" @submit="onSubmit()">
+                    <div>
+                        <label class="block mb-2 text-sm font-medium text-gray-900 dark:text-white" for="email">Votre
+                            email</label>
+                        <Field
+                            id="email"
+                            v-model="user.email"
+                            :rules="validateEmail"
+                            class="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-indigo-500 focus:border-indigo-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-indigo-500 dark:focus:border-indigo-500"
+                            name="email"
+                            placeholder="adresse@mail.com"
+                            required
+                            type="email"
                         />
-                    </div>
-                    <div class="ml-3 text-sm">
-                        <label class="font-medium text-gray-900 dark:text-white" for="rememberMe">
-                            Se souvenir de moi
-                        </label>
-                    </div>
-                    <NuxtLink class="ml-auto text-sm text-indigo-700 hover:underline dark:text-indigo-500" to="/forgot-password">Mot de passe perdu ?</NuxtLink>
-                </div>
+                        <ErrorMessage class="text-red-500" name="email"/>
 
-                <button  class="w-full px-5 py-3 text-base font-medium text-center text-white bg-indigo-700 rounded-lg hover:bg-indigo-800 focus:ring-4 focus:ring-indigo-300 sm:w-auto dark:bg-indigo-600 dark:hover:bg-indigo-700 dark:focus:ring-indigo-800">Se connecter</button>
-                <div class="text-sm font-medium text-gray-500 dark:text-gray-400">
-                    Vous n'êtes pas inscrit ?
-                    <NuxtLink class="text-indigo-700 hover:underline dark:text-indigo-500" to="/register">
-                        Créer un compte
-                    </NuxtLink>
-                </div>
-            </Form>
+                    </div>
+                    <div>
+                        <label class="block mb-2 text-sm font-medium text-gray-900 dark:text-white" for="password">Votre mot
+                            de passe</label>
+                        <Field
+                            id="password"
+                            v-model="user.password"
+                            :rules="validatePassword"
+                            class="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-indigo-500 focus:border-indigo-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-indigo-500 dark:focus:border-indigo-500"
+                            name="password"
+                            placeholder="••••••••"
+                            required
+                            type="password"
+                        />
+                        <ErrorMessage class="text-red-500" name="password"/>
+                    </div>
+
+                    <div class="flex items-start">
+                        <div class="flex items-center h-5">
+                            <Field id="rememberMe"
+                                   v-model="user.rememberMe"
+                                   :value="true"
+                                   aria-describedby="rememberMe"
+                                   class="w-4 h-4 border-gray-300 rounded bg-gray-50 focus:ring-3 focus:ring-indigo-300 dark:focus:ring-indigo-600 dark:ring-offset-gray-800 dark:bg-gray-700 dark:border-gray-600"
+                                   name="rememberMe"
+                                   required
+                                   type="checkbox"
+                            />
+                        </div>
+                        <div class="ml-3 text-sm">
+                            <label class="font-medium text-gray-900 dark:text-white" for="rememberMe">
+                                Se souvenir de moi
+                            </label>
+                        </div>
+                        <NuxtLink class="ml-auto text-sm text-indigo-700 hover:underline dark:text-indigo-500" to="/forgot-password">Mot de passe perdu ?</NuxtLink>
+                    </div>
+
+                    <button  class="w-full px-5 py-3 text-base font-medium text-center text-white bg-indigo-700 rounded-lg hover:bg-indigo-800 focus:ring-4 focus:ring-indigo-300 sm:w-auto dark:bg-indigo-600 dark:hover:bg-indigo-700 dark:focus:ring-indigo-800">Se connecter</button>
+                    <div class="text-sm font-medium text-gray-500 dark:text-gray-400">
+                        Vous n'êtes pas inscrit ?
+                        <NuxtLink class="text-indigo-700 hover:underline dark:text-indigo-500" to="/register">
+                            Créer un compte
+                        </NuxtLink>
+                    </div>
+                </Form>
+            </div>
+
         </div>
 
         <div class="col-span-6 sm:col-full mt-10 pb-5 text-start">

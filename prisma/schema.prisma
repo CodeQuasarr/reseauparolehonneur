@@ -8,30 +8,31 @@ datasource db {
 }
 
 model User {
-    id           String        @id @default(auto()) @map("_id") @db.ObjectId
-    role         Role          @default(USER)
-    email        String        @unique
-    firstName    String
-    lastName     String
-    password     String
-    isVerified   Boolean       @default(false)
-    isBanned     Boolean       @default(false)
-    birthDate    DateTime?
-    job          String?
-    description  String?
-    address      String?
-    city         String?
-    country      String?
-    phone        String?
-    avatar       String?
-    language_1   String?
-    language_2   String?
-    Subscription Subscription?
-    evenementId  String?       @db.ObjectId
-    Evenement    Evenement?    @relation(fields: [evenementId], references: [id])
-    sessions     Session[]
-    createdAt    DateTime      @default(now())
-    updatedAt    DateTime      @updatedAt
+    id               String        @id @default(auto()) @map("_id") @db.ObjectId
+    stripeCustomerId String?
+    role             Role          @default(USER)
+    email            String        @unique
+    firstName        String
+    lastName         String
+    password         String
+    isVerified       Boolean       @default(false)
+    isBanned         Boolean       @default(false)
+    birthDate        DateTime?
+    job              String?
+    description      String?
+    address          String?
+    city             String?
+    country          String?
+    phone            String?       @unique
+    avatar           String?
+    language_1       String?
+    language_2       String?
+    Subscription     Subscription?
+    evenementId      String?       @db.ObjectId
+    Evenement        Evenement?    @relation(fields: [evenementId], references: [id])
+    sessions         Session[]
+    createdAt        DateTime      @default(now())
+    updatedAt        DateTime      @updatedAt
 }
 
 model Evenement {

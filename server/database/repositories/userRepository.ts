@@ -92,14 +92,14 @@ export async function deleteUser(id: string) {
     });
 }
 
-// export async function getUserByUserName(username: string) {
-//     return prisma.user.findUnique({
-//         where: {
-//             OR:
-//                 [
-//                     {email: username},
-//                     {username: username},
-//                 ]
-//         }
-//     });
-// }
+export async function updateStripeCustomerId(data: IUser) {
+    return prisma.user.update({
+        where: {
+            id: data.id,
+        },
+        data: {
+            stripeCustomerId: data.stripeCustomerId,
+        },
+    });
+}
+

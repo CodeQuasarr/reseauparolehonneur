@@ -1,5 +1,28 @@
 <script setup lang="ts">
 
+
+
+import UseFetchWithApi from "~/composables/useFetchWithApi";
+import {navigateTo} from "#app";
+
+const subscribe = async () => {
+
+    const result = await UseFetchWithApi<any>('api/protected/subscribe', {
+        method: 'POST',
+        body: {paymentKey: 1}
+    })
+
+    console.log('data, error', result)
+    navigateTo(result.value.url,
+        {
+            external: true,
+            open: {
+                target: '_blank'
+            }
+        }
+    )
+}
+
 </script>
 
 <template>
@@ -28,7 +51,7 @@
                                     <h2 class="text-5xl mt-8 mb-3 items-center align-middle">
                                         <sup class="text-2xl align-middle">€</sup>12
                                     </h2>
-                                    <span>par an</span>
+                                    <span>par mois</span>
                                 </div>
 
                                 <div class="p-10">
@@ -59,7 +82,9 @@
                                         </li>
                                     </ul>
                                     <div class="flex justify-center">
-                                        <a href="#" class="price-btn py-3 px-6 font-medium border rounded-md border-purple-500 bg-purple-500 text-white hover:bg-purple-500-800">Get Pro</a>
+                                        <button @click="subscribe()" class="price-btn py-3 px-6 font-medium border rounded-md border-purple-500 bg-purple-500 text-white hover:bg-purple-500-800">
+                                            s'abonner
+                                        </button>
                                     </div>
                                 </div>
                             </div>

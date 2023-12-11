@@ -34,6 +34,7 @@
     "motion": "^10.16.4",
     "pinia": "^2.1.7",
     "prisma": "^5.6.0",
+    "stripe": "^14.8.0",
     "vee-validate": "^4.11.8",
     "vue-awesome-paginate": "^1.1.46",
     "vue3-toastify": "^0.1.14",

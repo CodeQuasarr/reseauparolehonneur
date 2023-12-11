@@ -55,7 +55,7 @@ const toggleMenu = () => {
                 </div>
             </nav>
             <div class=" ml-auto mr-2">
-                <NuxtLink to="/" class="flex items-center justify-center p-2 w-10 h-10 xl:w-full xl:h-full rounded-lg hover:bg-gray-100 xl:bg-purple-700 xl:text-white xl:rounded"> <!-- Add classes to NuxtLink -->
+                <NuxtLink to="/login" class="flex items-center justify-center p-2 w-10 h-10 xl:w-full xl:h-full rounded-lg hover:bg-gray-100 xl:bg-purple-700 xl:text-white xl:rounded"> <!-- Add classes to NuxtLink -->
                     <span class="xl:mr-2"><Icon name="ic:baseline-person-2" /></span>
                     <span class="hidden xl:block">Se connecter</span>
                 </NuxtLink>

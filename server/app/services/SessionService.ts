@@ -35,11 +35,17 @@ class SessionService {
     }
 
     static async setSession( userId: string, refreshToken: string) {
-        return prisma.session.create({
-            data: {
+        return prisma.session.upsert({
+            where: {
                 userId: userId,
-                refreshToken: refreshToken
-            }
+            },
+            update: {
+                refreshToken: refreshToken,
+            },
+            create: {
+                userId: userId,
+                refreshToken: refreshToken,
+            },
         });
     }
 
