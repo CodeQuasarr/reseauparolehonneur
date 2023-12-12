@@ -16,8 +16,6 @@ export default defineEventHandler(async event => {
             throw new Error('User not found');
         }
 
-        console.log('user', user);
-
         const {url, user: customer, shouldUpdateUser} = await StripeService.getSubscribeUrl(lookupKey as string, user);
 
         if (shouldUpdateUser) {

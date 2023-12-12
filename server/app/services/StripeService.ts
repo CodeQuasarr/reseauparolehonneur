@@ -1,5 +1,6 @@
 import Stripe from 'stripe';
 import {IUser} from "~/types/IUser";
+import type {SubscribePostResponse} from "~/types/SubscribePostResponse";
 
 const config = useRuntimeConfig()
 const stripe = new Stripe(config.stripe.secretKey, {
@@ -22,7 +23,7 @@ class StripeService {
         return false;
     }
 
-    public static async getSubscribeUrl(lookupKey: string, user: IUser) {
+    public static async getSubscribeUrl(lookupKey: string, user: IUser): Promise<SubscribePostResponse> {
 
         const customerEmail = user.email;
 
@@ -57,6 +58,9 @@ class StripeService {
             customer: user.stripeCustomerId
         });
 
+        if (!session.url) {
+            throw new Error('No url in session');
+        }
 
 
         return {url: session.url, user, shouldUpdateUser}
