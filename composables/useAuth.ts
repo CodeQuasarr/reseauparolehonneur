@@ -31,10 +31,9 @@ export async function loginWithEmail(loginInfo: IUser) {
         })
 
         if (result) {
-            console.log('result', result)
             useUserStore().setUserInStore(result?.user)
             useUserStore().setAuthToken(result?.accessToken)
-            // await useRouter().push('/private')
+            await useRouter().push('/private')
         }
 
         return { hasErrors: false, loggedIn: true }

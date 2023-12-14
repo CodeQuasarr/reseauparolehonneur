@@ -12,7 +12,6 @@ const subscribe = async () => {
         body: {paymentKey: 1}
     })
 
-    console.log('data, error', result)
     navigateTo(result.value.url,
         {
             external: true,

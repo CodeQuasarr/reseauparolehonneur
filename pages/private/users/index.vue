@@ -89,7 +89,6 @@ const deleteUser = async () => {
 }
 
 const onClickHandler = async (page: number) => {
-    console.log('page', search.value)
     const {data, error} = await UseFetchWithToken<any>(`/api/protected/users?page=${page}&q=${search.value}`, {
         method: 'GET',
     });

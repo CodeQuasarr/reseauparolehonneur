@@ -1,19 +1,15 @@
 <script lang="ts" setup>
 import {ErrorMessage, Field, Form} from "vee-validate";
-import {
-    validateConfirmedPassword,
-    validateEmail,
-    validateFirstName,
-    validateLastName,
-    validatePassword, validateTerms
-} from "~/utils/config/formValidationsRules";
-import {loginWithEmail, registerWithEmail} from "~/composables/useAuth";
+import {validateEmail, validatePassword} from "~/utils/config/formValidationsRules";
+import {loginWithEmail} from "~/composables/useAuth";
 
-definePageMeta({ layout: false, })
+definePageMeta({layout: false,})
 
 //---------------------------------- Variables ----------------------------------//
 
-const errors: Ref<Map<string, { message: InputValidation; }> | undefined> = ref(new Map<string, { message: InputValidation }>())
+const errors: Ref<Map<string, { message: InputValidation; }> | undefined> = ref(new Map<string, {
+    message: InputValidation
+}>())
 let response: FormValidation
 
 let loading = ref(false);
@@ -47,25 +43,26 @@ const onSubmit = async () => {
             <span class="text-xl">Réseau Parole d'Honneur</span>
         </a>
         <!-- Card -->
-        <div class="w-full max-w-xl p-6 space-y-8 sm:p-8 bg-white rounded-lg shadow-xl dark:bg-gray-800">
-            <div>
-                <h2 class="text-2xl font-bold text-gray-900 dark:text-white">
-                    Créer un compte
-                </h2>
-                <p class="text-gray-400 dark:text-gray-300">
-                    Créez votre compte pour accéder à votre espace personnel.
-                </p>
-            </div>
-            <div v-if="errors && errors?.size"
-                 class="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded relative mt-3" role="alert">
-                <ul class="block sm:inline">
-                    <li v-for="[key, value] in errors">
-                        {{ value.message }}
-                    </li>
-                </ul>
-            </div>
-            <div class="relative w-full">
-                <LoadingComponent v-if="loading"/>
+
+        <div class="relative w-full">
+            <LoadingComponent v-if="loading"/>
+            <div class="w-full max-w-xl p-6 space-y-8 sm:p-8 bg-white rounded-lg shadow-xl dark:bg-gray-800">
+                <div>
+                    <h2 class="text-2xl font-bold text-gray-900 dark:text-white">
+                        Créer un compte
+                    </h2>
+                    <p class="text-gray-400 dark:text-gray-300">
+                        Créez votre compte pour accéder à votre espace personnel.
+                    </p>
+                </div>
+                <div v-if="errors && errors?.size"
+                     class="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded relative mt-3" role="alert">
+                    <ul class="block sm:inline">
+                        <li v-for="[key, value] in errors">
+                            {{ value.message }}
+                        </li>
+                    </ul>
+                </div>
                 <Form class="mt-8 space-y-6" @submit="onSubmit()">
                     <div>
                         <label class="block mb-2 text-sm font-medium text-gray-900 dark:text-white" for="email">Votre
@@ -84,7 +81,8 @@ const onSubmit = async () => {
 
                     </div>
                     <div>
-                        <label class="block mb-2 text-sm font-medium text-gray-900 dark:text-white" for="password">Votre mot
+                        <label class="block mb-2 text-sm font-medium text-gray-900 dark:text-white" for="password">Votre
+                            mot
                             de passe</label>
                         <Field
                             id="password"
@@ -116,10 +114,15 @@ const onSubmit = async () => {
                                 Se souvenir de moi
                             </label>
                         </div>
-                        <NuxtLink class="ml-auto text-sm text-indigo-700 hover:underline dark:text-indigo-500" to="/forgot-password">Mot de passe perdu ?</NuxtLink>
+                        <NuxtLink class="ml-auto text-sm text-indigo-700 hover:underline dark:text-indigo-500"
+                                  to="/forgot-password">Mot de passe perdu ?
+                        </NuxtLink>
                     </div>
 
-                    <button  class="w-full px-5 py-3 text-base font-medium text-center text-white bg-indigo-700 rounded-lg hover:bg-indigo-800 focus:ring-4 focus:ring-indigo-300 sm:w-auto dark:bg-indigo-600 dark:hover:bg-indigo-700 dark:focus:ring-indigo-800">Se connecter</button>
+                    <button
+                        class="w-full px-5 py-3 text-base font-medium text-center text-white bg-indigo-700 rounded-lg hover:bg-indigo-800 focus:ring-4 focus:ring-indigo-300 sm:w-auto dark:bg-indigo-600 dark:hover:bg-indigo-700 dark:focus:ring-indigo-800">
+                        Se connecter
+                    </button>
                     <div class="text-sm font-medium text-gray-500 dark:text-gray-400">
                         Vous n'êtes pas inscrit ?
                         <NuxtLink class="text-indigo-700 hover:underline dark:text-indigo-500" to="/register">
@@ -127,10 +130,9 @@ const onSubmit = async () => {
                         </NuxtLink>
                     </div>
                 </Form>
+
             </div>
-
         </div>
-
         <div class="col-span-6 sm:col-full mt-10 pb-5 text-start">
             Retourner sur la
             <NuxtLink class="ml-auto text-sm text-indigo-700 hover:underline dark:text-indigo-500" to="/">

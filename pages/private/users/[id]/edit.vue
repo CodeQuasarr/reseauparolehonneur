@@ -37,7 +37,6 @@ const user = ref({
     language_2: '',
 });
 
-console.log('route', route.params.id)
 
 const {data, error} = await UseFetchWithToken<any>(`/api/protected/users/${route.params.id}`, {
     method: 'GET',

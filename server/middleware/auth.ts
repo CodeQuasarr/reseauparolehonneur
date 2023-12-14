@@ -1,5 +1,7 @@
 import SessionService from "~/server/app/services/SessionService";
 import {getUserById} from "~/server/database/repositories/userRepository";
+import {useUserStore} from "~/stores/userStore";
+import {getSessionByUserId} from "~/server/database/repositories/sessionRepository";
 
 
 export default defineEventHandler(async (event) => {
@@ -19,8 +21,38 @@ export default defineEventHandler(async (event) => {
     const decodedToken = SessionService.decodeToken(token);
     const isValidToken = SessionService.verifyToken(decodedToken);
 
-    const user = await getUserById(decodedToken.userId);
+    if (!isValidToken) {
+        const session = await getSessionByUserId(decodedToken.userId);
+        if (!session) {
+            // deleteCookie(event, 'user')
+            // deleteCookie(event, 'authToken')
+            sendRedirect(event, '/')
+            return
+        }
+        const decodedRefreshToken = SessionService.decodeToken(session.refreshToken);
+        const isValidRefreshToken = SessionService.verifyToken(decodedRefreshToken);
 
+        if (isValidRefreshToken) {
+            // const newToken = SessionService.generateToken(decodedToken.userId, useRuntimeConfig().sessionKey);
+            // const newRefreshToken = SessionService.generateToken(decodedToken.userId, useRuntimeConfig().sessionKey, true);
+            // await SessionService.updateSession(decodedToken.userId, newToken, newRefreshToken);
+            // event.node.res.setHeader('Set-Cookie', `token=${newToken}; HttpOnly; Path=/; Max-Age=${useRuntimeConfig().sessionMaxAge}`);
+            // event.node.res.setHeader('Set-Cookie', `refreshToken=${newRefreshToken}; HttpOnly; Path=/; Max-Age=${useRuntimeConfig().sessionMaxAge}`);
+        } else {
+            throw new Error('Invalid Token');
+        }
+    }
+
+    console.log('isValidToken', isValidToken)
+
+    // return sendError(event, createError({
+    //     statusCode: 401,
+    //     statusMessage: "Unauthorized",
+    // }));
+    // console.log('decodedToken', decodedToken)
+    const user = await getUserById(decodedToken.userId);
+    // useUserStore().setUserInStore({id: user?.id, name: `${user?.firstName} ${user?.lastName}`, avatar: user?.avatar});
+    //
     event.context.user = user;
 
 })

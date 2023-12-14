@@ -32,6 +32,11 @@ const registerRequestSchema = z.object({
             .min(3, "Le nom doit contenir au moins 3 caractères")
             .max(255, "Le nom doit contenir au maximum 255 caractères")
             .refine((value) => value.trim() !== "", "Le nom ne doit pas être vide"),
+    avatar:
+        z
+            .string()
+            .optional()
+            .nullable(),
 });
 
 

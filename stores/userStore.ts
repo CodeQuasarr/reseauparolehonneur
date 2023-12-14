@@ -6,8 +6,10 @@ export const useUserStore = defineStore('user', {
             id: '',
             firstName: '',
             lastName: '',
+            avatar: '',
         } as IUser,
         authToken: '',
+        authenticated: false,
     }),
     actions: {
         setUserInStore(user: IUser) {
@@ -17,6 +19,9 @@ export const useUserStore = defineStore('user', {
 
         setAuthToken(token: string) {
             this.$state.authToken = token;
+            if (token) {
+                this.$state.authenticated = true;
+            }
         },
 
         deleteCookieUser() {
@@ -24,9 +29,12 @@ export const useUserStore = defineStore('user', {
         },
     },
     getters: {
+
         name: (state) => state.user.firstName + ' ' + state.user.lastName,
         id: (state) => state.user.id,
         getAuthToken: (state): string => { return state.authToken || '' },
+        getUser: (state): IUser => { return state.user || {} },
+        isLogged: (state): boolean => { return state.authenticated; },
     },
     persist: true,
 });

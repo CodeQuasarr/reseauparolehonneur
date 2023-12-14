@@ -19,7 +19,6 @@ const breadcrumbs = computed(() => {
     return pathsArray
 })
 
-console.log(breadcrumbs.value)
 
 </script>
 

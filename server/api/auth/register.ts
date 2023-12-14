@@ -8,7 +8,7 @@ import {User} from "@prisma/client";
 export default defineEventHandler(async event => {
     try {
 
-        const data = await validateRegisterRequest(event);
+        let data = await validateRegisterRequest(event);
         const validation = await UserService.validateUser(data);
 
         if (validation.hasErrors && validation.errors) {
@@ -20,6 +20,8 @@ export default defineEventHandler(async event => {
         data.password = await UserService.hashedPassword(data.password);
         data.lastName = data.lastName.toUpperCase();
         data.firstName = data.firstName.charAt(0).toUpperCase() + data.firstName.slice(1).toLowerCase();
+        data.avatar = 'default.png';
+
         const user: User = await createUser(data);
         // return message 200
         return Promise.resolve({

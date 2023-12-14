@@ -1,12 +1,19 @@
 <script setup lang="ts">
 import {useGlobalStore} from "~/stores/globalStore";
+import { initFlowbite } from 'flowbite'
+import {useUserStore} from "~/stores/userStore";
 
-const dropDownOpen = ref(false)
+const user = useUserStore().getUser
+const appUrl = useRuntimeConfig().public.baseUrl
 const toggleSidebar = () => {
     useGlobalStore().toggleSidebar()
 }
-import { initFlowbite } from 'flowbite'
-import {useUserStore} from "../../stores/userStore";
+
+const logout = async () => {
+    await useFetch('/api/auth/logout', {
+        method: 'GET',
+    });
+}
 
 // initialize components based on data attribute selectors
 onMounted(() => {
@@ -47,29 +54,29 @@ onMounted(() => {
 
                 <button id="dropdownUserAvatarButton" data-dropdown-toggle="dropdownAvatar" class="flex text-sm bg-gray-800 rounded-full md:me-0 focus:ring-4 focus:ring-gray-300 dark:focus:ring-gray-600" type="button">
                     <span class="sr-only">Open user menu</span>
-                    <img src="https://a7sas.net/wp-content/uploads/2019/07/4060.jpeg" class="w-12 h-12 rounded-full shadow-lg" alt="user photo">
+                    <img :src="`${appUrl}/_nuxt/assets/images/users/${user.avatar}`" :alt="user.lastName" class="w-12 h-12 rounded-full shadow-lg">
                 </button>
             </div>
 
             <!-- Dropdown menu -->
             <div id="dropdownAvatar" class="z-10 hidden bg-white divide-y divide-gray-100 rounded-lg shadow w-44 dark:bg-gray-700 dark:divide-gray-600">
                 <div class="px-4 py-3 text-sm text-gray-900 dark:text-white">
-                    <div>{{ useUserStore().name }}</div>
-                    <div class="font-medium truncate">name@flowbite.com</div>
+                    <div>{{ user.firstName }} {{ user.lastName }}</div>
+<!--                    <div class="font-medium truncate">name@flowbite.com</div>-->
                 </div>
                 <ul class="py-2 text-sm text-gray-700 dark:text-gray-200" aria-labelledby="dropdownUserAvatarButton">
                     <li>
-                        <a href="#" class="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">Dashboard</a>
+                        <NuxtLink to="/private" class="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">Dashboard</NuxtLink>
                     </li>
                     <li>
-                        <a href="#" class="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">Settings</a>
+                        <NuxtLink to="private/setting" class="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">Settings</NuxtLink>
                     </li>
                     <li>
                         <a href="#" class="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">Earnings</a>
                     </li>
                 </ul>
                 <div class="py-2">
-                    <a href="#" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 dark:hover:bg-gray-600 dark:text-gray-200 dark:hover:text-white">Sign out</a>
+                    <button @click="logout()" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 dark:hover:bg-gray-600 dark:text-gray-200 dark:hover:text-white">Sign out</button>
                 </div>
             </div>
 

@@ -23,7 +23,7 @@ model User {
     address          String?
     city             String?
     country          String?
-    phone            String?       @unique
+    phone            String?
     avatar           String?
     language_1       String?
     language_2       String?
