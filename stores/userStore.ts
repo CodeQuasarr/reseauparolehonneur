@@ -21,6 +21,8 @@ export const useUserStore = defineStore('user', {
             this.$state.authToken = token;
             if (token) {
                 this.$state.authenticated = true;
+            } else {
+                this.$state.authenticated = false;
             }
         },
 

@@ -6,6 +6,7 @@ import {
     FwbNavbarLink,
     FwbNavbarLogo,
 } from 'flowbite-vue'
+import {useUserStore} from "~/stores/userStore";
 
 const showMenu = ref(false);
 
@@ -55,9 +56,13 @@ const toggleMenu = () => {
                 </div>
             </nav>
             <div class=" ml-auto mr-2">
-                <NuxtLink to="/login" class="flex items-center justify-center p-2 w-10 h-10 xl:w-full xl:h-full rounded-lg hover:bg-gray-100 xl:bg-purple-700 xl:text-white xl:rounded"> <!-- Add classes to NuxtLink -->
+                <NuxtLink v-if="!useUserStore().isLogged" to="/login" class="flex items-center justify-center p-2 w-10 h-10 xl:w-full xl:h-full rounded-lg hover:bg-purple-800 xl:bg-purple-700 xl:text-white xl:rounded"> <!-- Add classes to NuxtLink -->
                     <span class="xl:mr-2"><Icon name="ic:baseline-person-2" /></span>
                     <span class="hidden xl:block">Se connecter</span>
+                </NuxtLink>
+                <NuxtLink v-else to="/private" class="flex items-center justify-center p-2 w-10 h-10 xl:w-full xl:h-full rounded-lg hover:bg-purple-800 xl:bg-purple-700 xl:text-white xl:rounded"> <!-- Add classes to NuxtLink -->
+                    <span class="xl:mr-2"><Icon name="ic:baseline-person-2" /></span>
+                    <span class="hidden xl:block">Mon Profile</span>
                 </NuxtLink>
             </div>
         </div>
