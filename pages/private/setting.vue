@@ -1,10 +1,20 @@
 <script setup lang="ts">
 import FrontBreadcrumbComponent from "~/components/breadcrumbs/FrontBreadcrumbComponent.vue";
+import UseFetchWithToken from "~/composables/useFetchWithToken";
 
 definePageMeta({
-    title: 'Paramettre',
-    layout: 'private'
+    pageTransition: {name: 'page', mode: 'out-in'},
+    title: 'Page des paramètres des utilisateurs connectés',
+    layout: "private",
 })
+const {data, error} = await UseFetchWithToken<any>('/api/protected/setting', {
+    method: 'GET',
+});
+
+console.log("data, date", data.value)
+console.log("error, error", error.value)
+
+
 </script>
 
 <template>

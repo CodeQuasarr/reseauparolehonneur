@@ -36,7 +36,7 @@ export async function getAllUsers(take: number = 0, skip: number = 0, q: string 
     };
 
     if (role && role.trim() !== '') {
-        console.log('roleqqqqqqqqqqqqq', role)
+
         whereClause['role'] = Role[role.toUpperCase() as keyof typeof Role];
     }
     if (status && status.trim() !== '') {
@@ -99,6 +99,14 @@ export async function updateStripeCustomerId(data: IUser) {
         },
         data: {
             stripeCustomerId: data.stripeCustomerId,
+        },
+    });
+}
+
+export async function getSubscriptionById(id: string) {
+    return prisma.subscription.findUnique({
+        where: {
+            userId: id,
         },
     });
 }

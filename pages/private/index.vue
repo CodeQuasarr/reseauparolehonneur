@@ -11,7 +11,7 @@ definePageMeta({
 const stats = ref({
     userCounts: 0,
 })
-const {data, error} = await UseFetchWithToken<any>('/api/protected/setting', {
+const {data, error} = await UseFetchWithToken<any>('/api/protected/dashboard', {
     method: 'GET',
 });
 
@@ -22,9 +22,6 @@ if (data.value) {
 if (error.value) {
     throw error.value
 }
-
-console.log('data', data)
-console.log('errorsxsxsx', error)
 </script>
 
 <template>

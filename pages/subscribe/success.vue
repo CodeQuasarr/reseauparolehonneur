@@ -1,6 +1,24 @@
 <script lang="ts" setup>
+import UseFetchWithToken from "~/composables/useFetchWithToken";
 const route = useRoute()
 const sessionId = ref(route.query.session_id ? route.query.session_id : '')
+
+if (sessionId.value) {
+
+    const {data, error} = await UseFetchWithToken<any>(`/api/protected/stripe/portalSession?sessionId=${sessionId.value}`, {
+        method: 'GET',
+    });
+
+    if (data.value) {
+
+        // window.location.href = data.value.url
+    }
+
+    if (error.value) {
+
+        // throw error.value
+    }
+}
 </script>
 
 <template>
@@ -20,7 +38,7 @@ const sessionId = ref(route.query.session_id ? route.query.session_id : '')
             <p class="mb-10 font-normal text-gray-500 dark:text-gray-400">Veiller cliquer sur le bouton pour etre
                 rediriger vers la page d'abonnement</p>
 
-            <form action="/api/stripe/portal-session" method="POST">
+            <form action="/api/stripe/portalSession" method="POST">
                 <input id="session-id" :value="sessionId" name="session_id" type="hidden"/>
                 <button class="inline-flex items-center text-blue-600 hover:underline" type="submit">
                     See our guideline

@@ -10,6 +10,7 @@ datasource db {
 model User {
     id               String        @id @default(auto()) @map("_id") @db.ObjectId
     stripeCustomerId String?
+    stripeSessionId  String?
     role             Role          @default(USER)
     email            String        @unique
     firstName        String

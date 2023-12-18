@@ -5,7 +5,7 @@ import {getSessionByUserId} from "~/server/database/repositories/sessionReposito
 
 export default defineEventHandler(async (event) => {
 
-    // Get All route starting with /api/setting
+    // Get All route starting with /api/dashboard
     const route = event.node.req.url?.startsWith('/api/protected');
 
     if (!route) return;
@@ -22,8 +22,8 @@ export default defineEventHandler(async (event) => {
 
     if (!isValidToken) {
         const session = await getSessionByUserId(decodedToken.userId);
-        const trtr = deleteCookie(event, 'user')
-        if (session) {
+
+        if (!session) {
             deleteCookie(event, 'user')
             deleteCookie(event, 'authToken')
             // useUserStore().setUserInStore(null);
@@ -52,7 +52,7 @@ export default defineEventHandler(async (event) => {
     //     statusCode: 401,
     //     statusMessage: "Unauthorized",
     // }));
-    // console.log('decodedToken', decodedToken)
+
     const user = await getUserById(decodedToken.userId);
     // useUserStore().setUserInStore({id: user?.id, name: `${user?.firstName} ${user?.lastName}`, avatar: user?.avatar});
     //

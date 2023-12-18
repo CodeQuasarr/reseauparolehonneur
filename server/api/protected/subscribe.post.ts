@@ -21,11 +21,10 @@ export default defineEventHandler(async event => {
         if (shouldUpdateUser) {
             await updateStripeCustomerId(customer);
         }
-        console.log('url', url);
-        console.log('customer', customer);
+
         return {url}
 
     } catch (e: any) {
-        console.log(e.message);
+
     }
 });

@@ -42,7 +42,7 @@ const {data, error} = await UseFetchWithToken<any>(`/api/protected/users/${route
     method: 'GET',
 });
 if (error.value) {
-    console.log('error.value', error.value)
+
 }
 if (data.value) {
     user.value = data.value
@@ -101,7 +101,7 @@ const updateInformation = async () => {
             errors.value = useErrorMapper(error.value.data.data).errors
         }
     } catch (e) {
-        console.log('errorcatch', e)
+
     } finally {
         loading.value = false
     }

@@ -84,7 +84,7 @@ const deleteUser = async () => {
             users.value = users.value.filter(user => user.id !== currentUserId.value)
         }
     } catch (e) {
-        console.log('error', e)
+
     }
 }
 
@@ -101,7 +101,6 @@ const onClickHandler = async (page: number) => {
 };
 
 const handleInputChange = (event: any) => {
-    console.log('event', event.target.value)
     search.value = event.target.value
     onClickHandler(1)
 };

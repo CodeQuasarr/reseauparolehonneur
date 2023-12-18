@@ -69,10 +69,9 @@ const updateInformation = async () => {
             await useRouter().push(`/private/users/${data.value.id}/edit`)
         }
         if (error.value) {
-            console.log('error.value', error.value)
+
         }
     } catch (e) {
-        console.log('e', e)
     } finally {
         loading.value = false
     }
