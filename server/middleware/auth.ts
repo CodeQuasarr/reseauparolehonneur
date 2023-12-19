@@ -24,28 +24,21 @@ export default defineEventHandler(async (event) => {
         const session = await getSessionByUserId(decodedToken.userId);
 
         if (!session) {
-            deleteCookie(event, 'user')
-            deleteCookie(event, 'authToken')
-            // useUserStore().setUserInStore(null);
-            // useUserStore().setAuthToken(null);
-
-            // return sendError(event, createError({
-            //     statusCode: 401,
-            //     statusMessage: "Unauthorized",
-            // }));
+            // delete cookie user
+            // delete cookie authToken
         }
-        // const decodedRefreshToken = SessionService.decodeToken(session.refreshToken);
-        // const isValidRefreshToken = SessionService.verifyToken(decodedRefreshToken);
-        //
-        // if (isValidRefreshToken) {
-        //     // const newToken = SessionService.generateToken(decodedToken.userId, useRuntimeConfig().sessionKey);
-        //     // const newRefreshToken = SessionService.generateToken(decodedToken.userId, useRuntimeConfig().sessionKey, true);
-        //     // await SessionService.updateSession(decodedToken.userId, newToken, newRefreshToken);
-        //     // event.node.res.setHeader('Set-Cookie', `token=${newToken}; HttpOnly; Path=/; Max-Age=${useRuntimeConfig().sessionMaxAge}`);
-        //     // event.node.res.setHeader('Set-Cookie', `refreshToken=${newRefreshToken}; HttpOnly; Path=/; Max-Age=${useRuntimeConfig().sessionMaxAge}`);
-        // } else {
-        //     throw new Error('Invalid Token');
-        // }
+        const decodedRefreshToken = SessionService.decodeToken(session.refreshToken);
+        const isValidRefreshToken = SessionService.verifyToken(decodedRefreshToken);
+
+        if (isValidRefreshToken) {
+            // const newToken = SessionService.generateToken(decodedToken.userId, useRuntimeConfig().sessionKey);
+            // const newRefreshToken = SessionService.generateToken(decodedToken.userId, useRuntimeConfig().sessionKey, true);
+            // await SessionService.updateSession(decodedToken.userId, newToken, newRefreshToken);
+            // event.node.res.setHeader('Set-Cookie', `token=${newToken}; HttpOnly; Path=/; Max-Age=${useRuntimeConfig().sessionMaxAge}`);
+            // event.node.res.setHeader('Set-Cookie', `refreshToken=${newRefreshToken}; HttpOnly; Path=/; Max-Age=${useRuntimeConfig().sessionMaxAge}`);
+        } else {
+            throw new Error('Invalid Token');
+        }
     }
 
     // return sendError(event, createError({

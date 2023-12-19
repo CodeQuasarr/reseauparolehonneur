@@ -12,14 +12,18 @@ const subscribe = async () => {
         body: {paymentKey: 1}
     })
 
-    navigateTo(result.value.url,
-        {
-            external: true,
-            open: {
-                target: '_blank'
+    if (result && result.value.url) {
+        navigateTo(result.value.url,
+            {
+                external: true,
+                open: {
+                    target: '_blank'
+                }
             }
-        }
-    )
+        )
+    }
+
+
 }
 
 </script>
@@ -33,7 +37,7 @@ const subscribe = async () => {
             <p class="mt-6 text-xl/8 text-gray-600">Choisissez le plan qui correspond le mieux à vos besoins et profitez du processus créatif de brainstorming sur votre nouveau projet.</p>
         </div>
 
-        <div class="grid lg:grid-cols-3 grid-cols-1 gap-10 px-4 2xl:px-28 mt-20">
+        <div class="grid lg:grid-cols-3 md:grid-cols-2 grid-cols-1 gap-10 px-4 2xl:px-28 mt-20">
 
             <div class="shadow-2xl relative z-20 ">
                 <div class="absolute top-0 inset-x-0">

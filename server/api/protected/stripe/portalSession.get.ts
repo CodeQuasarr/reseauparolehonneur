@@ -13,6 +13,10 @@ export default defineEventHandler(async (event) => {
     const checkoutSession = await stripe.checkout.sessions.retrieve(session_id);
     const subscription = await stripe.subscriptions.retrieve(checkoutSession.subscription as string);
 
+    console.log('subscription', subscription)
+
+
+
     await prisma.subscription.upsert({
         where: {stripeId: subscription.id},
         update: {
@@ -21,7 +25,7 @@ export default defineEventHandler(async (event) => {
             quantity: 1,
             trialEndsAt: subscription.trial_end,
             endsAt: subscription.ended_at,
-            lastEventDate: subscription.start_date,
+            lastEventDate: subscription.current_period_end,
             startDate: subscription.start_date
         },
         create: {
@@ -32,8 +36,8 @@ export default defineEventHandler(async (event) => {
             quantity: 1,
             trialEndsAt: subscription.trial_end,
             endsAt: subscription.ended_at,
-            lastEventDate: subscription.start_date,
-            startDate: subscription.start_date
+            lastEventDate: subscription.current_period_end,
+            startDate: subscription.current_period_start
         }
     })
 
