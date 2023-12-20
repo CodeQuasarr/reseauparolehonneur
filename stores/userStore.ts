@@ -37,6 +37,7 @@ export const useUserStore = defineStore('user', {
         getAuthToken: (state): string => { return state.authToken || '' },
         getUser: (state): IUser => { return state.user || {} },
         isLogged: (state): boolean => { return state.authenticated; },
+        isAdmin: (state): boolean => { return state.user.role === 'ADMIN'; },
     },
     persist: true,
 });

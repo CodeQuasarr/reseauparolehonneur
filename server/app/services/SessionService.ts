@@ -108,6 +108,7 @@ class SessionService {
                         lastName: true,
                         email: true,
                         avatar: true,
+                        role: true,
                     }
                 }
             }

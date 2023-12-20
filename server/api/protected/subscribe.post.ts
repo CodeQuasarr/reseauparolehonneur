@@ -1,6 +1,5 @@
 import StripeService from "~/server/app/services/StripeService";
 import {updateStripeCustomerId} from "~/server/database/repositories/userRepository";
-import {navigateTo} from "nuxt/app";
 
 
 export default defineEventHandler(async event => {

@@ -16,9 +16,10 @@ export default defineEventHandler(async (event: H3Event) => {
         }
 
 
-        console.log('subscriber', HelperService.convertNumberToHours(1705606678))
-        // const date = new Date(subscriber.startDate * 1000);
-        // console.log(date.toUTCString())
+        console.log('subscriber', HelperService.convertNumberToHours(subscriber.lastEventDate))
+        return {
+            subscriptionRenewal: HelperService.convertNumberToHours(subscriber.lastEventDate)
+        }
     } catch (e: any) {
         return {
             body: JSON.stringify({
