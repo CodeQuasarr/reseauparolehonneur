@@ -116,8 +116,10 @@ class SessionService {
     }
 
     static async makeSessionCookie(event: H3Event, session: any, secretKey: string) {
+        // securiter du token pour le cookie
         const accessToken = this.secureSerialize(session, secretKey);
         setCookie(event, 'authToken', accessToken, {path: '/', httpOnly: true, secure: true, sameSite: 'strict'});
+        // get user
         const sessionUser = await this.getUserSessionByAuthToken(accessToken);
         return {user: sessionUser?.user, accessToken};
     }

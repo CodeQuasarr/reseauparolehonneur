@@ -32,7 +32,6 @@ export async function loginWithEmail(loginInfo: IUser) {
 
         if (result) {
             useUserStore().setUserInStore(result?.user)
-            useUserStore().setAuthToken(result?.accessToken)
             await useRouter().push('/private')
         }
 
