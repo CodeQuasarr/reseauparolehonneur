@@ -32,7 +32,7 @@ export async function loginWithEmail(loginInfo: IUser) {
 
         if (result) {
             useUserStore().setUserInStore(result?.user)
-            await useRouter().push('/private')
+            await useRouter().push('/private/app')
         }
 
         return { hasErrors: false, loggedIn: true }

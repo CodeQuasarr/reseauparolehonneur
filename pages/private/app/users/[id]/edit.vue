@@ -118,7 +118,7 @@ const updateInformation = async () => {
             <div class="w-full flex items-center justify-between">
                 <h1 class="text-xl font-semibold text-gray-900 sm:text-2xl dark:text-white">Nouveau utilisateur</h1>
                 <div class="col-span-6 sm:col-full">
-                    <NuxtLink class="text-white bg-indigo-700 hover:bg-indigo-800 focus:ring-4 focus:ring-indigo-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-indigo-600 dark:hover:bg-indigo-700 dark:focus:ring-indigo-800" to="/private/users" type="submit">Retour</NuxtLink>
+                    <NuxtLink class="text-white bg-indigo-700 hover:bg-indigo-800 focus:ring-4 focus:ring-indigo-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-indigo-600 dark:hover:bg-indigo-700 dark:focus:ring-indigo-800" to="/private/app/users" type="submit">Retour</NuxtLink>
                 </div>
             </div>
         </div>
