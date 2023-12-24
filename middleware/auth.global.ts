@@ -6,7 +6,7 @@ export default defineNuxtRouteMiddleware(async (to, from) => {
 
 
 
-    if (!useCookie('authToken').value?.trim() && !user.isLogged && to.path.startsWith('/private')) {
+    if (!useCookie('authToken').value && !user.isLogged && to.path.startsWith('/private')) {
         return navigateTo('/login')
     }
     if ( user.isLogged && (to.name === 'login' || to.name === 'register') ) {

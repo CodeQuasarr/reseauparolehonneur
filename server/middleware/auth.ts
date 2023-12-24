@@ -13,8 +13,7 @@ export default defineEventHandler(async (event) => {
     const cookieToken = getCookie(event, 'authToken');
     if (!cookieToken) { return await sendRedirect(event, '/login') }
 
-    const {token} = SessionService.secureDeserialize(cookieToken.trim(), useRuntimeConfig().sessionKey);
-    const decodedToken = SessionService.decodeToken(token);
+    const decodedToken = SessionService.decodeToken(cookieToken);
     const isValidToken = SessionService.verifyToken(decodedToken);
     console.log('cookies', isValidToken)
     if (!isValidToken) {
