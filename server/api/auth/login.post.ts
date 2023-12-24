@@ -16,12 +16,14 @@ export default eventHandler(async (event: H3Event) => {
             const errors = JSON.stringify(Object.fromEntries(validation.errors))
             return sendError(event, createError({ statusCode: 401, data: errors }))
         }
-
         const config = useRuntimeConfig();
         const authToken = SessionService.generateToken({userId: userInfo?.id}, (60 * 5)); // 5 minutes
         const refreshToken = SessionService.generateToken({userId: userInfo?.id}, 2592000); // 30 days
         const session = await SessionService.setSession(userInfo?.id as string, refreshToken);
-        const {user, accessToken} = await SessionService.makeSessionCookie(event, {token: authToken}, config.sessionKey);
+
+        const {user, accessToken} = await SessionService.makeSessionCookie(event, authToken);
+
+
         return {
             user: user,
             accessToken

@@ -91,11 +91,33 @@ class SessionService {
         return JSON.parse(decryptedData);
     }
 
+    // static async getUserSessionByAuthToken(authToken: string) {
+    //     // deserialize token
+    //     const {token} = this.secureDeserialize(authToken, useRuntimeConfig().sessionKey);
+    //     // decode token
+    //     const decodedToken = this.decodeToken(token);
+    //     return prisma.session.findUnique({
+    //         where: {
+    //             userId: decodedToken.userId,
+    //         },
+    //         select: {
+    //             user: {
+    //                 select: {
+    //                     id: true,
+    //                     firstName: true,
+    //                     lastName: true,
+    //                     email: true,
+    //                     avatar: true,
+    //                     role: true,
+    //                 }
+    //             }
+    //         }
+    //     });
+    // }
+
     static async getUserSessionByAuthToken(authToken: string) {
-        // deserialize token
-        const {token} = this.secureDeserialize(authToken, useRuntimeConfig().sessionKey);
-        // decode token
-        const decodedToken = this.decodeToken(token);
+         // decode token
+        const decodedToken = this.decodeToken(authToken);
         return prisma.session.findUnique({
             where: {
                 userId: decodedToken.userId,
@@ -115,11 +137,16 @@ class SessionService {
         });
     }
 
-    static async makeSessionCookie(event: H3Event, session: any, secretKey: string) {
-        // securiter du token pour le cookie
-        const accessToken = this.secureSerialize(session, secretKey);
-        setCookie(event, 'authToken', accessToken, {path: '/', httpOnly: true, secure: true, sameSite: 'strict'});
-        // get user
+    // static async makeSessionCookie(event: H3Event, session: any, secretKey: string) {
+    //     // securiter du token pour le cookie
+    //     const accessToken = this.secureSerialize(session, secretKey);
+    //     // setCookie(event, 'authToken', accessToken, {path: '/', httpOnly: true, secure: true, sameSite: 'strict'});
+    //     // get user
+    //     const sessionUser = await this.getUserSessionByAuthToken(accessToken);
+    //     return {user: sessionUser?.user, accessToken};
+    // }
+
+    static async makeSessionCookie(event: H3Event, accessToken: string) {
         const sessionUser = await this.getUserSessionByAuthToken(accessToken);
         return {user: sessionUser?.user, accessToken};
     }
