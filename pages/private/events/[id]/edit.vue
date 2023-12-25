@@ -13,8 +13,12 @@ definePageMeta({
     title: 'Créer un nouveau évenement  ',
     layout: "private",
 })
+
 const appUrl: string = useRuntimeConfig().public.baseUrl;
 const route = useRoute()
+const activeTab = ref('first')
+const loading = ref(false)
+const isShowModal = ref(false)
 const evenement = ref({
     title: '',
     content: '',
@@ -24,21 +28,24 @@ const evenement = ref({
     users: [] as IUser[],
     picture: null as string | ArrayBuffer | null,
 });
-const activeTab = ref('first')
-
+const speakers = ref<IUser[]>([])
 const errors: Ref<Map<string, { message: InputValidation; }> | undefined> = ref(new Map<string, { message: InputValidation }>());
-let loading = ref(false)
 
+// Get event
 const {data, error} = await UseFetchWithToken<any>(`/api/protected/events/${route.params.id}`, {
     method: 'GET',
 });
 if (error.value) {
-
-}
-if (data.value) {
+    throw error.value
+} else if (data.value) {
+    console.log('evenement.value', evenement.value)
     evenement.value = data.value
     evenement.value.startDate = convertDateToString(data.value.startDate)
-    console.log('evenement.value', evenement.value)
+} else {
+    throw {
+        statusCode: 404,
+        statusMessage: 'La page que vous recherchez n\'existe pas'
+    }
 }
 
 //---------------------------------- Methods ----------------------------------//
@@ -69,6 +76,7 @@ const deleteSpeakerToEvent = async (speaker: any) => {
     evenement.value.users = evenement.value.users.filter((item: any) => item.id !== speaker.id)
     await updateInformation()
 }
+
 const updateInformation = async () => {
     try {
         loading.value = true
@@ -94,19 +102,17 @@ const updateInformation = async () => {
     }
 }
 
-const speakers = ref<IUser[]>([])
 const getSpeacker = async () => {
     const { data, error } = await UseFetchWithToken<any>(`/api/protected/users/speakers`, {
         method: 'GET',
     });
 }
 
-const isShowModal = ref(false)
-
-function closeModal () {
+const closeModal = () => {
     isShowModal.value = false
 }
-async function showModal() {
+
+const showModal = async () => {
     isShowModal.value = true;
     const {data, error} = await UseFetchWithToken<any>(`/api/protected/users/speakers`, {
         method: 'GET',
@@ -121,26 +127,32 @@ async function showModal() {
     <div class="px-4 pt-6">
         <div>
             <div class="mb-4 col-span-full xl:mb-2">
+                <!-- Breadcrumb -->
                 <FrontBreadcrumbComponent />
+
+                <!-- TItre de la page -->
                 <div class="w-full flex items-center justify-between px-4">
                     <h1 class="text-xl font-semibold text-gray-900 sm:text-2xl dark:text-white"> {{ truncateText(evenement.title, 15) }}</h1>
                 </div>
-                <div v-if="errors" class="px-4 pt-6">
-                    <div class="p-4 mb-4 text-sm text-red-800 rounded-lg bg-red-50 dark:bg-gray-800 dark:text-red-400"
-                         role="alert">
-                        <ul>
-                            <li v-for="(error, field) in errors" :key="field">
-                                <span class="font-medium">{{ error }}</span>
-                            </li>
-                        </ul>
-                    </div>
+
+                <!-- Erreurs -->
+                <div v-if="errors && errors?.size"
+                     class="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded relative mt-3" role="alert">
+                    <ul class="block sm:inline">
+                        <li v-for="[key, value] in errors">
+                            {{ value.message }}
+                        </li>
+                    </ul>
                 </div>
             </div>
-            <!-- Right Content -->
+
+
             <div class="relative w-full">
                 <LoadingComponent v-if="loading"/>
                 <div>
                     <fwb-tabs v-model="activeTab" variant="underline" class="p-5">
+
+                        <!-- Tab 1 conference -->
                         <fwb-tab name="first" title="Conference">
                             <Form @submit="updateInformation()">
                                 <div class="grid grid-cols-1 px-4 pt-6 xl:grid-cols-3 xl:gap-4 dark:bg-gray-900">
@@ -242,10 +254,12 @@ async function showModal() {
                                 </div>
                             </Form>
                         </fwb-tab>
+
+                        <!-- Tab 2 intervenants -->
                         <fwb-tab name="second" title="Les intervenants">
-                            <div class="flex items-center justify-end">
-                                <fwb-button @click="showModal">
-                                    Open modal
+                            <div class="flex items-center justify-end mb-5">
+                                <fwb-button @click="showModal" color="light">
+                                    Ajouter
                                 </fwb-button>
 
                                 <fwb-modal v-if="isShowModal" @close="closeModal">
@@ -280,12 +294,6 @@ async function showModal() {
                                         </div>
                                     </template>
                                 </fwb-modal>
-
-                                <button
-                                    @click="getSpeacker()"
-                                    class="text-white bg-indigo-700 hover:bg-indigo-800 focus:ring-4 focus:ring-indigo-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-indigo-600 dark:hover:bg-indigo-700 dark:focus:ring-indigo-800"
-                                    type="submit">Ajouter
-                                </button>
                             </div>
 
                             <div v-if="evenement.users.length" class="flex flex-col">
@@ -346,12 +354,6 @@ async function showModal() {
                         </fwb-tab>
                     </fwb-tabs>
                 </div>
-
-
-
-
-
-
             </div>
         </div>
     </div>

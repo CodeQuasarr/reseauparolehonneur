@@ -21,7 +21,7 @@ export default defineEventHandler(async (event) => {
         }
         const evenement = await getEventById(id);
         if (!evenement) {
-            return sendError(event, createError({ statusCode: 400, data: [{'evenement': {'message' : 'L\' utilisateur n\' existe pas'} }] }))
+            return sendError(event, createError({ statusCode: 400, data: [{'evenement': {'message' : 'L\' évènement n\' existe pas'} }] }))
         }
 
 

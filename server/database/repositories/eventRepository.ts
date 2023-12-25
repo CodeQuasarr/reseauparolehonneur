@@ -30,14 +30,7 @@ export async function getEventById(id: string){
             startTime: true,
             address: true,
             content: true,
-            users: {
-                select: {
-                    id: true,
-                    firstName: true,
-                    lastName: true,
-                    avatar: true,
-                }
-            },
+            users: true,
         }
     });
 }
@@ -83,22 +76,7 @@ export async function updateEvent(id: string, data: any): Promise<Evenement> {
             startDate: data.startDate,
             startTime: data.startTime,
             address: data.address,
-            users: {
-                connect: data.users
-            }
-        }
-    });
-}
-
-export async function updateEventUsers(id: string, data: any): Promise<Evenement> {
-    return prisma.evenement.update({
-        where: {
-            id: id
-        },
-        data: {
-            users: {
-                connect: data
-            }
+            users: data.users
         }
     });
 }
@@ -110,21 +88,6 @@ export async function deleteEvent(id: string) {
         }
     });
 }
-
-export async function updateOrCreateEventUsers(id: string, data: any): Promise<Evenement> {
-    return prisma.evenement.update({
-        where: {
-            id: id
-        },
-        data: {
-            users: {
-                connectOrCreate: data
-            }
-        }
-    });
-}
-
-
 
 export async function getSpeakersForEvent(id: string) {
     return prisma.evenement.findFirst({

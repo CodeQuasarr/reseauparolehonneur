@@ -28,8 +28,8 @@ model User {
     language_1       String?
     language_2       String?
     Subscription     Subscription?
-    evenementId      String?       @db.ObjectId
-    Evenement        Evenement?    @relation(fields: [evenementId], references: [id])
+    // evenementId      String?       @db.ObjectId
+    // Evenement        Evenement?    @relation(fields: [evenementId], references: [id])
     sessions         Session[]
     createdAt        DateTime      @default(now())
     updatedAt        DateTime      @updatedAt
@@ -42,8 +42,8 @@ model Evenement {
     startDate DateTime
     startTime String
     address   String
-    users     User[]
     picture   String?
+    users     Json[]   @default([])
     createdAt DateTime @default(now())
     updatedAt DateTime @updatedAt
 }
