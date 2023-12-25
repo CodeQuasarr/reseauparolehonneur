@@ -7,6 +7,7 @@ export const useUserStore = defineStore('user', {
             firstName: '',
             lastName: '',
             avatar: '',
+            stripeCustomerId: '',
         } as IUser,
     }),
     actions: {
@@ -21,6 +22,7 @@ export const useUserStore = defineStore('user', {
         getUser: (state): IUser => { return state.user || {} },
         isAdmin: (state): boolean => { return state.user.role === 'ADMIN'; },
         isUser: (state): boolean => { return state.user.role === 'USER'; },
+        isSubscriber: (state): boolean => { return state.user.stripeCustomerId !== ''; },
     },
     persist: true,
 });

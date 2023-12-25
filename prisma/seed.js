@@ -12,7 +12,7 @@ async function seedUsers () {
         const hashedPassword = await argon2.hash("password");
 
 
-        for (let i = 0; i < 50; i++) {
+        for (let i = 0; i < 10; i++) {
             const isVerified = Math.random() >= 0.5;
 
             // Calculate birthdate to represent an age between 20 and 70
@@ -20,7 +20,7 @@ async function seedUsers () {
             const birthYear = currentDate.getFullYear() - Math.floor(Math.random() * 51) - 20;
             const birthDate = new Date(birthYear, 0, 1);
 
-            await prisma.user.create({
+            const user = await prisma.user.create({
                 data: {
                     role: "USER",
                     email: `user${i + 1}@example.com`,
@@ -41,6 +41,7 @@ async function seedUsers () {
                     language_2: languages[Math.floor(Math.random() * languages.length)],
                 }
             });
+            console.log(`Launched user ${user.firstName} ${user.lastName}`);
         }
 
     } catch (error) {

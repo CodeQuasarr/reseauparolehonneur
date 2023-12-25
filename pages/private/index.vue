@@ -37,7 +37,7 @@ if (error.value) {
         </div>
         <!-- breadcrumb end -->
         <AdminDashboardComponent :stats="stats" v-if="user.isAdmin"/>
-        <UserDashboardComponent />
+        <UserDashboardComponent v-if="user.isUser" />
     </div>
 </template>
 

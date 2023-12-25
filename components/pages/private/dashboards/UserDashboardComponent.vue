@@ -1,5 +1,12 @@
 <script setup lang="ts">
 
+const {data, error} = await useFetchWithToken<any>('/api/protected/stripe/payment', {
+    method: 'GET',
+})
+
+console.log(data.value)
+console.log(error.value)
+
 </script>
 
 <template>

@@ -35,7 +35,7 @@ class StripeService {
         if (!user.stripeCustomerId) {
             const customer = await stripe.customers.create({
                 email: customerEmail,
-                // name: user.lastName + ' ' + user.firstName,
+                name: user.lastName + ' ' + user.firstName,
 
             });
             user.stripeCustomerId = customer.id;

@@ -10,5 +10,5 @@ export interface IUser {
     isVerified?: boolean;
     role?: Role;
     job?: string | null;
-    stripeCustomerId?: string;
+    stripeCustomerId?: string | null;
 }

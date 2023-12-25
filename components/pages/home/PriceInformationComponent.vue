@@ -1,11 +1,10 @@
 <script setup lang="ts">
 
-
-
-import UseFetchWithApi from "~/composables/useFetchWithApi";
 import {navigateTo} from "#app";
 import {useTokenStore} from "~/stores/tokenStore";
 
+
+const user = useUserStore()
 const subscribe = async () => {
 
     if (!useTokenStore().isLogged) {
@@ -65,7 +64,7 @@ const payment = async (key: number) => {
 
         <div class="grid lg:grid-cols-3 md:grid-cols-2 grid-cols-1 gap-10 px-4 2xl:px-28 mt-20">
 
-            <div class="shadow-2xl relative z-20 ">
+            <div v-if="!user.isSubscriber" class="shadow-2xl relative z-20 ">
                 <div class="absolute top-0 inset-x-0">
                     <div class="flex justify-center">
                         <span class="text-xs font-medium uppercase border border-gray-700 text-white bg-black px-2 py-1 rounded-md -mt-3">most popular</span>
@@ -126,7 +125,7 @@ const payment = async (key: number) => {
                 <div class="text-center pt-10">
                     <h5 class="text-xl font-semibold">Basique</h5>
                     <h2 class="text-5xl mt-8 mb-3 items-center align-middle">
-                        <sup class="text-2xl align-middle">€</sup>50
+                        <sup class="text-2xl align-middle">€</sup> {{ !user.isSubscriber ? 50 : 30}}
                     </h2>
                     <span>par personne, par évènement</span>
                 </div>
@@ -159,11 +158,10 @@ const payment = async (key: number) => {
                         </li>
                     </ul>
                     <div class="flex justify-center">
-                        <button @click="payment(3)" class="price-btn py-3 px-6 font-medium border rounded-md border-purple-500 text-purple-500 hover:bg-red-500 hover:text-white hover:border-red-500 transition-all duration-500">Get Basic</button>
+                        <button @click="payment(!user.isSubscriber ? 3 : 2)" class="price-btn py-3 px-6 font-medium border rounded-md border-purple-500 text-purple-500 hover:bg-red-500 hover:text-white hover:border-red-500 transition-all duration-500">Get Basic</button>
                     </div>
                 </div>
             </div>
-
 
             <div class="price bg-gray-100 flex flex-col border border-gray-300 rounded-xl overflow-hidden group transition duration-300 hover:bg-white hover:shadow-2xl">
                 <div class="text-center pt-10">
@@ -202,7 +200,7 @@ const payment = async (key: number) => {
                         </li>
                     </ul>
                     <div class="flex justify-center">
-                        <a href="#" class="price-btn py-3 px-6 font-medium border rounded-md border-purple-500 text-purple-500 hover:bg-purple-500 hover:text-white transition-all duration-500">Get Ultimate</a>
+                        <button @click="payment(4)" class="price-btn py-3 px-6 font-medium border rounded-md border-purple-500 text-purple-500 hover:bg-red-500 hover:text-white hover:border-red-500 transition-all duration-500">Get Basic</button>
                     </div>
                 </div>
             </div>
