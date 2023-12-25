@@ -66,5 +66,47 @@ class StripeService {
         return {url: session.url, user, shouldUpdateUser}
     }
 
+    public static async paymentIntent(lookupKey: string, user: IUser) {
+        const customerEmail = user.email;
+
+        const price = await stripe.prices.retrieve(
+            lookupKey
+        );
+
+        let shouldUpdateUser = false;
+
+        if (!user.stripeCustomerId) {
+            const customer = await stripe.customers.create({
+                email: customerEmail,
+                name: user.lastName + ' ' + user.firstName,
+
+            });
+            user.stripeCustomerId = customer.id;
+            shouldUpdateUser = true;
+        }
+
+        const session = await stripe.checkout.sessions.create({
+            billing_address_collection: 'auto',
+            line_items: [
+                {
+                    price: price.id,
+                    quantity: 1,
+
+                },
+            ],
+            mode: 'payment',
+            success_url: `${useRuntimeConfig().public.baseUrl}/subscribe/success?session_id={CHECKOUT_SESSION_ID}`,
+            cancel_url: `${useRuntimeConfig().public.baseUrl}/subscribe/cancel`,
+            customer: user.stripeCustomerId
+        });
+
+        if (!session.url) {
+            throw new Error('No url in session');
+        }
+        return {url: session.url, user, shouldUpdateUser}
+
+    }
+
 }
+
 export default StripeService

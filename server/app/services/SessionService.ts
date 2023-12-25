@@ -15,12 +15,10 @@ class SessionService {
     }
 
     static decodeToken(token: string): any {
-        console.log('token', token)
         return jwt.decode(token);
     }
 
     public static verifyToken(tokenData: any): boolean {
-        console.log('tokenData', tokenData)
         const currentTimeInSeconds = Math.floor(Date.now() / 1000);
         if (!tokenData || tokenData.exp < currentTimeInSeconds) {
             return false;

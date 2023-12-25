@@ -27,8 +27,29 @@ const subscribe = async () => {
             }
         )
     }
+}
 
+const payment = async (key: number) => {
 
+    if (!useTokenStore().isLogged) {
+        navigateTo('/login')
+    }
+
+    const {data, error} = await useFetch<any>('api/protected/payment', {
+        method: 'POST',
+        body: {paymentKey: key}
+    })
+
+    if (data.value) {
+        navigateTo(data.value.url,
+            {
+                external: true,
+                open: {
+                    target: '_blank'
+                }
+            }
+        )
+    }
 }
 
 </script>
@@ -138,7 +159,7 @@ const subscribe = async () => {
                         </li>
                     </ul>
                     <div class="flex justify-center">
-                        <a href="#" class="price-btn py-3 px-6 font-medium border rounded-md border-purple-500 text-purple-500 hover:bg-red-500 hover:text-white hover:border-red-500 transition-all duration-500">Get Basic</a>
+                        <button @click="payment(3)" class="price-btn py-3 px-6 font-medium border rounded-md border-purple-500 text-purple-500 hover:bg-red-500 hover:text-white hover:border-red-500 transition-all duration-500">Get Basic</button>
                     </div>
                 </div>
             </div>

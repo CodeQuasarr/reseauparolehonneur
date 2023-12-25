@@ -24,15 +24,14 @@ export default defineEventHandler(async (event) => {
     const decodedToken = SessionService.decodeToken(token.authToken);
 
     const isValidToken = SessionService.verifyToken(decodedToken);
-    console.log('cookies', isValidToken)
     if (!isValidToken) {
+
         deleteCookie(event, 'authToken');
         deleteCookie(event, 'user');
+        console.log('no cookie')
         // unauthorize
-        return sendError(event, createError({statusCode: 401, statusMessage: 'Unauthorized', message: 'login'}))
+        // return sendError(event, createError({statusCode: 401, statusMessage: 'Unauthorized', message: 'login'}))
     }
-
-    console.log('decodedToken', decodedToken)
 
     // get user
     const user = await getUserById(decodedToken.userId);
