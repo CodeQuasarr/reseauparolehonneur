@@ -18,7 +18,7 @@ export default defineEventHandler(async (event) => {
         const formattedPayments = payments.data.map((payment) => ({
             id: payment.id,
             amount: `${payment.amount / 100} ${payment.currency}`,
-            created: HelperService.convertNumberToHours(payment.created),
+            startDate: HelperService.convertNumberToHours(payment.created),
             status: payment.status,
         }));
         console.log('Paiements récupérés :', payments.data);
