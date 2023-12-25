@@ -18,6 +18,7 @@ export const useTokenStore = defineStore('authToken', {
     },
     getters: {
         getAuthToken: (state): string => { return state.authToken || '' },
+        isLogged: (state): boolean => { return state.authenticated; },
     },
     persist: true,
 });

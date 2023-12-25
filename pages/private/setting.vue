@@ -13,9 +13,15 @@ const {data, error} = await UseFetchWithToken<any>('/api/protected/setting', {
     method: 'GET',
 });
 
-console.log("data, date", data.value)
-subscriptionRenewal.value = data.value.subscriptionRenewal
-console.log("error, error", error.value)
+if (data.value) {
+    console.log('data.value', data.value)
+    subscriptionRenewal.value = data.value.subscriptionRenewal
+}
+
+if (error.value) {
+    console.log('error.value', error.value)
+    // throw error.value
+}
 
 
 </script>
@@ -27,7 +33,7 @@ console.log("error, error", error.value)
                 <FrontBreadcrumbComponent />
                 <h1 class="text-xl font-semibold text-gray-900 sm:text-2xl dark:text-white">Parametre de l'utilisateur</h1>
             </div>
-            <div class="col-span-2">
+            <div v-if="subscriptionRenewal" class="col-span-2">
                 <div class="p-4 mb-4 bg-white border border-gray-200 rounded-lg shadow-sm 2xl:col-span-2 dark:border-gray-700 sm:p-6 dark:bg-gray-800">
                     <div class="flow-root">
                         <h3 class="text-xl font-semibold dark:text-white">Liste des abonnements</h3>

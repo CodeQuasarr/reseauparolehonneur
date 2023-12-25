@@ -9,6 +9,7 @@ export default defineEventHandler(async event => {
         const lookupKey = StripeService.getLookupKey(Number(data.paymentKey));
 
 
+        console.log("zzzzzzzzzzzzzzzzzzzzz")
         const user = event.context.user;
 
         if (!user) {
@@ -20,6 +21,8 @@ export default defineEventHandler(async event => {
         if (shouldUpdateUser) {
             await updateStripeCustomerId(customer);
         }
+
+        console.log('url', url)
 
         return {url}
 

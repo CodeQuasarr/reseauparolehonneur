@@ -9,10 +9,9 @@ export default defineEventHandler(async (event: H3Event) => {
         const subscriber = await getSubscriptionById(event.context.user.id);
 
         if (!subscriber) {
-            return sendError(event, createError({
-                message: 'No subscription found',
-                statusCode: 404
-            }))
+            return {
+                subscriptionRenewal: null
+            };
         }
 
 

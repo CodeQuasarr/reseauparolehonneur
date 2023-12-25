@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import {useGlobalStore} from "~/stores/globalStore";
 
+const user = useUserStore()
 
 </script>
 
@@ -27,7 +28,7 @@ import {useGlobalStore} from "~/stores/globalStore";
             </div>
         </div>
 
-        <div class="mb-4 px-4">
+        <div v-if="user.isAdmin" class="mb-4 px-4">
             <p class="pl-4 text-sm font-semibold mb-1">UTILISATEURS</p>
             <NuxtLink to="/private/users/create" class="w-full flex items-center text-blue-400 h-10 pl-4 hover:bg-gray-200 rounded-lg cursor-pointer">
                 <svg class="h-6 w-6 fill-current mr-2" viewBox="0 0 20 20">
@@ -43,7 +44,7 @@ import {useGlobalStore} from "~/stores/globalStore";
             </NuxtLink>
         </div>
 
-        <div class="mb-4 px-4">
+        <div v-if="user.isAdmin" class="mb-4 px-4">
             <p class="pl-4 text-sm font-semibold mb-1">EVENEMENTS</p>
             <NuxtLink to="/private/events/create" class="w-full flex items-center text-blue-400 h-10 pl-4 hover:bg-gray-200 rounded-lg cursor-pointer">
                 <svg class="h-6 w-6 fill-current mr-2" viewBox="0 0 20 20">
@@ -59,7 +60,7 @@ import {useGlobalStore} from "~/stores/globalStore";
             </NuxtLink>
         </div>
 
-        <div class="mb-4 px-4">
+        <div v-if="user.isAdmin" class="mb-4 px-4">
             <p class="pl-4 text-sm font-semibold mb-1">PRODUITS</p>
             <div class="w-full flex items-center text-blue-400 h-10 pl-4 hover:bg-gray-200 rounded-lg cursor-pointer">
                 <svg class="h-6 w-6 fill-current mr-2" viewBox="0 0 20 20">
@@ -76,14 +77,14 @@ import {useGlobalStore} from "~/stores/globalStore";
         </div>
 
         <div class="mb-4 px-4">
-            <p class="pl-4 text-sm font-semibold mb-1">MISC</p>
+            <p class="pl-4 text-sm font-semibold mb-1">PARAMETRE</p>
             <div class="w-full flex items-center text-blue-400 h-10 pl-4 hover:bg-gray-200 rounded-lg cursor-pointer">
                 <svg class="h-6 w-6 fill-current mr-2" viewBox="0 0 20 20">
                     <path d="M17.592,8.936l-6.531-6.534c-0.593-0.631-0.751-0.245-0.751,0.056l0.002,2.999L5.427,9.075H2.491c-0.839,0-0.162,0.901-0.311,0.752l3.683,3.678l-3.081,3.108c-0.17,0.171-0.17,0.449,0,0.62c0.169,0.17,0.448,0.17,0.618,0l3.098-3.093l3.675,3.685c-0.099-0.099,0.773,0.474,0.773-0.296v-2.965l3.601-4.872l2.734-0.005C17.73,9.688,18.326,9.669,17.592,8.936 M3.534,9.904h1.906l4.659,4.66v1.906L3.534,9.904z M10.522,13.717L6.287,9.48l4.325-3.124l3.088,3.124L10.522,13.717z M14.335,8.845l-3.177-3.177V3.762l5.083,5.083H14.335z"></path>
                 </svg>
                 <span class="text-gray-700">Notices</span>
             </div>
-            <div class="w-full flex items-center text-blue-400 h-10 pl-4 hover:bg-gray-200 rounded-lg cursor-pointer">
+            <div v-if="user.isAdmin" class="w-full flex items-center text-blue-400 h-10 pl-4 hover:bg-gray-200 rounded-lg cursor-pointer">
                 <svg class="h-6 w-6 fill-current mr-2" viewBox="0 0 20 20">
                     <path d="M6.176,7.241V6.78c0-0.221-0.181-0.402-0.402-0.402c-0.221,0-0.403,0.181-0.403,0.402v0.461C4.79,7.416,4.365,7.955,4.365,8.591c0,0.636,0.424,1.175,1.006,1.35v3.278c0,0.222,0.182,0.402,0.403,0.402c0.222,0,0.402-0.181,0.402-0.402V9.941c0.582-0.175,1.006-0.714,1.006-1.35C7.183,7.955,6.758,7.416,6.176,7.241 M5.774,9.195c-0.332,0-0.604-0.272-0.604-0.604c0-0.332,0.272-0.604,0.604-0.604c0.332,0,0.604,0.272,0.604,0.604C6.377,8.923,6.105,9.195,5.774,9.195 M10.402,10.058V6.78c0-0.221-0.181-0.402-0.402-0.402c-0.222,0-0.402,0.181-0.402,0.402v3.278c-0.582,0.175-1.006,0.714-1.006,1.35c0,0.637,0.424,1.175,1.006,1.351v0.461c0,0.222,0.181,0.402,0.402,0.402c0.221,0,0.402-0.181,0.402-0.402v-0.461c0.582-0.176,1.006-0.714,1.006-1.351C11.408,10.772,10.984,10.233,10.402,10.058M10,12.013c-0.333,0-0.604-0.272-0.604-0.604S9.667,10.805,10,10.805c0.332,0,0.604,0.271,0.604,0.604S10.332,12.013,10,12.013M14.629,8.448V6.78c0-0.221-0.182-0.402-0.403-0.402c-0.221,0-0.402,0.181-0.402,0.402v1.668c-0.581,0.175-1.006,0.714-1.006,1.35c0,0.636,0.425,1.176,1.006,1.351v2.07c0,0.222,0.182,0.402,0.402,0.402c0.222,0,0.403-0.181,0.403-0.402v-2.07c0.581-0.175,1.006-0.715,1.006-1.351C15.635,9.163,15.21,8.624,14.629,8.448 M14.226,10.402c-0.331,0-0.604-0.272-0.604-0.604c0-0.332,0.272-0.604,0.604-0.604c0.332,0,0.604,0.272,0.604,0.604C14.83,10.13,14.558,10.402,14.226,10.402 M17.647,3.962H2.353c-0.221,0-0.402,0.181-0.402,0.402v11.27c0,0.222,0.181,0.402,0.402,0.402h15.295c0.222,0,0.402-0.181,0.402-0.402V4.365C18.05,4.144,17.869,3.962,17.647,3.962 M17.245,15.232H2.755V4.768h14.49V15.232z"></path>
                 </svg>

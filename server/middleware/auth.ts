@@ -1,26 +1,41 @@
 import SessionService from "~/server/app/services/SessionService";
+import {getUserById} from "~/server/database/repositories/userRepository";
 
 
 export default defineEventHandler(async (event) => {
 
     // Get All route starting with /api/dashboard
-    const route = event.node.req.url?.startsWith('/private');
-    // console.log('route', route)
+    const route = event.node.req.url?.startsWith('/api/protected');
+    // console.log('route', event.node.req.url)
 
     if (!route) return;
 
     // get cookie
     const cookieToken = getCookie(event, 'authToken');
-    if (!cookieToken) { return await sendRedirect(event, '/login') }
+    // console.log('cookieToken', cookieToken)
+    if (!cookieToken) {
+        deleteCookie(event, 'authToken');
+        deleteCookie(event, 'user');
+        // unauthorize
+        return sendError(event, createError({statusCode: 401, statusMessage: 'Unauthorized', message: 'login'}))
+    }
+    //
+    const token = JSON.parse(cookieToken);
+    const decodedToken = SessionService.decodeToken(token.authToken);
 
-    const decodedToken = SessionService.decodeToken(cookieToken);
     const isValidToken = SessionService.verifyToken(decodedToken);
     console.log('cookies', isValidToken)
     if (!isValidToken) {
-        // deleteCookie(event, 'authToken');
-        // deleteCookie(event, 'user');
-
-        // return await sendRedirect(event, '/login')
+        deleteCookie(event, 'authToken');
+        deleteCookie(event, 'user');
+        // unauthorize
+        return sendError(event, createError({statusCode: 401, statusMessage: 'Unauthorized', message: 'login'}))
     }
+
+    console.log('decodedToken', decodedToken)
+
+    // get user
+    const user = await getUserById(decodedToken.userId);
+    event.context.user = user;
 
 })

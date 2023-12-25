@@ -4,16 +4,21 @@
 
 import UseFetchWithApi from "~/composables/useFetchWithApi";
 import {navigateTo} from "#app";
+import {useTokenStore} from "~/stores/tokenStore";
 
 const subscribe = async () => {
 
-    const result = await UseFetchWithApi<any>('api/protected/subscribe', {
+    if (!useTokenStore().isLogged) {
+        navigateTo('/login')
+    }
+
+    const {data, error} = await useFetch<any>('api/protected/subscribe', {
         method: 'POST',
         body: {paymentKey: 1}
     })
 
-    if (result && result.value.url) {
-        navigateTo(result.value.url,
+    if (data.value) {
+        navigateTo(data.value.url,
             {
                 external: true,
                 open: {

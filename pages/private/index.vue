@@ -2,12 +2,15 @@
 import UseFetchWithToken from "~/composables/useFetchWithToken";
 import FrontBreadcrumbComponent from "~/components/breadcrumbs/FrontBreadcrumbComponent.vue";
 import AdminDashboardComponent from "~/components/pages/private/dashboards/AdminDashboardComponent.vue";
+import UserDashboardComponent from "~/components/pages/private/dashboards/UserDashboardComponent.vue";
+
 
 definePageMeta({
     pageTransition: {name: 'page', mode: 'out-in'},
     title: 'Page d\'accueil des utilisateurs connectés',
     layout: "private",
 })
+const user = useUserStore()
 const stats = ref({
     userCounts: 0,
 })
@@ -33,7 +36,8 @@ if (error.value) {
             </div>
         </div>
         <!-- breadcrumb end -->
-        <AdminDashboardComponent :stats="stats"/>
+        <AdminDashboardComponent :stats="stats" v-if="user.isAdmin"/>
+        <UserDashboardComponent />
     </div>
 </template>
 
