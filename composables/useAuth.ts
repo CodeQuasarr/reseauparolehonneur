@@ -2,6 +2,7 @@ import useErrorMapper from "~/composables/useErrorMapper";
 import type {IUser} from "~/types/IUser";
 import {useUserStore} from "~/stores/userStore";
 import {notifySuccess} from "~/utils/config";
+import {useTokenStore} from "~/stores/tokenStore";
 
 export async function registerWithEmail(user: any): Promise<FormValidation> {
 
@@ -32,7 +33,8 @@ export async function loginWithEmail(loginInfo: IUser) {
 
         if (result) {
             useUserStore().setUserInStore(result?.user)
-            await useRouter().push('/private/app')
+            useTokenStore().setAuthToken(result?.accessToken)
+            await useRouter().push('/private')
         }
 
         return { hasErrors: false, loggedIn: true }

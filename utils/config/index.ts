@@ -17,6 +17,18 @@ export function notifyError(message: string) {
     });
 }
 
+export function convertDateToString(date: string) {
+    return date.split('T')[0];
+}
+export function truncateText(input: string, maxLength: number): string {
+    if (input.length <= maxLength) {
+        return input;
+    } else {
+        return input.substring(0, maxLength) + '...';
+    }
+}
+
+
 export const languages = [
     { value: 'de', name: 'Deutsch' },
     { value: 'en', name: 'English' },

@@ -111,3 +111,17 @@ export async function getSubscriptionById(id: string) {
     });
 }
 
+export async function getAllSpeackers(): Promise<IUser[] | null> {
+    return prisma.user.findMany({
+        where: {
+            role: Role.SPEAKER,
+        },
+        select: {
+            id: true,
+            firstName: true,
+            lastName: true,
+            avatar: true,
+        },
+    });
+}
+

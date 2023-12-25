@@ -6,7 +6,7 @@ import {validateEmail, validatePassword} from "~/utils/config/formValidationsRul
 import path from "path";
 import fs from "fs";
 
-class UserService {
+class EventService {
 
     public static fields: string[] = [
         'role', 'email', 'firstName', 'lastName', 'password', 'isVerified', 'isBanned', 'birthDate',
@@ -58,7 +58,7 @@ class UserService {
         return data;
     }
 
-    static async validationUserDataFields(data: any, forCreation: boolean = true): Promise<any> {
+    static async validationEventDataFields(data: any, forCreation: boolean = true): Promise<any> {
         const errors = new Map<string, { message: string | undefined }>()
 
         if (!data) {
@@ -66,7 +66,7 @@ class UserService {
         } else {
             for (const key of this.fields) {
                 if (forCreation) {
-                    if (key === 'email' || key === 'password' || key === 'firstName' || key === 'lastName' || key === 'role') {
+                    if (key === 'title' || key === 'content' || key === 'startDate' || key === 'startTime' || key === 'address') {
                         if (!data[key]) {
                             errors.set(key, {'message': `Le champ ${key} est obligatoire`})
                         }
@@ -74,26 +74,18 @@ class UserService {
                 }
                 if (data[key]) {
                     if (key === 'role') {
-                        if (data[key] !== 'USER' && data[key] !== 'ADMIN' && data[key] !== 'REDACTOR' && data[key] !== 'SPEAKER') {
+                        if (data[key] !== 'USER' && data[key] !== 'ADMIN' && data[key] !== 'REDACTOR') {
                             errors.set(key, {'message': 'le rôle Que vous avez choisi n\'est pas valide'})
                         }
                     }
-                    if (key === 'email') {
-                        if (!validateEmail(data[key])) {
-                            errors.set(key, {'message': 'L\'email n\'est pas valide'})
-                        }
-                    }
-                    if (key === 'firstName' || key === 'lastName') {
+                    if (key === 'title') {
                         if (data[key].length < 3) {
-                            errors.set(key, {'message': 'le nom et le prénom doit contenir au moins 3 caractères'})
+                            errors.set(key, {'message': 'Le titre doit contenir au moins 3 caractères'})
                         }
                     }
-                    if (key === 'password') {
-                        if (!validatePassword(data[key])) {
-                            errors.set(key, {'message': 'Le mot de passe doit contenir au moins 8 caractères, une lettre, un chiffre et un caractère spécial'})
-                        }
-                        if (!this.passwordMatch(data[key], data.confirmPassword)) {
-                            errors.set(key, {'message': 'Le mot de passe et la confirmation du mot de passe ne correspondent pas'})
+                    if (key === 'content') {
+                        if (data[key].length < 3) {
+                            errors.set(key, {'message': 'Le contenu doit contenir au moins 3 caractères'})
                         }
                     }
                 }
@@ -118,7 +110,7 @@ class UserService {
             throw new Error('Image size is too large');
         }
 
-        const destPath = path.join(process.cwd(), 'assets', 'images/users', fileName);
+        const destPath = path.join(process.cwd(), 'assets', 'images/events', fileName);
         // Save the image to the file system.
         fs.writeFileSync(destPath, buffer);
 
@@ -127,7 +119,7 @@ class UserService {
 
     public static async replaceImage(oldFileName: string, newPicture: string): Promise<string> {
         // Supprimer l'ancienne image
-        const oldImagePath = path.join(process.cwd(), 'assets', 'images/users', oldFileName);
+        const oldImagePath = path.join(process.cwd(), 'assets', 'images/events', oldFileName);
         fs.unlinkSync(oldImagePath);
 
         // Enregistrer la nouvelle image
@@ -144,7 +136,7 @@ class UserService {
             throw new Error('La taille de l\'image est trop grande');
         }
 
-        const destPath = path.join(process.cwd(), 'assets', 'images/users', fileName);
+        const destPath = path.join(process.cwd(), 'assets', 'images/events', fileName);
         // Enregistrer la nouvelle image sur le système de fichiers
         fs.writeFileSync(destPath, buffer);
 
@@ -162,4 +154,4 @@ class UserService {
 
 }
 
-export default UserService
+export default EventService

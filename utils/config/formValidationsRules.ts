@@ -1,10 +1,18 @@
+export const validatestringField = (value: any, key: string) => {
+    // if the field is empty
+    if (!value) { return "Le nom est requis"; }
+    // if the field is not a valid name
+    if (!(value && value.length <= 255 && value.length > 2)) { return `Le ${key} doit contenir au moins 3 caractères`; }
+    return true;
+}
+
 export const validateFirstName = (value: any) => {
-        // if the field is empty
-        if (!value) { return "Le nom est requis"; }
-        // if the field is not a valid name
-        if (!(value && value.length <= 255 && value.length > 2)) { return 'Le nom doit contenir au moins 3 caractères'; }
-        return true;
-    }
+    // if the field is empty
+    if (!value) { return "Le nom est requis"; }
+    // if the field is not a valid name
+    if (!(value && value.length <= 255 && value.length > 2)) { return 'Le nom doit contenir au moins 3 caractères'; }
+    return true;
+}
 
 export const validateLastName = (value: any) => {
         // if the field is empty

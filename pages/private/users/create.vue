@@ -58,7 +58,8 @@ const handleFileUpload = (event: { target: { files: any[]; }; }) => {
     };
 }
 
-const updateInformation = async () => {
+const createUser = async () => {
+    console.log('eeeeeeeeeeeeeeeeeeeeeeeeeee')
     try {
         loading.value = true
         const {data, error} = await useFetchWithToken<any>('/api/protected/users', {
@@ -66,7 +67,7 @@ const updateInformation = async () => {
             body: user.value
         });
         if (data.value) {
-            await useRouter().push(`/private/app/users/${data.value.id}/edit`)
+            await useRouter().push(`/private/users/${data.value.id}/edit`)
         }
         if (error.value) {
 
@@ -87,18 +88,6 @@ const updateInformation = async () => {
                 <FrontBreadcrumbComponent />
                 <div class="w-full flex items-center justify-between px-4">
                     <h1 class="text-xl font-semibold text-gray-900 sm:text-2xl dark:text-white">Nouveau utilisateur</h1>
-                    <div class="col-span-6 sm:col-full">
-                        <div class="flex items-center justify-end gap-3">
-                            <button
-                                class="text-white bg-gray-900 hover:bg-indigo-800 focus:ring-4 focus:ring-indigo-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-indigo-600 dark:hover:bg-indigo-700 dark:focus:ring-indigo-800"
-                                type="submit">Tout Enrégistrer
-                            </button>
-                            <NuxtLink
-                                class="text-white bg-indigo-700 hover:bg-indigo-800 focus:ring-4 focus:ring-indigo-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-indigo-600 dark:hover:bg-indigo-700 dark:focus:ring-indigo-800"
-                                to="/private/app/users" type="submit">Retour
-                            </NuxtLink>
-                        </div>
-                    </div>
                 </div>
                 <div v-if="errors" class="px-4 pt-6">
                     <div class="p-4 mb-4 text-sm text-red-800 rounded-lg bg-red-50 dark:bg-gray-800 dark:text-red-400"
@@ -114,7 +103,7 @@ const updateInformation = async () => {
             <!-- Right Content -->
             <div class="relative w-full">
                 <LoadingComponent v-if="loading"/>
-                <Form @submit="updateInformation()">
+                <Form @submit="createUser()">
                     <div class="grid grid-cols-1 px-4 pt-6 xl:grid-cols-3 xl:gap-4 dark:bg-gray-900">
                         <div class="col-span-full xl:col-auto">
                             <div
@@ -374,7 +363,7 @@ const updateInformation = async () => {
                                     </button>
                                     <NuxtLink
                                         class="text-white bg-indigo-700 hover:bg-indigo-800 focus:ring-4 focus:ring-indigo-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-indigo-600 dark:hover:bg-indigo-700 dark:focus:ring-indigo-800"
-                                        to="/private/app/users" type="submit">Retour
+                                        to="/private/users" type="submit">Retour
                                     </NuxtLink>
                                 </div>
                             </div>
