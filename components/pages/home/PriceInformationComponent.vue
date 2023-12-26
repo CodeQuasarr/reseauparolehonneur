@@ -14,13 +14,18 @@ const props = defineProps({
 const user = useUserStore()
 const subscribe = async () => {
 
+    if (!props.eventId) {
+        throw {
+            message: 'Event id is required'
+        }
+    }
     if (!useTokenStore().isLogged) {
         navigateTo('/login')
     }
 
     const {data, error} = await useFetch<any>('api/protected/subscribe', {
         method: 'POST',
-        body: {paymentKey: 1}
+        body: {paymentKey: 1, eventId: props.eventId}
     })
 
     if (data.value) {

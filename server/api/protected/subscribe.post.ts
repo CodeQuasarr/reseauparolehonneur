@@ -1,5 +1,6 @@
 import StripeService from "~/server/app/services/StripeService";
 import {updateStripeCustomerId} from "~/server/database/repositories/userRepository";
+import {getEventById} from "~/server/database/repositories/eventRepository";
 
 
 export default defineEventHandler(async event => {
@@ -22,7 +23,10 @@ export default defineEventHandler(async event => {
             await updateStripeCustomerId(customer);
         }
 
-        console.log('url', url)
+        // if (url) {
+        //     const event = await getEventById(data.eventId);
+        //
+        // }
 
         return {url}
 
