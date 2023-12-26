@@ -1,22 +1,18 @@
 <script setup lang="ts">
 
-import FrontBreadcrumbComponent from "~/components/breadcrumbs/FrontBreadcrumbComponent.vue";
+const payments = ref<any>(null)
 
-const payments = ref<any>([{
-    id: '',
-    amount: '',
-    startDate: '',
-    status: '',
-}])
+if (useUserStore().isSubscriber) {
+    const {data, error} = await useFetchWithToken<any>('/api/protected/stripe/payment', {
+        method: 'GET',
+    })
+    payments.value = data.value
 
-const {data, error} = await useFetchWithToken<any>('/api/protected/stripe/payment', {
-    method: 'GET',
-})
+    console.log(data.value)
+    console.log(error.value)
+}
 
-payments.value = data.value
 
-console.log(data.value)
-console.log(error.value)
 
 </script>
 
@@ -46,7 +42,7 @@ console.log(error.value)
                 <h1 class="text-xl font-semibold text-gray-900 sm:text-2xl dark:text-white">Mes factures</h1>
             </div>
         </div>
-        <div v-if="payments.length" class="flex flex-col">
+        <div v-if="payments && payments.length" class="flex flex-col">
             <div class="overflow-x-auto">
                 <div class="inline-block min-w-full align-middle">
                     <div class="overflow-hidden shadow">
@@ -104,7 +100,7 @@ console.log(error.value)
                 </div>
             </div>
         </div>
-        <div v-if="!payments.length" class="text-center mt-10">
+        <div v-if="!payments" class="text-center mt-10">
             <h2 class="text-sm text-gray-400">Aucun Facture en cours</h2>
             <Icon name="fluent-emoji-high-contrast:crying-face" class="w-24 h-24 text-gray-400 my-5" />
         </div>

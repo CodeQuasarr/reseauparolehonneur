@@ -10,15 +10,22 @@ import useErrorMapper from "~/composables/useErrorMapper";
 import {notifySuccess} from "~/utils/config";
 import FrontBreadcrumbComponent from "~/components/breadcrumbs/FrontBreadcrumbComponent.vue";
 
-definePageMeta({
-    pageTransition: { name: 'page', mode: 'out-in' },
-    title: 'Créer un nouveau utilisateur ',
-    auth: true,
-    layout: "private",
-})
+// definePageMeta({
+//     pageTransition: { name: 'page', mode: 'out-in' },
+//     title: 'Créer un nouveau utilisateur ',
+//     auth: true,
+//     layout: "private",
+// })
 //---------------------------------- Variables ----------------------------------//
 
 const route = useRoute()
+const props = defineProps({
+    userId: {
+        type: String,
+        required: false,
+    },
+});
+const loading = ref(false)
 const userStore = useUserStore();
 const user = ref({
     role: '',
@@ -40,9 +47,11 @@ const user = ref({
 });
 
 
-const {data, error} = await UseFetchWithToken<any>(`/api/protected/users/${route.params.id}`, {
+const {data, error} = await UseFetchWithToken<any>(`/api/protected/users/${props.userId}`, {
     method: 'GET',
 });
+
+console.log('data.value', props.userId)
 if (error.value) {
 
 }
@@ -53,7 +62,6 @@ if (data.value) {
 
 let message = ref(null);
 const sumbit = ref(false)
-let loading = ref(false)
 
 //---------------------------------- Methods ----------------------------------//
 

@@ -8,16 +8,20 @@ export default defineEventHandler(async (event: H3Event) => {
 
         const subscriber = await getSubscriptionById(event.context.user.id);
 
+        const user = event.context.user;
         if (!subscriber) {
             return {
+                userId: user.id,
                 subscriptionRenewal: null
             };
         }
 
-
-        console.log('subscriber', HelperService.convertNumberToHours(subscriber.lastEventDate))
+        console.log('event.context.user', event.context.user)
+        console.log('HelperService.convertNumberToHour', HelperService.convertNumberToHours(subscriber.lastEventDate))
         return {
-            subscriptionRenewal: HelperService.convertNumberToHours(subscriber.lastEventDate)
+            userId: user.id,
+            subscriptionRenewal: HelperService.convertNumberToHours(subscriber.lastEventDate),
+
         }
     } catch (e: any) {
         return {

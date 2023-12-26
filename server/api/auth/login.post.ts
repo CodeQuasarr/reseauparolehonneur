@@ -17,7 +17,7 @@ export default eventHandler(async (event: H3Event) => {
             return sendError(event, createError({ statusCode: 401, data: errors }))
         }
         const config = useRuntimeConfig();
-        const authToken = SessionService.generateToken({userId: userInfo?.id}, (60 * 5)); // 5 minutes
+        const authToken = SessionService.generateToken({userId: userInfo?.id}, (60 * 60)); // 5 minutes // 1hour
         const refreshToken = SessionService.generateToken({userId: userInfo?.id}, 2592000); // 30 days
         const session = await SessionService.setSession(userInfo?.id as string, refreshToken);
 
