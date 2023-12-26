@@ -6,7 +6,7 @@
     <div>
         <footer  class="ftco-footer  text-base bg-[#232429] text-[#FFFFFF7F] relative z-0 pt-[5em] pb-0 px-0">
             <div class="container mx-auto">
-                <div class="grid grid-cols-2 xl:grid-cols-5 mb-5">
+                <div class="grid grid-cols-2 xl:grid-cols-3 mb-5">
                     <div class="w-full sm:w-full md:w-auto mb-5 xl:mb-0">
                         <div class="ftco-footer-widget mb-4">
                             <h2 class="text-white text-[22px] font-bold uppercase mb-[30px]"><a href="#">Réseau Parole d'Honneur</a></h2>
@@ -14,21 +14,21 @@
                                 Plateforme pour les leaders économiques qui rassemble des professionnels et des particuliers afin d'encourager
                                 l'innovation et de créer des opportunités commerciales.
                             </p>
-                            <ul class="ftco-footer-social list-unstyled mt-2">
-                                <li class="ftco-animate fadeInUp ftco-animated"><a href="#"><span class="fa fa-twitter"></span></a></li>
-                                <li class="ftco-animate fadeInUp ftco-animated"><a href="#"><span class="fa fa-facebook"></span></a></li>
-                                <li class="ftco-animate fadeInUp ftco-animated"><a href="#"><span class="fa fa-instagram"></span></a></li>
-                            </ul>
+<!--                            <ul class="ftco-footer-social list-unstyled mt-2">-->
+<!--                                <li class="flex items-center justify-center"><a href="#"> <Icon name="mdi:twitter" /> </a></li>-->
+<!--                                <li class="ftco-animate fadeInUp ftco-animated"><a href="#"><span class="fa fa-facebook"></span></a></li>-->
+<!--                                <li class="ftco-animate fadeInUp ftco-animated"><a href="#"><span class="fa fa-instagram"></span></a></li>-->
+<!--                            </ul>-->
                         </div>
                     </div>
                     <div class="w-full sm:w-full md:w-auto mb-5 xl:mb-0">
                         <div class="ftco-footer-widget mb-4 md:ml-4">
                             <h2 class="text-white text-[22px] font-bold uppercase mb-[30px]">Explore</h2>
                             <ul class="list-unstyled">
-                                <li class="mb-2.5"><a href="#"><span class="mr-2"><Icon name="ic:baseline-chevron-right" /></span>About</a></li>
-                                <li class="mb-2.5"><a href="#"><span class="mr-2"><Icon name="ic:baseline-chevron-right" /></span>Contact</a></li>
-                                <li class="mb-2.5"><a href="#"><span class="mr-2"><Icon name="ic:baseline-chevron-right" /></span>Speaker</a></li>
-                                <li class="mb-2.5"><a href="#"><span class="mr-2"><Icon name="ic:baseline-chevron-right" /></span>Blog</a></li>
+                                <li class="mb-2.5"><NuxtLink to="/"><span class="mr-2"><Icon name="ic:baseline-chevron-right" /></span>Accueil</NuxtLink></li>
+                                <li class="mb-2.5"><NuxtLink to="/about"><span class="mr-2"><Icon name="ic:baseline-chevron-right" /></span>À Propos</NuxtLink></li>
+                                <li class="mb-2.5"><NuxtLink to="/event"><span class="mr-2"><Icon name="ic:baseline-chevron-right" /></span>Conférence à venir</NuxtLink></li>
+                                <li class="mb-2.5"><NuxtLink to="/contact"><span class="mr-2"><Icon name="ic:baseline-chevron-right" /></span>Contact</NuxtLink></li>
                             </ul>
                         </div>
                     </div>
@@ -36,30 +36,10 @@
                         <div class="ftco-footer-widget mb-4 md:ml-4">
                             <h2 class="text-white text-[22px] font-bold uppercase mb-[30px]">Info</h2>
                             <ul class="list-unstyled">
-                                <li class="mb-2.5"><a href="#"><span class="mr-2"><Icon name="ic:baseline-chevron-right" /></span>Join us</a></li>
-                                <li class="mb-2.5"><a href="#"><span class="mr-2"><Icon name="ic:baseline-chevron-right" /></span>Buy Ticket</a></li>
-                                <li class="mb-2.5"><a href="#"><span class="mr-2"><Icon name="ic:baseline-chevron-right" /></span>Privacy &amp; Policy</a></li>
-                                <li class="mb-2.5"><a href="#"><span class="mr-2"><Icon name="ic:baseline-chevron-right" /></span>Term &amp; Conditions</a></li>
+                                <li class="mb-2.5"><NuxtLink to="/privacy"><span class="mr-2"><Icon name="ic:baseline-chevron-right" /></span>Politique de confidentialité</NuxtLink></li>
+                                <li class="mb-2.5"><NuxtLink to="/terms"><span class="mr-2"><Icon name="ic:baseline-chevron-right" /></span>Termes et Conditions</NuxtLink></li>
+                                <li class="mb-2.5"><NuxtLink to="/cookie-policy"><span class="mr-2"><Icon name="ic:baseline-chevron-right" /></span>Politique liée aux cookies</NuxtLink></li>
                             </ul>
-                        </div>
-                    </div>
-                    <div class="w-full sm:w-full md:w-auto mb-5 xl:mb-0">
-                        <div class="ftco-footer-widget mb-4">
-                            <h2 class="text-white text-[22px] font-bold uppercase mb-[30px]">Get Your Seat</h2>
-                            <p>A small river named Duden flows by their place and supplies it with the necessary regelialia.</p>
-                            <a href="#" class="btn btn-indigo px-3 py-2">Buy Ticket</a>
-                        </div>
-                    </div>
-                    <div class="w-full sm:w-full md:w-auto mb-5 xl:mb-0">
-                        <div class="ftco-footer-widget mb-4">
-                            <h2 class="text-white text-[22px] font-bold uppercase mb-[30px]">Have a Questions?</h2>
-                            <div class="block-23 mb-3">
-                                <ul>
-                                    <li class="mb-2.5"><span class="icon fa fa-map marker"></span><span class="text">203 Fake St. Mountain View, San Francisco, California, USA</span></li>
-                                    <li class="mb-2.5"><a href="#"><span class="icon fa fa-phone"></span><span class="text">+2 392 3929 210</span></a></li>
-                                    <li class="mb-2.5"><a href="#"><span class="icon fa fa-paper-plane pr-4"></span><span class="text">info@yourdomain.com</span></a></li>
-                                </ul>
-                            </div>
                         </div>
                     </div>
                 </div>

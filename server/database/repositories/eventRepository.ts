@@ -1,9 +1,7 @@
-import {Evenement, Role, User} from "@prisma/client";
+import {Evenement, User} from "@prisma/client";
 import {prisma} from "~/server/database";
-import {IUser} from "~/types/IUser";
-import {Filter} from "~/types/Filter";
 
-export async function getUserByEmail(emailOrEmail: string): Promise<User|null> {
+export async function getUserByEmail(emailOrEmail: string): Promise<User | null> {
     return prisma.user.findFirst({
         where: {
             email: emailOrEmail
@@ -17,7 +15,7 @@ export async function createEvent(data: any): Promise<Evenement> {
     });
 }
 
-export async function getEventById(id: string){
+export async function getEventById(id: string) {
     return prisma.evenement.findFirst({
         where: {
             id: id
@@ -39,7 +37,7 @@ export async function getAllEvents(take: number = 0, skip: number = 0, q: string
 
     const whereClause: any = {
         OR: [
-            { title: { contains: q } },
+            {title: {contains: q}},
         ],
     };
 
@@ -47,10 +45,31 @@ export async function getAllEvents(take: number = 0, skip: number = 0, q: string
         take,
         skip,
         where: whereClause,
-        orderBy: { id: 'desc' },
+        orderBy: {id: 'desc'},
     });
 }
 
+export async function getFirstEventByStartDate(today: Date) {
+    return prisma.evenement.findFirst({
+        where: {
+            startDate: {
+                gt: new Date().toISOString()
+            }
+        },
+        orderBy: {
+            startDate: 'asc'
+        },
+        select: {
+            id: true,
+            title: true,
+            startDate: true,
+            startTime: true,
+            address: true,
+            content: true,
+            users: true,
+        }
+    });
+}
 
 export async function countEvents(q: string = ''): Promise<number> {
     return prisma.evenement.count({

@@ -1,6 +1,11 @@
 <script setup lang="ts">
-
 import {scrollFadeIn} from "~/utils/animations";
+
+defineProps({
+    speakers: {
+        required: true,
+    },
+})
 </script>
 
 <template>
@@ -11,7 +16,7 @@ import {scrollFadeIn} from "~/utils/animations";
                     <p class="uppercase mb-0 text-gray-300">REJOIGNEZ L'ÉVÉNEMENT</p>
                     <h2 class="text-white text-4xl font-semibold">Rencontrez les conférenciers</h2>
                 </div>
-                <div class="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-32">
+                <div v-if="speakers" class="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-32">
                     <div class="col-span-full md:col-span-1">
                         <div class="card-speaker">
                             <img class="w-full rounded-0" src="https://preview.colorlib.com/theme/umeet/img/home/speaker-1.png" alt="">
@@ -96,7 +101,18 @@ import {scrollFadeIn} from "~/utils/animations";
                             </div>
                         </div>
                     </div>
-                    <!-- Répétez la structure ci-dessus pour les autres conférenciers -->
+                </div>
+                <div v-else class="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-32">
+                    <div class="col-span-full">
+                        <div class="section-tittle mb-14">
+                            <h2 class="text-center block text-gray-400 font-bold">
+                                <Icon name="ci:info-circle" class="w-32 h-32 mr-2"/>
+                            </h2>
+                        </div>
+                        <p class="text-base text-white mb-[43px] xl:pr-[50px]">
+                            Nous sommes ravis de vous inviter à rencontrer les conférenciers qui participeront à nos prochains événements. Restez informé sur les profils, les expertises et les dates de leurs interventions. Nous sommes impatients de vous offrir des échanges stimulants. Merci de votre intérêt et de votre compréhension.
+                        </p>
+                    </div>
                 </div>
             </div>
         </section>

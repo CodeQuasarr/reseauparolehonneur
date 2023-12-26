@@ -1,6 +1,7 @@
 <script setup lang="ts">
 
 import {scrollFadeIn} from "~/utils/animations";
+import {useEvenementStore} from "~/stores/evenementStore";
 </script>
 
 <template>
@@ -45,7 +46,7 @@ import {scrollFadeIn} from "~/utils/animations";
                     </div>
                 </div>
                 <div class="flex mt-10">
-                    <div class="w-full text-center">
+                    <div v-if="useEvenementStore().getCanPay" class="w-full text-center">
                         <a href="#_" class="relative inline-flex items-center justify-center px-10 py-4 overflow-hidden font-medium uppercase tracking-tighter text-black hover:text-white border border-[#331391] rounded-lg group">
                             <span class="absolute w-0 h-0 transition-all duration-500 ease-out bg-[#331391] ext-white rounded-full group-hover:w-56 group-hover:h-56"></span>
                             <span class="relative">ACHETER UN BILLET</span>

@@ -2,6 +2,7 @@
 
 import {navigateTo} from "#app";
 import {useTokenStore} from "~/stores/tokenStore";
+import {useEvenementStore} from "~/stores/evenementStore";
 
 
 const user = useUserStore()
@@ -85,28 +86,19 @@ const payment = async (key: number) => {
                                 <div class="p-10">
                                     <ul class="mb-10 text-center">
                                         <li class="my-4">
-                                            <h5 class="font-medium">10k Visiteurs/mois</h5>
+                                            <h5 class="font-medium">Séance de conseil de groupe</h5>
                                         </li>
                                         <li>
-                                            <h5 class="font-medium">10 entonnoirs, 50 pages</h5>
+                                            <h5 class="font-medium">Acces canal discord privé</h5>
                                         </li>
                                         <li class="my-4">
-                                            <h5 class="font-medium">Transactions illimitées</h5>
+                                            <h5 class="font-medium">Mise en relation avec nos partenaires</h5>
                                         </li>
                                         <li>
-                                            <h5 class="font-medium">Analytics</h5>
+                                            <h5 class="font-medium">Réduction sur nos soirée inspirantes ( Atelier et Cocktail)</h5>
                                         </li>
                                         <li class="my-4">
-                                            <h5 class="font-medium">lnstegrations</h5>
-                                        </li>
-                                        <li class="my-4">
-                                            <h5 class="font-medium">Date d’audience</h5>
-                                        </li>
-                                        <li class="my-4">
-                                            <h5 class="font-medium">Modèles Premium</h5>
-                                        </li>
-                                        <li class="my-4">
-                                            <h5 class="font-medium text-gray-500 line-through">Marque blanche</h5>
+                                            <h5 class="font-medium">6 postes sur nos réseaux sociaux</h5>
                                         </li>
                                     </ul>
                                     <div class="flex justify-center">
@@ -125,7 +117,7 @@ const payment = async (key: number) => {
                 <div class="text-center pt-10">
                     <h5 class="text-xl font-semibold">Basique</h5>
                     <h2 class="text-5xl mt-8 mb-3 items-center align-middle">
-                        <sup class="text-2xl align-middle">€</sup> {{ !user.isSubscriber ? 50 : 30}}
+                        <sup class="text-2xl align-middle">€</sup> {{ !user.isSubscriber ? 85 : 40}}
                     </h2>
                     <span>par personne, par évènement</span>
                 </div>
@@ -133,31 +125,22 @@ const payment = async (key: number) => {
                 <div class="p-10">
                     <ul class="mb-10 text-center">
                         <li class="my-4">
-                            <h5 class="font-medium">10k Visiteurs/mois</h5>
+                            <h5 class="font-medium">Conférence interactive</h5>
                         </li>
                         <li>
-                            <h5 class="font-medium">10 entonnoirs, 50 pages</h5>
+                            <h5 class="font-medium">La rencontre des décideurs économiques</h5>
                         </li>
                         <li class="my-4">
-                            <h5 class="font-medium">Transactions illimitées</h5>
+                            <h5 class="font-medium">Réseautage</h5>
                         </li>
                         <li>
-                            <h5 class="font-medium">Analytics</h5>
+                            <h5 class="font-medium">Mise en relation avec nos partenaires</h5>
                         </li>
                         <li class="my-4">
-                            <h5 class="font-medium">lnstegrations</h5>
-                        </li>
-                        <li class="my-4">
-                            <h5 class="font-medium text-gray-500 line-through">Date d’audience</h5>
-                        </li>
-                        <li class="my-4">
-                            <h5 class="font-medium text-gray-500 line-through">Modèles Premium</h5>
-                        </li>
-                        <li class="my-4">
-                            <h5 class="font-medium text-gray-500 line-through">Marque blanche</h5>
+                            <h5 class="font-medium">Apéro dînatoire</h5>
                         </li>
                     </ul>
-                    <div class="flex justify-center">
+                    <div v-if="useEvenementStore().getCanPay" class="flex justify-center">
                         <button @click="payment(!user.isSubscriber ? 3 : 2)" class="price-btn py-3 px-6 font-medium border rounded-md border-purple-500 text-purple-500 hover:bg-red-500 hover:text-white hover:border-red-500 transition-all duration-500">Get Basic</button>
                     </div>
                 </div>
@@ -167,7 +150,7 @@ const payment = async (key: number) => {
                 <div class="text-center pt-10">
                     <h5 class="text-xl font-semibold">Ultime</h5>
                     <h2 class="text-5xl mt-8 mb-3 items-center align-middle">
-                        <sup class="text-2xl align-middle">$</sup>85
+                        <sup class="text-2xl align-middle">$</sup>155
                     </h2>
                     <span>par binôme, par événement</span>
                 </div>
@@ -175,31 +158,22 @@ const payment = async (key: number) => {
                 <div class="p-10">
                     <ul class="mb-10 text-center">
                         <li class="my-4">
-                            <h5 class="font-medium">10k Visiteurs/mois</h5>
+                            <h5 class="font-medium">Conférence interactive</h5>
                         </li>
                         <li>
-                            <h5 class="font-medium">10 entonnoirs, 50 pages</h5>
+                            <h5 class="font-medium">La rencontre des décideurs économiques</h5>
                         </li>
                         <li class="my-4">
-                            <h5 class="font-medium">Transactions illimitées</h5>
+                            <h5 class="font-medium">Réseautage</h5>
                         </li>
                         <li>
-                            <h5 class="font-medium">Analytics</h5>
+                            <h5 class="font-medium">Mise en relation avec nos partenaires</h5>
                         </li>
                         <li class="my-4">
-                            <h5 class="font-medium">lnstegrations</h5>
-                        </li>
-                        <li class="my-4">
-                            <h5 class="font-medium">Date d’audience</h5>
-                        </li>
-                        <li class="my-4">
-                            <h5 class="font-medium">Modèles Premium</h5>
-                        </li>
-                        <li class="my-4">
-                            <h5 class="font-medium">Marque blanche</h5>
+                            <h5 class="font-medium">Apéro dînatoire</h5>
                         </li>
                     </ul>
-                    <div class="flex justify-center">
+                    <div v-if="useEvenementStore().getCanPay" class="flex justify-center">
                         <button @click="payment(4)" class="price-btn py-3 px-6 font-medium border rounded-md border-purple-500 text-purple-500 hover:bg-red-500 hover:text-white hover:border-red-500 transition-all duration-500">Get Basic</button>
                     </div>
                 </div>

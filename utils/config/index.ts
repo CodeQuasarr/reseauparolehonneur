@@ -20,6 +20,31 @@ export function notifyError(message: string) {
 export function convertDateToString(date: string) {
     return date.split('T')[0];
 }
+
+export function convertDate(charDate: string): string {
+    const date = new Date(charDate);
+
+    // Options de formatage pour la date
+    const options: any = { day: 'numeric', month: 'short', year: 'numeric' };
+
+    // Formater la date en utilisant les options
+    return date.toLocaleDateString('fr-FR', options);
+}
+
+export function convertHour(hour: string): string {
+    // Diviser l'heure en heures et minutes
+    const [heures, minutes] = hour.split(':').map(Number);
+
+    // Vérifier si les heures et les minutes sont valides
+    if (isNaN(heures) || isNaN(minutes) || heures < 0 || heures > 23 || minutes < 0 || minutes > 59) {
+        throw new Error("Format d'heure invalide");
+    }
+
+    // Formater l'heure en utilisant la chaîne de format
+    return `${heures}h${minutes}min`;
+}
+
+
 export function truncateText(input: string, maxLength: number): string {
     if (input.length <= maxLength) {
         return input;
