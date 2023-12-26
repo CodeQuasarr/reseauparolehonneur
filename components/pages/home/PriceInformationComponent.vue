@@ -4,6 +4,12 @@ import {navigateTo} from "#app";
 import {useTokenStore} from "~/stores/tokenStore";
 import {useEvenementStore} from "~/stores/evenementStore";
 
+const props = defineProps({
+    eventId: {
+        required: false,
+    },
+})
+
 
 const user = useUserStore()
 const subscribe = async () => {
@@ -37,7 +43,7 @@ const payment = async (key: number) => {
 
     const {data, error} = await useFetch<any>('api/protected/payment', {
         method: 'POST',
-        body: {paymentKey: key}
+        body: {paymentKey: key, eventId: props.eventId}
     })
 
     if (data.value) {

@@ -49,11 +49,11 @@ export async function getAllEvents(take: number = 0, skip: number = 0, q: string
     });
 }
 
-export async function getFirstEventByStartDate(today: Date) {
+export async function getFirstEventByStartDate(today: string) {
     return prisma.evenement.findFirst({
         where: {
             startDate: {
-                gt: new Date().toISOString()
+                gt: today
             }
         },
         orderBy: {
@@ -71,6 +71,27 @@ export async function getFirstEventByStartDate(today: Date) {
     });
 }
 
+export async function getAllNextEventByStartDate(today: string)
+{
+    return prisma.evenement.findMany({
+        where: {
+            startDate: {
+                gt: today
+            }
+        },
+        orderBy: {
+            startDate: 'asc'
+        },
+        select: {
+            id: true,
+            title: true,
+            startDate: true,
+            startTime: true,
+            address: true,
+            content: true,
+        }
+    });
+}
 export async function countEvents(q: string = ''): Promise<number> {
     return prisma.evenement.count({
         where: {

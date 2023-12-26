@@ -13,7 +13,7 @@ defineProps({
     <div>
         <section v-motion="scrollFadeIn()" class="relative px-4 bg-gray-200 py-36">
             <div class="w-full xl:w-8/12 mx-auto grid grid-cols-2 gap-6">
-                <div v-if="evenement" class="col-span-full xl:col-span-1">
+                <div v-if="evenement" class="col-span-full">
                     <div class="mb-50">
 
                         <div class="section-tittle mb-14">
@@ -34,7 +34,7 @@ defineProps({
                                                                                  size="40"/> </span></span>
                                     <h5 class="text-lg font-semibold">Quand</h5>
                                 </div>
-                                <p class="text-gray-700">{{ convertDate(evenement.startDate) }} à {{ convertHour(evenement.startDate) }}</p>
+                                <p class="text-gray-700">{{ convertDate(evenement.startDate) }} à {{ convertHour(evenement.startTime) }}</p>
                             </div>
                         </div>
                     </div>

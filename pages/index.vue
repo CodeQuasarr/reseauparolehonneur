@@ -6,12 +6,22 @@ import EventSpeackerComponent from "~/components/pages/home/EventSpeackerCompone
 import PriceInformationComponent from "~/components/pages/home/PriceInformationComponent.vue";
 import {useEvenementStore} from "~/stores/evenementStore";
 
-const nextEvent = ref<any>(null);
+const nextEvent = ref<any>({
+    id: null,
+    title: null,
+    content: null,
+    startTime: null,
+    startDate: null,
+    address: null,
+    users: [],
+});
 const speakers = ref<any>(null);
 
 const { data, error } = await useFetch('/api/client', {
     method: 'GET',
 });
+
+console.log('data', data.value);
 
 if(data.value) {
     nextEvent.value = data.value.nextEvent;
@@ -21,7 +31,6 @@ if(data.value) {
     }
 }
 
-console.log('data', data.value);
 
 
 </script>
@@ -29,7 +38,7 @@ console.log('data', data.value);
 <template>
     <div>
         <!-- Section 1 -->
-        <PresentationBannerComponent />
+        <PresentationBannerComponent :startDate="nextEvent.startDate" :startTime="nextEvent.startTime" :address="nextEvent.address" />
         <!-- Section 2 -->
         <EventDescriptionComponent :evenement="nextEvent" />
         <!-- Section 3 -->
@@ -37,7 +46,7 @@ console.log('data', data.value);
         <!-- Section 4 -->
         <EventSpeackerComponent :speakers="speakers" />
         <!-- Section 5 -->
-        <PriceInformationComponent />
+        <PriceInformationComponent :eventId="nextEvent.id" />
 
 
     </div>

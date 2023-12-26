@@ -5,7 +5,8 @@ export interface Evenement {
     title: string;
     content: string;
     startDate: string;
-    startTime: boolean;
+    startTime: string;
     picture: string | null;
     users: IUser[] | null;
+    address: string | null;
 }

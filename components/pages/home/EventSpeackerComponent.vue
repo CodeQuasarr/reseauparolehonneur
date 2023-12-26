@@ -16,89 +16,33 @@ defineProps({
                     <p class="uppercase mb-0 text-gray-300">REJOIGNEZ L'ÉVÉNEMENT</p>
                     <h2 class="text-white text-4xl font-semibold">Rencontrez les conférenciers</h2>
                 </div>
-                <div v-if="speakers" class="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-32">
-                    <div class="col-span-full md:col-span-1">
+                <div v-if="speakers.length" class="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-32">
+                    <div v-for="speaker in speaker" :key="speaker.firstName" class="col-span-full md:col-span-1">
                         <div class="card-speaker">
                             <img class="w-full rounded-0" src="https://preview.colorlib.com/theme/umeet/img/home/speaker-1.png" alt="">
                             <div class="speaker-footer bg-purple-900 bg-opacity-90 py-5 px-0 absolute bottom-0 left-0 w-full text-center">
-                                <h4 class="text-white text-2xl mb-3">John Léonar</h4>
-                                <p class="text-white text-base">Concepteur UX/UI Microsoft</p>
+                                <h4 class="text-white text-2xl mb-3">{{ speaker.firstName }} {{ speaker.lastName }}</h4>
+<!--                                <p class="text-white text-base">Concepteur UX/UI Microsoft</p>-->
                             </div>
-                            <div class="speaker-overlay bg-purple-800 bg-opacity-80 absolute top-0 left-0 w-full h-full opacity-0 transform -translate-y-60 transition-all duration-600 ease-in-out">
-                                <ul class="speaker-social absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2">
-                                    <li class="inline-block mr-4">
-                                        <a class="text-gray-400" href="#">
-                                            <Icon class="icon-overlay" name="formkit:facebook" />
-                                        </a>
-                                    </li>
-                                    <li class="inline-block mr-4">
-                                        <a class="text-gray-400" href="#">
-                                            <Icon class="icon-overlay" name="mdi:twitter-circle" />
-                                        </a>
-                                    </li>
-                                    <li class="inline-block">
-                                        <a class="text-gray-400" href="#">
-                                            <Icon class="icon-overlay" name="mdi:instagram" />
-                                        </a>
-                                    </li>
-                                </ul>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-span-full md:col-span-1">
-                        <div class="card-speaker">
-                            <img class="w-full rounded-0" src="https://preview.colorlib.com/theme/umeet/img/home/speaker-1.png" alt="">
-                            <div class="speaker-footer bg-purple-900 bg-opacity-90 py-5 px-0 absolute bottom-0 left-0 w-full text-center">
-                                <h4 class="text-white text-2xl mb-3">John Léonar</h4>
-                                <p class="text-white text-base">Concepteur UX/UI Microsoft</p>
-                            </div>
-                            <div class="speaker-overlay bg-purple-800 bg-opacity-80 absolute top-0 left-0 w-full h-full opacity-0 transform -translate-y-60 transition-all duration-600 ease-in-out">
-                                <ul class="speaker-social absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2">
-                                    <li class="inline-block mr-4">
-                                        <a class="text-gray-400" href="#">
-                                            <Icon class="icon-overlay" name="formkit:facebook" />
-                                        </a>
-                                    </li>
-                                    <li class="inline-block mr-4">
-                                        <a class="text-gray-400" href="#">
-                                            <Icon class="icon-overlay" name="mdi:twitter-circle" />
-                                        </a>
-                                    </li>
-                                    <li class="inline-block">
-                                        <a class="text-gray-400" href="#">
-                                            <Icon class="icon-overlay" name="mdi:instagram" />
-                                        </a>
-                                    </li>
-                                </ul>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-span-full md:col-span-1">
-                        <div class="card-speaker">
-                            <img class="w-full rounded-0" src="https://preview.colorlib.com/theme/umeet/img/home/speaker-1.png" alt="">
-                            <div class="speaker-footer bg-purple-900 bg-opacity-90 py-5 px-0 absolute bottom-0 left-0 w-full text-center">
-                                <h4 class="text-white text-2xl mb-3">John Léonar</h4>
-                                <p class="text-white text-base">Concepteur UX/UI Microsoft</p>
-                            </div>
-                            <div class="speaker-overlay bg-purple-800 bg-opacity-80 absolute top-0 left-0 w-full h-full opacity-0 transform -translate-y-60 transition-all duration-600 ease-in-out">
-                                <ul class="speaker-social absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2">
-                                    <li class="inline-block mr-4">
-                                        <a class="text-gray-400" href="#">
-                                            <Icon class="icon-overlay" name="formkit:facebook" />
-                                        </a>
-                                    </li>
-                                    <li class="inline-block mr-4">
-                                        <a class="text-gray-400" href="#">
-                                            <Icon class="icon-overlay" name="mdi:twitter-circle" />
-                                        </a>
-                                    </li>
-                                    <li class="inline-block">
-                                        <a class="text-gray-400" href="#">
-                                            <Icon class="icon-overlay" name="mdi:instagram" />
-                                        </a>
-                                    </li>
-                                </ul>
-                            </div>
+<!--                            <div class="speaker-overlay bg-purple-800 bg-opacity-80 absolute top-0 left-0 w-full h-full opacity-0 transform -translate-y-60 transition-all duration-600 ease-in-out">-->
+<!--                                <ul class="speaker-social absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2">-->
+<!--                                    <li class="inline-block mr-4">-->
+<!--                                        <a class="text-gray-400" href="#">-->
+<!--                                            <Icon class="icon-overlay" name="formkit:facebook" />-->
+<!--                                        </a>-->
+<!--                                    </li>-->
+<!--                                    <li class="inline-block mr-4">-->
+<!--                                        <a class="text-gray-400" href="#">-->
+<!--                                            <Icon class="icon-overlay" name="mdi:twitter-circle" />-->
+<!--                                        </a>-->
+<!--                                    </li>-->
+<!--                                    <li class="inline-block">-->
+<!--                                        <a class="text-gray-400" href="#">-->
+<!--                                            <Icon class="icon-overlay" name="mdi:instagram" />-->
+<!--                                        </a>-->
+<!--                                    </li>-->
+<!--                                </ul>-->
+<!--                            </div>-->
                         </div>
                     </div>
                 </div>
