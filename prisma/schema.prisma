@@ -7,6 +7,73 @@ datasource db {
     url      = env("DATABASE_URL")
 }
 
+model Evenement {
+    id        String   @id @default(auto()) @map("_id") @db.ObjectId
+    title     String
+    content   String
+    startDate DateTime
+    startTime String
+    address   String
+    picture   String?
+    users     Json[]   @default([])
+    createdAt DateTime @default(now())
+    updatedAt DateTime @updatedAt
+}
+
+model FailedLoginAttempts {
+    id        String @id @default(auto()) @map("_id") @db.ObjectId
+    userEmail String
+    attempts  Int
+}
+
+model LockoutInformation {
+    id           String   @id @default(auto()) @map("_id") @db.ObjectId
+    userEmail    String
+    lockoutUntil DateTime
+}
+
+model Payment {
+    id        String   @id @default(auto()) @map("_id") @db.ObjectId
+    userId    String   @db.ObjectId
+    amount    Int
+    event     Json
+    status    String
+    startDate DateTime
+    createdAt DateTime @default(now())
+    updatedAt DateTime @updatedAt
+}
+
+enum Role {
+    ADMIN
+    REDACTOR
+    SPEAKER
+    USER
+}
+
+model Session {
+    id           String    @id @default(auto()) @map("_id") @db.ObjectId
+    userId       String    @unique @db.ObjectId
+    user         User      @relation(fields: [userId], references: [id]) // relation one to one
+    refreshToken String
+    lastUsed     DateTime?
+    createdAt    DateTime  @default(now())
+    updatedAt    DateTime  @updatedAt
+}
+
+model Subscription {
+    id            String  @id @default(auto()) @map("_id") @db.ObjectId
+    userId        String  @unique @db.ObjectId
+    user          User    @relation(fields: [userId], references: [id])
+    stripeId      String  @unique
+    stripeStatus  String?
+    stripePriceId String?
+    quantity      Int?
+    trialEndsAt   Int?
+    endsAt        Int?
+    startDate     Int
+    lastEventDate Int
+}
+
 model User {
     id               String        @id @default(auto()) @map("_id") @db.ObjectId
     stripeCustomerId String?
@@ -33,60 +100,4 @@ model User {
     sessions         Session[]
     createdAt        DateTime      @default(now())
     updatedAt        DateTime      @updatedAt
-}
-
-model Evenement {
-    id        String   @id @default(auto()) @map("_id") @db.ObjectId
-    title     String
-    content   String
-    startDate DateTime
-    startTime String
-    address   String
-    picture   String?
-    users     Json[]   @default([])
-    createdAt DateTime @default(now())
-    updatedAt DateTime @updatedAt
-}
-
-enum Role {
-    ADMIN
-    REDACTOR
-    SPEAKER
-    USER
-}
-
-model Session {
-    id           String    @id @default(auto()) @map("_id") @db.ObjectId
-    userId       String    @unique @db.ObjectId
-    user         User      @relation(fields: [userId], references: [id]) // relation one to one
-    refreshToken String
-    lastUsed     DateTime?
-    createdAt    DateTime  @default(now())
-    updatedAt    DateTime  @updatedAt
-}
-
-model LockoutInformation {
-    id           String   @id @default(auto()) @map("_id") @db.ObjectId
-    userEmail    String
-    lockoutUntil DateTime
-}
-
-model FailedLoginAttempts {
-    id        String @id @default(auto()) @map("_id") @db.ObjectId
-    userEmail String
-    attempts  Int
-}
-
-model Subscription {
-    id            String  @id @default(auto()) @map("_id") @db.ObjectId
-    userId        String  @unique @db.ObjectId
-    user          User    @relation(fields: [userId], references: [id])
-    stripeId      String  @unique
-    stripeStatus  String?
-    stripePriceId String?
-    quantity      Int?
-    trialEndsAt   Int?
-    endsAt        Int?
-    startDate     Int
-    lastEventDate Int
 }
