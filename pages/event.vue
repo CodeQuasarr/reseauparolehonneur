@@ -12,6 +12,7 @@ onMounted(() => {
 
 import { FwbButton, FwbModal } from 'flowbite-vue'
 
+const appUrl: string = useRuntimeConfig().public.baseUrl;
 const isShowModal = ref(false)
 
 function closeModal () {
@@ -128,7 +129,7 @@ const payment = async (key: number) => {
                         <div class="grid grid-cols-1 xl:grid-cols-2 gap-10 items-center mb-10">
                             <div class="col-span-1">
                                 <div>
-                                    <img alt="" src="~/assets/images/events/07-10-2023.webp">
+                                    <img alt="" :src="`${appUrl}/_nuxt/assets/images/events/${event.picture}`" :alt="event.picture">>
                                 </div>
                             </div>
                             <div class="col-span-1">
@@ -147,16 +148,14 @@ const payment = async (key: number) => {
 
                                     <div class="flex mt-10">
                                         <div class="w-full">
-                                            <fwb-button @click="showModal(); eventId = event.id">
-                                                Open modal
+                                            <fwb-button
+                                                class="relative inline-flex items-center justify-center px-10 py-4 overflow-hidden font-medium uppercase tracking-tighter text-black hover:text-white border border-[#331391] rounded-lg group"
+                                                @click="showModal(); eventId = event.id"
+                                            >
+                                                <span
+                                                    class="absolute w-0 h-0 transition-all duration-500 ease-out bg-[#331391] ext-white rounded-full group-hover:w-56 group-hover:h-56"></span>
+                                                <span class="relative">ACHETER UN BILLET</span>
                                             </fwb-button>
-<!--                                            <button data-modal-target="choose-payment-type-modal"-->
-<!--                                                    data-modal-toggle="choose-payment-type-modal" class="relative inline-flex items-center justify-center px-10 py-4 overflow-hidden font-medium uppercase tracking-tighter text-black hover:text-white border border-[#331391] rounded-lg group"-->
-<!--                                                    @click="eventId = event.id">-->
-<!--                                                <span-->
-<!--                                                    class="absolute w-0 h-0 transition-all duration-500 ease-out bg-[#331391] ext-white rounded-full group-hover:w-56 group-hover:h-56"></span>-->
-<!--                                                <span class="relative">ACHETER UN BILLET</span>-->
-<!--                                            </button>-->
                                         </div>
                                     </div>
                                 </div>

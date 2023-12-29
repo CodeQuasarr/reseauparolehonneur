@@ -21,7 +21,7 @@ export default defineEventHandler(async (event) => {
             }
             data.picture = fileName;
         } else {
-            data.picture = 'default.png';
+            data.picture = 'default.jpg';
         }
 
         data.startDate = new Date(data.startDate);
