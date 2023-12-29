@@ -2,10 +2,11 @@
 import UseFetchWithToken from "~/composables/useFetchWithToken";
 const route = useRoute()
 const sessionId = ref(route.query.session_id ? route.query.session_id : '')
+const eventId = ref(route.query.eventId ? route.query.eventId : '')
 
 if (sessionId.value) {
 
-    const {data, error} = await UseFetchWithToken<any>(`/api/protected/stripe/portalSession?sessionId=${sessionId.value}`, {
+    const {data, error} = await UseFetchWithToken<any>(`/api/protected/stripe/session?sessionId=${sessionId.value}&eventId=${eventId}`, {
         method: 'GET',
     });
 

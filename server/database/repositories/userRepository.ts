@@ -93,7 +93,6 @@ export async function deleteUser(id: string) {
 }
 
 export async function updateStripeCustomerId(data: IUser) {
-    console.log("eeeeeeeeeeeeee")
     return prisma.user.update({
         where: {
             id: data.id,

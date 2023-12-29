@@ -23,9 +23,10 @@ class StripeService {
         return false;
     }
 
-    public static async getSubscribeUrl(lookupKey: string, user: IUser): Promise<SubscribePostResponse> {
+    public static async getPaymentUrl(lookupKey: string, user: IUser, eventId: string, mode: "subscription"|"payment"): Promise<SubscribePostResponse> {
 
         const customerEmail = user.email;
+
 
         const price = await stripe.prices.retrieve(
             lookupKey
@@ -35,50 +36,7 @@ class StripeService {
         if (!user.stripeCustomerId) {
             const customer = await stripe.customers.create({
                 email: customerEmail,
-                name: user.lastName + ' ' + user.firstName,
-
-            });
-            user.stripeCustomerId = customer.id;
-            shouldUpdateUser = true;
-        }
-
-
-        const session = await stripe.checkout.sessions.create({
-            billing_address_collection: 'auto',
-            line_items: [
-                {
-                    price: price.id,
-                    quantity: 1,
-
-                },
-            ],
-            mode: 'subscription',
-            success_url: `${useRuntimeConfig().public.baseUrl}/subscribe/success?session_id={CHECKOUT_SESSION_ID}`,
-            cancel_url: `${useRuntimeConfig().public.baseUrl}/subscribe/cancel`,
-            customer: user.stripeCustomerId
-        });
-
-        if (!session.url) {
-            throw new Error('No url in session');
-        }
-
-
-        return {url: session.url, user, shouldUpdateUser}
-    }
-
-    public static async paymentIntent(lookupKey: string, user: IUser) {
-        const customerEmail = user.email;
-
-        const price = await stripe.prices.retrieve(
-            lookupKey
-        );
-
-        let shouldUpdateUser = false;
-
-        if (!user.stripeCustomerId) {
-            const customer = await stripe.customers.create({
-                email: customerEmail,
-                name: user.lastName + ' ' + user.firstName,
+                name: `${user.firstName} ${user.lastName}`,
 
             });
             user.stripeCustomerId = customer.id;
@@ -94,17 +52,19 @@ class StripeService {
 
                 },
             ],
-            mode: 'payment',
-            success_url: `${useRuntimeConfig().public.baseUrl}/subscribe/success?session_id={CHECKOUT_SESSION_ID}`,
+            mode: mode,
+            success_url: `${useRuntimeConfig().public.baseUrl}/subscribe/success?session_id={CHECKOUT_SESSION_ID}&eventId={eventId}`,
             cancel_url: `${useRuntimeConfig().public.baseUrl}/subscribe/cancel`,
             customer: user.stripeCustomerId
         });
 
+        console.log('customerEmail', customerEmail)
         if (!session.url) {
             throw new Error('No url in session');
         }
-        return {url: session.url, user, shouldUpdateUser}
 
+
+        return {url: session.url, user, shouldUpdateUser}
     }
 
 }

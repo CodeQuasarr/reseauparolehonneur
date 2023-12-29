@@ -14,11 +14,11 @@ const props = defineProps({
 const user = useUserStore()
 const subscribe = async () => {
 
-    if (!props.eventId) {
-        throw {
-            message: 'Event id is required'
-        }
-    }
+    // if (!props.eventId) {
+    //     throw {
+    //         message: 'Event id is required'
+    //     }
+    // }
     if (!useTokenStore().isLogged) {
         navigateTo('/login')
     }

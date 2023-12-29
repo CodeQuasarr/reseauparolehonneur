@@ -42,20 +42,13 @@ const payment = async (key: number, eventId: string) => {
         navigateTo('/login')
     }
 
-    const {data, error} = await useFetch<any>('api/protected/payment', {
+    const {data, error} = await useFetch<any>('api/protected/payments/init', {
         method: 'POST',
         body: {paymentKey: key, eventId: eventId}
     })
 
     if (data.value) {
-        navigateTo(data.value.url,
-            {
-                external: true,
-                open: {
-                    target: '_blank'
-                }
-            }
-        )
+        navigateTo(data.value.url, { external: true, open: { target: '_blank' } })
     }
 }
 
