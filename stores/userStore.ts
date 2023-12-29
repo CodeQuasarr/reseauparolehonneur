@@ -22,7 +22,7 @@ export const useUserStore = defineStore('user', {
         getUser: (state): IUser => { return state.user || {} },
         isAdmin: (state): boolean => { return state.user.role === 'ADMIN'; },
         isUser: (state): boolean => { return state.user.role === 'USER'; },
-        isSubscriber: (state): boolean => { return state.user.stripeCustomerId !== ''; },
+        isSubscriber: (state): boolean => { return state.user.stripeCustomerId !== '' && state.user.stripeCustomerId !== null; },
     },
     persist: true,
 });

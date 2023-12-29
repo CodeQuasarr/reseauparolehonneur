@@ -36,10 +36,11 @@ if (data.value) {
     events.value = data.value?.events
 }
 
-const payment = async (key: number, eventId: string) => {
+const payment = async (key: number) => {
 
     if (!useTokenStore().isLogged) {
         navigateTo('/login')
+        return;
     }
 
     const {data, error} = await useFetch<any>('api/protected/payments/init', {
@@ -48,7 +49,8 @@ const payment = async (key: number, eventId: string) => {
     })
 
     if (data.value) {
-        navigateTo(data.value.url, { external: true, open: { target: '_blank' } })
+        navigateTo(data.value.url, { external: true })
+        return;
     }
 }
 
@@ -228,7 +230,7 @@ const payment = async (key: number, eventId: string) => {
                     <fwb-button  @click="closeModal" color="alternative">
                         Annuler
                     </fwb-button>
-                    <fwb-button v-if="choice === 1 || choice === 2" @click="closeModal; payment(!user.isSubscriber ? 3 : 2, eventId)" color="green">
+                    <fwb-button v-if="choice === 1 || choice === 2" @click="closeModal; payment(!user.isSubscriber ? 3 : 2)" color="green">
                         Payer
                     </fwb-button>
                 </div>

@@ -35,8 +35,9 @@ model LockoutInformation {
 model Payment {
     id        String   @id @default(auto()) @map("_id") @db.ObjectId
     userId    String   @db.ObjectId
-    amount    Int
+    eventId   String   @db.ObjectId
     event     Json
+    amount    Int
     status    String
     startDate DateTime
     createdAt DateTime @default(now())

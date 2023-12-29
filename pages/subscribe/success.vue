@@ -4,20 +4,22 @@ const route = useRoute()
 const sessionId = ref(route.query.session_id ? route.query.session_id : '')
 const eventId = ref(route.query.eventId ? route.query.eventId : '')
 
-if (sessionId.value) {
 
-    const {data, error} = await UseFetchWithToken<any>(`/api/protected/stripe/session?sessionId=${sessionId.value}&eventId=${eventId}`, {
+if (sessionId.value) {
+    console.log(sessionId.value)
+    console.log(eventId.value)
+    const {data, error} = await UseFetchWithToken<any>(`/api/protected/payments/session?sessionId=${sessionId.value}&eventId=${eventId.value}`, {
         method: 'GET',
     });
 
     if (data.value) {
 
-        // window.location.href = data.value.url
+        console.log(data.value)
     }
 
     if (error.value) {
 
-        // throw error.value
+        console.log(error.value)
     }
 }
 </script>

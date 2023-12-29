@@ -14,13 +14,9 @@ const props = defineProps({
 const user = useUserStore()
 const subscribe = async () => {
 
-    // if (!props.eventId) {
-    //     throw {
-    //         message: 'Event id is required'
-    //     }
-    // }
     if (!useTokenStore().isLogged) {
         navigateTo('/login')
+        return;
     }
 
     const {data, error} = await useFetch<any>('api/protected/subscribe', {
@@ -37,13 +33,16 @@ const subscribe = async () => {
                 }
             }
         )
+        return;
     }
 }
 
 const payment = async (key: number) => {
 
+    console.log()
     if (!useTokenStore().isLogged) {
         navigateTo('/login')
+        return;
     }
 
     const {data, error} = await useFetch<any>('api/protected/payment', {
@@ -60,6 +59,7 @@ const payment = async (key: number) => {
                 }
             }
         )
+        return;
     }
 }
 

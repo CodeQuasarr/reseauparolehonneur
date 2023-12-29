@@ -53,7 +53,7 @@ class StripeService {
                 },
             ],
             mode: mode,
-            success_url: `${useRuntimeConfig().public.baseUrl}/subscribe/success?session_id={CHECKOUT_SESSION_ID}&eventId={eventId}`,
+            success_url: `${useRuntimeConfig().public.baseUrl}/subscribe/success?session_id={CHECKOUT_SESSION_ID}&eventId=${eventId}`,
             cancel_url: `${useRuntimeConfig().public.baseUrl}/subscribe/cancel`,
             customer: user.stripeCustomerId
         });

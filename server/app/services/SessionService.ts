@@ -131,6 +131,7 @@ class SessionService {
                         email: true,
                         avatar: true,
                         role: true,
+                        stripeCustomerId: true,
                     }
                 }
             }

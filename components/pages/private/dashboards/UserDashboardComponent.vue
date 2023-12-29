@@ -2,15 +2,13 @@
 
 const payments = ref<any>(null)
 
-if (useUserStore().isSubscriber) {
-    const {data, error} = await useFetchWithToken<any>('/api/protected/stripe/payment', {
-        method: 'GET',
-    })
-    payments.value = data.value
+const {data, error} = await useFetchWithToken<any>('/api/protected/payments/purchases', {
+    method: 'GET',
+})
+payments.value = data.value
 
-    console.log(data.value)
-    console.log(error.value)
-}
+console.log('data.value: ', data.value)
+console.log('error.value; ', error.value)
 
 
 
