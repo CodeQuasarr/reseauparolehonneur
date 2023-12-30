@@ -7,11 +7,6 @@ const {data, error} = await useFetchWithToken<any>('/api/protected/payments/purc
 })
 payments.value = data.value
 
-console.log('data.value: ', data.value)
-console.log('error.value; ', error.value)
-
-
-
 </script>
 
 <template>
@@ -86,7 +81,9 @@ console.log('error.value; ', error.value)
                                 </td>
                                 <td class="max-w-sm p-4 overflow-hidden text-base font-normal text-gray-500 truncate xl:max-w-xs dark:text-gray-400">{{ payment.amount }}</td>
                                 <td class="p-4 text-base font-medium text-gray-900 whitespace-nowrap dark:text-white">{{ payment.startDate }}</td>
-                                <td class="p-4 text-base font-medium text-gray-900 whitespace-nowrap dark:text-white">{{ payment.status }}</td>
+                                <td class="p-4 text-base font-medium text-gray-900 whitespace-nowrap dark:text-white">
+                                    <span class="bg-green-100 text-green-800 text-xs font-medium me-2 px-2.5 py-0.5 rounded dark:bg-green-900 dark:text-green-300">{{ payment.status }}</span>
+                                </td>
                                <td class="p-4 space-x-2 whitespace-nowrap">
                                     eezfzf
                                 </td>

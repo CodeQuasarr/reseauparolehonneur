@@ -23,7 +23,7 @@ class StripeService {
         return false;
     }
 
-    public static async getPaymentUrl(lookupKey: string, user: IUser, eventId: string, mode: "subscription"|"payment"): Promise<SubscribePostResponse> {
+    public static async getPaymentUrl(lookupKey: string, user: IUser, mode: "subscription"|"payment", successUrl: string): Promise<SubscribePostResponse> {
 
         const customerEmail = user.email;
 
@@ -53,7 +53,7 @@ class StripeService {
                 },
             ],
             mode: mode,
-            success_url: `${useRuntimeConfig().public.baseUrl}/subscribe/success?session_id={CHECKOUT_SESSION_ID}&eventId=${eventId}`,
+            success_url: successUrl,
             cancel_url: `${useRuntimeConfig().public.baseUrl}/subscribe/cancel`,
             customer: user.stripeCustomerId
         });

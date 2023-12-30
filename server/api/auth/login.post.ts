@@ -1,7 +1,7 @@
 import validateLoginRequest from "~/server/app/formRequests/LoginRequest";
 import {H3Event} from "h3";
 import UserService from "~/server/app/services/userService";
-import {getUserByEmail} from "~/server/database/repositories/userRepository";
+import {getUserByEmail, isSubscribed} from "~/server/database/repositories/userRepository";
 import {User} from "@prisma/client";
 import SessionService from "~/server/app/services/SessionService";
 
@@ -22,7 +22,13 @@ export default eventHandler(async (event: H3Event) => {
         const session = await SessionService.setSession(userInfo?.id as string, refreshToken);
 
         const {user, accessToken} = await SessionService.makeSessionCookie(event, authToken);
-
+        if (!user) {
+            throw new Error('User not found');
+        }
+        const userIsSubscribed = await isSubscribed(user.id);
+        if (!userIsSubscribed) {
+            user.stripeCustomerId = null;
+        }
 
         return {
             user: user,

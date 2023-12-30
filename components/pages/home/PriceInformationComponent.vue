@@ -2,7 +2,6 @@
 
 import {navigateTo} from "#app";
 import {useTokenStore} from "~/stores/tokenStore";
-import {useEvenementStore} from "~/stores/evenementStore";
 
 const props = defineProps({
     eventId: {
@@ -19,9 +18,9 @@ const subscribe = async () => {
         return;
     }
 
-    const {data, error} = await useFetch<any>('api/protected/subscribe', {
+    const {data, error} = await useFetch<any>('/api/protected/payments/init', {
         method: 'POST',
-        body: {paymentKey: 1, eventId: props.eventId}
+        body: {paymentKey: 1, eventId: props.eventId, mode: 'subscription'}
     })
 
     if (data.value) {
@@ -151,9 +150,9 @@ const payment = async (key: number) => {
                             <h5 class="font-medium">Apéro dînatoire</h5>
                         </li>
                     </ul>
-                    <div v-if="useEvenementStore().getCanPay" class="flex justify-center">
-                        <button @click="payment(!user.isSubscriber ? 3 : 2)" class="price-btn py-3 px-6 font-medium border rounded-md border-purple-500 text-purple-500 hover:bg-red-500 hover:text-white hover:border-red-500 transition-all duration-500">Get Basic</button>
-                    </div>
+<!--                    <div v-if="useEvenementStore().getCanPay" class="flex justify-center">-->
+<!--                        <button @click="payment(!user.isSubscriber ? 3 : 2)" class="price-btn py-3 px-6 font-medium border rounded-md border-purple-500 text-purple-500 hover:bg-red-500 hover:text-white hover:border-red-500 transition-all duration-500">Get Basic</button>-->
+<!--                    </div>-->
                 </div>
             </div>
 
@@ -184,9 +183,9 @@ const payment = async (key: number) => {
                             <h5 class="font-medium">Apéro dînatoire</h5>
                         </li>
                     </ul>
-                    <div v-if="useEvenementStore().getCanPay" class="flex justify-center">
-                        <button @click="payment(4)" class="price-btn py-3 px-6 font-medium border rounded-md border-purple-500 text-purple-500 hover:bg-red-500 hover:text-white hover:border-red-500 transition-all duration-500">Get Basic</button>
-                    </div>
+<!--                    <div v-if="useEvenementStore().getCanPay" class="flex justify-center">-->
+<!--                        <button @click="payment(4)" class="price-btn py-3 px-6 font-medium border rounded-md border-purple-500 text-purple-500 hover:bg-red-500 hover:text-white hover:border-red-500 transition-all duration-500">Get Basic</button>-->
+<!--                    </div>-->
                 </div>
             </div>
 

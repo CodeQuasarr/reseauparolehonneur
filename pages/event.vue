@@ -46,7 +46,7 @@ const payment = async (key: number) => {
 
     const {data, error} = await useFetch<any>('api/protected/payments/init', {
         method: 'POST',
-        body: {paymentKey: key, eventId: eventId}
+        body: {paymentKey: key, eventId: eventId, mode: 'payment'}
     })
 
     if (data.value) {

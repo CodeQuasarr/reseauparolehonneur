@@ -13,7 +13,13 @@ export default defineEventHandler(async event => {
             throw new Error('User not found');
         }
 
-        const {url, user: customer, shouldUpdateUser} = await StripeService.getPaymentUrl(lookupKey as string, user, data.eventId, 'payment');
+        let successUrl: string = `${useRuntimeConfig().public.baseUrl}/subscribe/success?session_id={CHECKOUT_SESSION_ID}`;
+
+        if (data.mode === 'payment') {
+            successUrl = `${useRuntimeConfig().public.baseUrl}/subscribe/success?session_id={CHECKOUT_SESSION_ID}&eventId=${data.eventId}`;
+        }
+
+        const {url, user: customer, shouldUpdateUser} = await StripeService.getPaymentUrl(lookupKey as string, user, data.mode, successUrl);
 
         console.log('eeeeeeeeeeee', user)
 

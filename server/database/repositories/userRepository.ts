@@ -125,3 +125,12 @@ export async function getAllSpeackers(): Promise<IUser[] | null> {
     });
 }
 
+export async function isSubscribed(id: string): Promise<boolean> {
+    const subscription = await prisma.subscription.findFirst({
+        where: {
+            userId: id,
+        },
+    });
+    return !!subscription;
+}
+
