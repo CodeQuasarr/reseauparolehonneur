@@ -11,7 +11,7 @@ defineProps({
 
 <template>
     <div>
-        <section v-motion="scrollFadeIn()" class="relative px-4 bg-gray-200 py-36">
+        <section class="relative px-4 bg-gray-200 py-36">
             <div class="w-full xl:w-8/12 mx-auto grid grid-cols-2 gap-6">
                 <div v-if="evenement" class="col-span-full">
                     <div class="mb-50">

@@ -106,7 +106,7 @@ const payment = async (key: number) => {
             </div>
         </section>
 
-        <section v-motion="scrollFadeIn()" class="p-2 w-full flex items-center justify-center my-20">
+        <section class="p-2 w-full flex items-center justify-center my-20">
             <div class="container mx-auto">
                 <div class="grid grid-cols-1">
                     <div class="w-full">

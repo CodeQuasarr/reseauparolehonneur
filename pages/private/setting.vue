@@ -76,7 +76,7 @@ try {
                                             20,00 € par mois
                                         </p>
                                         <p class="text-sm font-normal text-gray-500 truncate dark:text-gray-400">
-                                            Votre abonnement sera renouvelé le <strong>{{
+                                            Le renouvellement de votre abonnement est prévu pour le <strong>{{
                                                 subscriptionRenewal
                                             }}</strong>.
                                         </p>

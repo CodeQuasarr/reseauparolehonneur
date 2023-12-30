@@ -30,7 +30,7 @@ if(data.value) {
     nextEvent.value = data.value.nextEvent;
     if (nextEvent.value && nextEvent.value.users) {
         startTime.value = nextEvent.value.startTime;
-        startDate.value = nextEvent.value.startTime;
+        startDate.value = nextEvent.value.startDate;
         address.value = nextEvent.value.address;
         id.value = nextEvent.value.id;
         speakers.value = nextEvent.value.users;
@@ -54,8 +54,6 @@ if(data.value) {
         <EventSpeackerComponent :speakers="speakers" />
         <!-- Section 5 -->
         <PriceInformationComponent :eventId="id" />
-
-
     </div>
 </template>
 

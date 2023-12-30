@@ -2,11 +2,8 @@
 
 import NavbarComponent from "~/components/templates/NavbarComponent.vue";
 import FooterComponent from "~/components/templates/FooterComponent.vue";
-import {initFlowbite} from "flowbite";
 
-onMounted(() => {
-    initFlowbite();
-})
+
 </script>
 
 <template>

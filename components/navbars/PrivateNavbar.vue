@@ -2,6 +2,7 @@
 import {useGlobalStore} from "~/stores/globalStore";
 import { initFlowbite } from 'flowbite'
 import {useUserStore} from "~/stores/userStore";
+import {navigateTo} from "#app";
 
 const user = useUserStore().getUser
 const appUrl = useRuntimeConfig().public.baseUrl
@@ -13,6 +14,8 @@ const logout = async () => {
     await useFetch('/api/auth/logout', {
         method: 'GET',
     });
+
+    return navigateTo('/login')
 }
 
 // initialize components based on data attribute selectors
@@ -75,8 +78,8 @@ onMounted(() => {
                         <NuxtLink to="/private/setting" class="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">Settings</NuxtLink>
                     </li>
                 </ul>
-                <div class="py-2">
-                    <button @click="logout()" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 dark:hover:bg-gray-600 dark:text-gray-200 dark:hover:text-white">Sign out</button>
+                <div class="py-2 w-full">
+                    <button @click="logout()" class="w-full block px-4 py-2 text-sm text-gray-700 hover:bg-red-100">Sign out</button>
                 </div>
             </div>
 
