@@ -1,5 +1,29 @@
 <script lang="ts" setup>
-import {fadeIn, scrollFadeIn} from "~/utils/animations";
+import {fadeIn} from "~/utils/animations";
+import {ErrorMessage, Field, Form} from "vee-validate";
+
+
+const captchaResultMessage = ref<string | null>(null);
+const message = ref<string>('');
+const lastName = ref<string>('');
+const firstName = ref<string>('');
+const subject = ref<string>('');
+
+
+const handleExpectedResult = (payload: any) => {
+    if (!payload) {
+        captchaResultMessage.value = 'Le résultat est incorrecte';
+        return;
+    } else {
+        captchaResultMessage.value = null;
+    }
+
+}
+
+const sendMail = () => {
+
+}
+
 </script>
 
 <template>
@@ -62,61 +86,81 @@ import {fadeIn, scrollFadeIn} from "~/utils/animations";
                 </div>
                 <div class="grid grid-cols-3 gap-10">
                     <div class="col-span-2">
-                        <form >
+                        <Form @submit="sendMail()">
                             <div class="mb-6">
-                                    <textarea
-                                        class=" w-full rounded py-3 px-[14px] text-body-color text-base border border-gray-400 resize-none outline-none focus-visible:shadow-none focus:border-black"
-                                        placeholder="Saisir un message" rows="6">
-                                    </textarea>
+                                <Field
+                                    v-model="message"
+                                    as="textarea"
+                                    class=" w-full rounded py-3 text-body-color text-base border border-gray-400 resize-none outline-none focus-visible:shadow-none focus:border-black"
+                                    name="message"
+                                    placeholder="Saisir un message"
+                                    rows="6"
+                                />
+                                <ErrorMessage class="text-red-500" name="message"/>
                             </div>
 
                             <div class="mb-6 grid grid-cols-2 gap-20">
                                 <div class="col-span-1">
                                     <div class="mb-6">
-                                        <input
+                                        <Field
+                                            v-model="lastName"
                                             class=" w-full rounded py-3 px-[14px] text-body-color text-base border border-gray-400 outline-none focus-visible:shadow-none focus:border-black "
+                                            name="lastName"
                                             placeholder="Votre nom"
                                             type="text"
                                         />
+                                        <ErrorMessage class="text-red-500" name="lastName"/>
                                     </div>
                                 </div>
                                 <div class="col-span-1">
                                     <div class="mb-6">
-                                        <input
+                                        <Field
+                                            v-model="firstName"
                                             class=" w-full rounded py-3 px-[14px] text-body-color text-base border border-gray-400 outline-none focus-visible:shadow-none focus:border-black "
+                                            name="firstName"
                                             placeholder="Votre prénom"
                                             type="text"
                                         />
+                                        <ErrorMessage class="text-red-500" name="firstName"/>
                                     </div>
                                 </div>
                             </div>
 
                             <div class="mb-6">
-                                <input
+                                <Field
+                                    v-model="subject"
                                     class=" w-full rounded py-3 px-[14px] text-body-color text-base border border-gray-400 outline-none focus-visible:shadow-none focus:border-black "
+                                    name="subject"
                                     placeholder="Votre sujet"
                                     type="text"
                                 />
+                                <ErrorMessage class="text-red-500" name="subject"/>
                             </div>
                             <div class="mb-6">
-                                <button class="relative inline-flex items-center justify-center px-10 py-4 overflow-hidden font-medium uppercase tracking-tighter text-black hover:text-white border border-[#331391] rounded-lg group">
-                                    <span class="absolute w-0 h-0 transition-all duration-500 ease-out bg-[#331391] ext-white rounded-full group-hover:w-56 group-hover:h-56"></span>
+                                <Captcha @expectedResult="handleExpectedResult"/>
+                                <div v-if="captchaResultMessage" class="text-red-500"> {{ captchaResultMessage }}</div>
+                            </div>
+                            <div class="mb-6">
+                                <button
+                                    class="relative inline-flex items-center justify-center px-10 py-4 overflow-hidden font-medium uppercase tracking-tighter text-black hover:text-white border border-[#331391] rounded-lg group">
+                                    <span
+                                        class="absolute w-0 h-0 transition-all duration-500 ease-out bg-[#331391] ext-white rounded-full group-hover:w-56 group-hover:h-56"></span>
                                     <span class="relative">ACHETER UN BILLET</span>
                                 </button>
                             </div>
-                        </form>
+                        </Form>
                     </div>
 
                     <div class="col-span-1">
                         <ul>
                             <li class=" mb-5 text-base text-black leading-10">
                                     <span class="text-[#6a6b7c] me-2">
-                                        <Icon name="ph:house-line-light" size="40" />
+                                        <Icon name="ph:house-line-light" size="40"/>
                                     </span> Siège Social : Bordeaux, France
                             </li>
                             <li class="text-base text-black  leading-10">
                                     <span class="text-[#6a6b7c] me-2">
-                                        <Icon name="ion:ipad" size="40" />
+                                        <Icon name="ion:ipad" size="40"/>
                                     </span> (+33) 6 52 50 50 50 <br> <span class="text-[#6a6b7c]">Du lundi au vendredi de 9h à 18h</span>
                             </li>
                         </ul>
