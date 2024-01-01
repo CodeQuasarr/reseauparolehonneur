@@ -1,7 +1,7 @@
 module.exports = {
     apps: [
         {
-            name: 'reseauparolehonneur',
+            name: 'my-nuxt-app-rph',
             exec_mode: 'cluster',
             instances: 'max',
             script: './.output/server/index.mjs'
