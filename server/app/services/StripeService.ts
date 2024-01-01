@@ -58,7 +58,6 @@ class StripeService {
             customer: user.stripeCustomerId
         });
 
-        console.log('customerEmail', customerEmail)
         if (!session.url) {
             throw new Error('No url in session');
         }

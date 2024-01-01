@@ -13,9 +13,6 @@ export default defineEventHandler(async (event) => {
     const checkoutSession = await stripe.checkout.sessions.retrieve(session_id);
     const subscription = await stripe.subscriptions.retrieve(checkoutSession.subscription as string);
 
-    console.log('subscription', subscription)
-
-
 
     await prisma.subscription.upsert({
         where: {stripeId: subscription.id},
@@ -41,7 +38,6 @@ export default defineEventHandler(async (event) => {
         }
     })
 
-    console.log('subscription.id', subscription)
 
 
 });

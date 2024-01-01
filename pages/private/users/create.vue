@@ -59,7 +59,6 @@ const handleFileUpload = (event: { target: { files: any[]; }; }) => {
 }
 
 const createUser = async () => {
-    console.log('eeeeeeeeeeeeeeeeeeeeeeeeeee')
     try {
         loading.value = true
         const {data, error} = await useFetchWithToken<any>('/api/protected/users', {

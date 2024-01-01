@@ -12,9 +12,6 @@ export default defineEventHandler(async (event) => {
     const sessionId = String(getQuery(event).sessionId);
     const eventId = String(getQuery(event).eventId)
 
-    console.log('session_id', sessionId)
-    console.log('eventId', eventId)
-
 
     if (eventId) {
         const user= event.context.user;
@@ -52,9 +49,6 @@ export default defineEventHandler(async (event) => {
                 }
             });
 
-            console.log('Last purchase:', payment);
-            console.log('Price:', price);
-            console.log('Date:', date.toISOString());
         } else {
             console.log('No purchases found.');
         }
@@ -67,9 +61,6 @@ export default defineEventHandler(async (event) => {
     if ( sessionId ) {
         const checkoutSession = await stripe.checkout.sessions.retrieve(sessionId);
         const subscription = await stripe.subscriptions.retrieve(checkoutSession.subscription as string);
-
-        console.log('subscription', subscription)
-
 
 
         await prisma.subscription.upsert({

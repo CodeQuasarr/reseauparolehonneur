@@ -45,7 +45,6 @@ const checkCaptcha = () => {
                 v-model="userInput"
             />
         </div>
-        <div @click="checkCaptcha">Submit</div>
     </div>
 </template>
 

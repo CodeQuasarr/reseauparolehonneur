@@ -6,8 +6,6 @@ const eventId = ref(route.query.eventId ? route.query.eventId : '')
 
 
 if (sessionId.value) {
-    console.log(sessionId.value)
-    console.log(eventId.value)
     const {data, error} = await UseFetchWithToken<any>(`/api/protected/payments/session?sessionId=${sessionId.value}&eventId=${eventId.value}`, {
         method: 'GET',
     });
@@ -19,7 +17,7 @@ if (sessionId.value) {
 
     if (error.value) {
 
-        console.log(error.value)
+        console.error(error.value)
     }
 }
 </script>

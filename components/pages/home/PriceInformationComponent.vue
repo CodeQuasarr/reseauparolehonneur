@@ -38,7 +38,6 @@ const subscribe = async () => {
 
 const payment = async (key: number) => {
 
-    console.log()
     if (!useTokenStore().isLogged) {
         navigateTo('/login')
         return;

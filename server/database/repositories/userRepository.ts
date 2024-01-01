@@ -12,6 +12,10 @@ export async function getUserByEmail(emailOrEmail: string): Promise<User|null> {
 }
 
 export async function createUser(data: any): Promise<User> {
+    data = {
+        ...data,
+        isVerified: true,
+    }
     return prisma.user.create({
         data
     });

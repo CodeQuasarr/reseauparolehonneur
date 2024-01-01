@@ -52,7 +52,6 @@ const {data, error} = await UseFetchWithToken<any>(`/api/protected/users/${props
     method: 'GET',
 });
 
-console.log('data.value', props.userId)
 if (error.value) {
 
 }

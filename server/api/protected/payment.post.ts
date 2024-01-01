@@ -17,13 +17,10 @@ export default defineEventHandler(async event => {
 
         const {url, user: customer, shouldUpdateUser} = await StripeService.paymentIntent(lookupKey as string, user);
 
-        console.log("shouldUpdateUser", shouldUpdateUser)
         if (shouldUpdateUser) {
             await updateStripeCustomerId(customer);
         }
 
-        console.log("zzzzzzzzzzzzzzzzzzzzz", lookupKey)
-        console.log('url', url)
 
         return {url}
 

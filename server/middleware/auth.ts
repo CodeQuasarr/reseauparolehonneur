@@ -28,7 +28,6 @@ export default defineEventHandler(async (event) => {
 
         deleteCookie(event, 'authToken');
         deleteCookie(event, 'user');
-        console.log('no cookie')
         // unauthorize
         // return sendError(event, createError({statusCode: 401, statusMessage: 'Unauthorized', message: 'login'}))
     }

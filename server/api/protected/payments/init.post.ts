@@ -21,9 +21,7 @@ export default defineEventHandler(async event => {
 
         const {url, user: customer, shouldUpdateUser} = await StripeService.getPaymentUrl(lookupKey as string, user, data.mode, successUrl);
 
-        console.log('eeeeeeeeeeee', user)
 
-        console.log('url', url)
         if (shouldUpdateUser) {
             await updateStripeCustomerId(customer);
         }

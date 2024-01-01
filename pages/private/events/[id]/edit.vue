@@ -38,7 +38,6 @@ const {data, error} = await UseFetchWithToken<any>(`/api/protected/events/${rout
 if (error.value) {
     throw error.value
 } else if (data.value) {
-    console.log('evenement.value', evenement.value)
     evenement.value = data.value
     evenement.value.startDate = convertDateToString(data.value.startDate)
 } else {
@@ -84,8 +83,6 @@ const updateInformation = async () => {
             method: 'PUT',
             body: evenement.value
         });
-
-        console.log(data, error)
 
         if (data.value) {
             evenement.value.picture = data.value.picture

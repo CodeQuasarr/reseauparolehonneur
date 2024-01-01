@@ -15,9 +15,9 @@ export default defineEventHandler(async (event: H3Event) => {
                 subscriptionRenewal: null
             };
         }
-
-        console.log('event.context.user', event.context.user)
-        console.log('HelperService.convertNumberToHour', HelperService.convertNumberToHours(subscriber.lastEventDate))
+        //
+        // console.log('event.context.user', event.context.user)
+        // console.log('HelperService.convertNumberToHour', HelperService.convertNumberToHours(subscriber.lastEventDate))
         return {
             userId: user.id,
             subscriptionRenewal: HelperService.convertNumberToHours(subscriber.lastEventDate),

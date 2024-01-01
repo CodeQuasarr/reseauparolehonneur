@@ -11,7 +11,6 @@ import {useEvenementStore} from "~/stores/evenementStore";
                 <div class="text-center pb-16">
                     <p class="uppercase mb-0 text-[#64676c]">REJOIGNEZ L'ÉVÉNEMENT</p>
                     <h2 class="text-[#331391] text-4xl font-semibold">Pourquoi rejoindre Réseau PH?</h2>
-                    <img src="img/home/section-style.png" alt="">
                 </div>
                 <div class="flex flex-wrap justify-around">
                     <div class="m-full xl:w-[297px] mb-5 xl:mb-0 text-center">

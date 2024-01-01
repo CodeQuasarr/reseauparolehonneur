@@ -21,7 +21,6 @@ export default defineEventHandler(async (event) => {
             startDate: HelperService.convertNumberToHours(payment.created),
             status: payment.status,
         }));
-        console.log('Paiements récupérés :', payments.data);
 
         return formattedPayments;
     } catch (error) {

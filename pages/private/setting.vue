@@ -21,17 +21,16 @@ try {
     });
 
     if (data.value) {
-        console.log('data.value', data.value)
         subscriptionRenewal.value = data.value.subscriptionRenewal;
         userId.value = data.value.userId
     }
 
     if (error.value) {
-        console.log('error.value', error.value)
+        console.error('error.value', error.value)
         // throw error.value
     }
 } catch (e) {
-    console.log('e', e)
+    console.error('e', e)
 } finally {
     loading.value = false
 }
