@@ -6,6 +6,8 @@ defineProps({
         required: true,
     },
 })
+
+const appUrl = useRuntimeConfig().public.baseUrl
 </script>
 
 <template>
@@ -17,9 +19,9 @@ defineProps({
                     <h2 class="text-white text-4xl font-semibold">Rencontrez les conférenciers</h2>
                 </div>
                 <div v-if="speakers && speakers.length" class="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-32">
-                    <div v-for="speaker in speaker" :key="speaker.firstName" class="col-span-full md:col-span-1">
+                    <div v-for="speaker in speakers" :key="speaker.firstName" class="col-span-full md:col-span-1">
                         <div class="card-speaker">
-                            <img class="w-full rounded-0" src="https://preview.colorlib.com/theme/umeet/img/home/speaker-1.png" alt="">
+                            <img class="w-full rounded-0" :src="`${appUrl}/_nuxt/assets/images/users/${speaker.avatar}`" :alt="speaker.lastName" >
                             <div class="speaker-footer bg-purple-900 bg-opacity-90 py-5 px-0 absolute bottom-0 left-0 w-full text-center">
                                 <h4 class="text-white text-2xl mb-3">{{ speaker.firstName }} {{ speaker.lastName }}</h4>
 <!--                                <p class="text-white text-base">Concepteur UX/UI Microsoft</p>-->

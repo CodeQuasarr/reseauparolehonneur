@@ -20,18 +20,18 @@ defineProps({
                 :stat-number="stats.userCounts"
             />
             <CardStats
-                v-if="stats.userCounts"
+                v-if="stats.eventCounts"
                 statIconColor="red"
                 stat-icon-name="material-symbols:bigtop-updates"
                 stat-title="conférences"
-                :stat-number="stats.userCounts"
+                :stat-number="stats.eventCounts"
             />
             <CardStats
-                v-if="stats.userCounts"
+                v-if="stats.productCounts"
                 statIconColor="violet"
                 stat-icon-name="icon-park:ad-product"
                 stat-title="Produits"
-                :stat-number="stats.userCounts"
+                :stat-number="stats.productCounts"
             />
             <div class="w-1/2 xl:w-1/4 px-3">
                 <div class="w-full bg-white border text-blue-400 rounded-lg flex items-center p-6">

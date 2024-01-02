@@ -6,10 +6,11 @@ export default defineEventHandler(async (event: H3Event) => {
 
 
         const userCounts = await prisma.user.count();
-        return Promise.resolve({
-            statusCode: 201,
-            userCounts
-        })
+        const eventCounts = await prisma.evenement.count();
+        return {
+            userCounts,
+            eventCounts,
+        }
     } catch (e: any) {
         return {
             body: JSON.stringify({
