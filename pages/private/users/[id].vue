@@ -19,6 +19,8 @@ definePageMeta({
 })
 //---------------------------------- Variables ----------------------------------//
 const route = useRoute()
+
+const userId = route.params.id as string;
 const user = ref({
     role: '',
     email: '',
@@ -39,7 +41,7 @@ const user = ref({
 });
 
 
-const {data, error} = await UseFetchWithToken<any>(`/api/protected/users/${route.params.id}`, {
+const {data, error} = await UseFetchWithToken<any>(`/api/protected/users/${userId}`, {
     method: 'GET',
 });
 if (error.value) {
@@ -122,7 +124,7 @@ const updateInformation = async () => {
                 </div>
             </div>
         </div>
-        <UserForm :userID="route.params.id" />
+        <UserForm :userId="userId" />
     </div>
 </template>
 

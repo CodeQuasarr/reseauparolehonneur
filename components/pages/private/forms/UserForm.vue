@@ -47,7 +47,7 @@ const user = ref({
     language_2: '',
 });
 
-
+console.log('userStore.isAdmin', props.userId)
 const {data, error} = await UseFetchWithToken<any>(`/api/protected/users/${props.userId}`, {
     method: 'GET',
 });
