@@ -2,6 +2,7 @@
 import {ErrorMessage, Field, Form} from "vee-validate";
 import {validateEmail, validatePassword} from "~/utils/config/formValidationsRules";
 import {loginWithEmail} from "~/composables/useAuth";
+import {notifySuccess} from "~/utils/config";
 
 definePageMeta({layout: false,})
 

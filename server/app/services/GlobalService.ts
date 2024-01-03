@@ -61,7 +61,7 @@ class GlobalService {
         if (key == 'password') {
             if (value.length < 8) {
                 check.hasError = true
-                check.errorMessage = `password must be at least 8 characters`
+                check.errorMessage = `Le mot de passe doit contenir au moins 8 caractères`
             }
             check.lenghtMin8 = false
         }
@@ -69,12 +69,12 @@ class GlobalService {
         if (key == 'confirmPassword') {
             if (value.length < 8) {
                 check.hasError = true
-                check.errorMessage = `password must be at least 8 characters`
+                check.errorMessage = `Le mot de passe doit contenir au moins 8 caractères`
             }
             check.lenghtMin8 = false
             if (value !== password) {
                 check.hasError = true
-                check.errorMessage = `passwords must match`
+                check.errorMessage = `Les mots de passe ne concordent pas`
             }
             check.confirmPassword = false
         }
@@ -84,7 +84,7 @@ class GlobalService {
             if (email) {
                 check.emailTaken = true
                 check.hasError = true
-                check.errorMessage = `Email is invalid or already taken`
+                check.errorMessage = `Email est déjà utilisé`
             }
         }
 

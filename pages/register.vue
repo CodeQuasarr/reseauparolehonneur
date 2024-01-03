@@ -175,11 +175,11 @@ const onSubmit = async () => {
                     <ErrorMessage class="text-red-500" name="remember"/>
                 </div>
                 <button class="w-full px-5 py-3 text-base font-medium text-center text-white bg-indigo-700 rounded-lg hover:bg-indigo-800 focus:ring-4 focus:ring-indigo-300 sm:w-auto dark:bg-indigo-600 dark:hover:bg-indigo-700 dark:focus:ring-indigo-800">
-                    Suivant
+                    Enrégistrer
                 </button>
                 <div class="text-sm font-medium text-gray-500 dark:text-gray-400">
-                    Vous avez déjà un compte ? <NuxtLink class="text-indigo-700 hover:underline dark:text-indigo-500" to="/register">
-                    Inscrivez-vous
+                    Vous avez déjà un compte ? <NuxtLink class="text-indigo-700 hover:underline dark:text-indigo-500" to="/login">
+                    Connectez-vous
                 </NuxtLink>
                 </div>
             </Form>

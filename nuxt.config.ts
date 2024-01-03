@@ -9,7 +9,7 @@ export default defineNuxtConfig({
         '@vueuse/motion/nuxt'
     ],
     runtimeConfig: {
-        baseUrl: 'https://reseauph.fr',
+        baseUrl: 'http://localhost:3000',
         sessionKey: process.env.SESSION_SECRET_KEY,
         tokenKey: process.env.TOKEN_SECRET_KEY,
         stripePaymentSubscriber: process.env.STRIPE_PAYEMENT_SUSCRIBER,
@@ -21,7 +21,7 @@ export default defineNuxtConfig({
         },
         public: {
             sessionKey: process.env.SESSION_SECRET_KEY,
-            baseUrl: 'https://reseauph.fr',
+            baseUrl: 'http://localhost:3000',
         }
     },
     css: ['~/assets/css/main.css'],

@@ -14,7 +14,7 @@ const logout = async () => {
     await useFetch('/api/auth/logout', {
         method: 'GET',
     });
-
+    useTokenStore().setAuthenticated(false);
     return navigateTo('/login')
 }
 

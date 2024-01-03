@@ -43,7 +43,7 @@ const updateInformation = async () => {
             body: evenement.value
         });
         if (data.value) {
-            await useRouter().push(`/private/events/${data.value.id}/edit`)
+            await useRouter().push(`/private/events/${data.value.id}`)
         }
         if (error.value) {
 

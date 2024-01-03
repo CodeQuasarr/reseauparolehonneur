@@ -66,7 +66,7 @@ const createUser = async () => {
             body: user.value
         });
         if (data.value) {
-            await useRouter().push(`/private/users/${data.value.id}/edit`)
+            await useRouter().push(`/private/users/${data.value.id}`)
         }
         if (error.value) {
 
