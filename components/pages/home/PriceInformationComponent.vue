@@ -190,7 +190,7 @@ const payment = async (key: number) => {
 
             <!-- Ajoutez les modifications similaires aux deux autres blocs -->
         </div>
-        <h5 class="text-center font-medium mt-14">Intéressé par un plan personnalisé ? <a href="#" class="text-purple-500">Contactez-nous</a></h5>
+        <h5 class="text-center font-medium mt-14">Intéressé par un plan personnalisé ? <NuxtLink to="/contact" class="text-purple-500">Contactez-nous</NuxtLink></h5>
     </div>
 </template>
 

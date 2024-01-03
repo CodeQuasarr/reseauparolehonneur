@@ -140,4 +140,12 @@ export async function getSpeakersForEvent(id: string) {
     });
 }
 
+export async function getPaymentsByEventId(id: string) {
+    return prisma.payment.findMany({
+        where: {
+            eventId: id
+        },
+    });
+}
+
 
