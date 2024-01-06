@@ -10,6 +10,7 @@ import {
 } from "~/utils/config/formValidationsRules";
 import FrontBreadcrumbComponent from "~/components/breadcrumbs/FrontBreadcrumbComponent.vue";
 import {LANGUAGES, ROLES} from "~/utils/statics/static-filter-data";
+import {notifyError, notifySuccess} from "~/utils/config";
 
 definePageMeta({
     pageTransition: {name: 'page', mode: 'out-in'},
@@ -69,7 +70,7 @@ const createUser = async () => {
             await useRouter().push(`/private/users/${data.value.id}`)
         }
         if (error.value) {
-
+            notifyError('Erreur lors de la création de l\'utilisateur')
         }
     } catch (e) {
     } finally {

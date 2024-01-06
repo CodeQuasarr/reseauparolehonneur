@@ -11,10 +11,12 @@ const toggleSidebar = () => {
 }
 
 const logout = async () => {
+    useTokenStore().setAuthenticated(false);
     await useFetch('/api/auth/logout', {
         method: 'GET',
     });
-    useTokenStore().setAuthenticated(false);
+    useCookie('authToken').value = null
+    useCookie('user').value = null
     return navigateTo('/login')
 }
 

@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import FrontBreadcrumbComponent from "~/components/breadcrumbs/FrontBreadcrumbComponent.vue";
 import {Form, Field, ErrorMessage} from "vee-validate";
+import {notifyError} from "~/utils/config";
 
 definePageMeta({
     pageTransition: {name: 'page', mode: 'out-in'},
@@ -46,7 +47,7 @@ const updateInformation = async () => {
             await useRouter().push(`/private/events/${data.value.id}`)
         }
         if (error.value) {
-
+            notifyError('Erreur lors de la création de l\'évenement'
         }
     } catch (e) {
     } finally {

@@ -1,8 +1,8 @@
 
 export default defineEventHandler(async (event) => {
 
+    deleteCookie(event, 'authToken');
     deleteCookie(event, 'user')
-    deleteCookie(event, 'authToken')
 
     return 'successfully logged out'
 })

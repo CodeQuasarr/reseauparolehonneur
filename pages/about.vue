@@ -68,7 +68,7 @@ import PriceInformationComponent from "~/components/pages/home/PriceInformationC
                 <div class="grid grid-cols-2 gap-10 items-center">
                     <div class="col-span-1">
                         <div>
-                            <img src="~/assets/images/abouts/077A0829.webp" alt="">
+                            <img src="~/assets/images/abouts/077A0829.webp" alt="" loading="lazy">
                         </div>
                     </div>
                     <div class="col-span-1">
@@ -117,28 +117,28 @@ import PriceInformationComponent from "~/components/pages/home/PriceInformationC
                 </div>
                 <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
                     <div>
-                        <img class="h-auto max-w-full" src="~/assets/images/conferences/077A0795.webp" alt="">
+                        <img class="h-auto max-w-full" src="~/assets/images/conferences/077A0795.webp" alt="" loading="lazy">
                     </div>
                     <div>
-                        <img class="h-auto max-w-full" src="~/assets/images/conferences/077A0977.webp" alt="">
+                        <img class="h-auto max-w-full" src="~/assets/images/conferences/077A0977.webp" alt="" loading="lazy">
                     </div>
                     <div>
-                        <img class="h-auto max-w-full" src="~/assets/images/conferences/077A0991.webp" alt="">
+                        <img class="h-auto max-w-full" src="~/assets/images/conferences/077A0991.webp" alt="" loading="lazy">
                     </div>
                     <div>
-                        <img class="h-auto max-w-full" src="~/assets/images/conferences/077A1019.webp" alt="">
+                        <img class="h-auto max-w-full" src="~/assets/images/conferences/077A1019.webp" alt="" loading="lazy">
                     </div>
                     <div>
-                        <img class="h-auto max-w-full" src="~/assets/images/conferences/077A1045.webp" alt="">
+                        <img class="h-auto max-w-full" src="~/assets/images/conferences/077A1045.webp" alt="" loading="lazy">
                     </div>
                     <div>
-                        <img class="h-auto max-w-full" src="~/assets/images/conferences/077A1056.webp" alt="">
+                        <img class="h-auto max-w-full" src="~/assets/images/conferences/077A1056.webp" alt="" loading="lazy">
                     </div>
                     <div>
-                        <img class="h-auto max-w-full" src="~/assets/images/conferences/077A1082.webp" alt="">
+                        <img class="h-auto max-w-full" src="~/assets/images/conferences/077A1082.webp" alt="" loading="lazy">
                     </div>
                     <div>
-                        <img class="h-auto max-w-full" src="~/assets/images/conferences/077A1065.webp" alt="">
+                        <img class="h-auto max-w-full" src="~/assets/images/conferences/077A1065.webp" alt="" loading="lazy">
                     </div>
                 </div>
             </div>
