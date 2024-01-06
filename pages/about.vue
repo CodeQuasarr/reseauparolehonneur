@@ -144,7 +144,7 @@ import PriceInformationComponent from "~/components/pages/home/PriceInformationC
             </div>
         </section>
 
-        <section v-motion="scrollFadeIn()" class="w-full flex items-center justify-center my-32">
+        <section  class="w-full flex items-center justify-center my-32">
             <PriceInformationComponent />
         </section>
 
