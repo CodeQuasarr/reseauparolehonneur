@@ -47,7 +47,7 @@ const updateInformation = async () => {
             await useRouter().push(`/private/events/${data.value.id}`)
         }
         if (error.value) {
-            notifyError('Erreur lors de la création de l\'évenement'
+            notifyError('Erreur lors de la création de l\'évenement')
         }
     } catch (e) {
     } finally {
