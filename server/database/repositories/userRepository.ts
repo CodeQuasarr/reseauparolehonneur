@@ -138,3 +138,14 @@ export async function isSubscribed(id: string): Promise<boolean> {
     return !!subscription;
 }
 
+export async function updateUserField(id: string, field: string, value: any) {
+    return prisma.user.update({
+        where: {
+            id: id,
+        },
+        data: {
+            [field]: value,
+        },
+    });
+}
+

@@ -4,6 +4,9 @@ import {createUser} from "~/server/database/repositories/userRepository";
 import {sendZodErrorResponse, sendDefaultErrorResponse} from "~/server/app/errors";
 import {ZodError} from "zod";
 import {User} from "@prisma/client";
+import TokenService from "~/server/app/services/TokenService";
+import EmailService from "~/server/app/services/emailService";
+import {createVerifyEmailData} from "~/server/database/repositories/emailRepository";
 
 export default defineEventHandler(async event => {
     try {
@@ -23,14 +26,13 @@ export default defineEventHandler(async event => {
         data.avatar = 'default.png';
 
         const user: User = await createUser(data);
-        // return message 200
+
+        await EmailService.sendVerificationEmail(user);
+
         return Promise.resolve({
             statusCode: 201,
             statusMessage: 'Le compte a bien été créer', // Vous pouvez personnaliser le message si nécessaire
         })
-
-
-
 
     } catch (e: any) {
         if (e.data instanceof ZodError) {

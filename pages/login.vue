@@ -3,6 +3,7 @@ import {ErrorMessage, Field, Form} from "vee-validate";
 import {validateEmail, validatePassword} from "~/utils/config/formValidationsRules";
 import {loginWithEmail} from "~/composables/useAuth";
 import {notifySuccess} from "~/utils/config";
+import {useGlobalStore} from "~/stores/globalStore";
 
 definePageMeta({layout: false,})
 
@@ -34,6 +35,12 @@ const onSubmit = async () => {
         loading.value = false;
     }
 }
+const isNewAccount = ref(false);
+onMounted(() => {
+    isNewAccount.value = useGlobalStore().isNewAccount;
+    useGlobalStore().setNewAccount(false);
+    console.log('isNewAccount.value', isNewAccount.value)
+})
 
 </script>
 
@@ -55,6 +62,14 @@ const onSubmit = async () => {
                     <p class="text-gray-400 dark:text-gray-300">
                         Créez votre compte pour accéder à votre espace personnel.
                     </p>
+                </div>
+                <div v-if="isNewAccount"
+                     class="bg-green-100 border border-green-400 text-green-700 px-4 py-3 rounded relative mt-3" role="alert">
+                    <ul class="block sm:inline">
+                        <li>
+                            <span class="font-medium">Le compte a été créé avec succès ; vous avez reçu un mail de confirmation.</span>
+                        </li>
+                    </ul>
                 </div>
                 <div v-if="errors && errors?.size"
                      class="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded relative mt-3" role="alert">

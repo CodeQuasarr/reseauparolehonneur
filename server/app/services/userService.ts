@@ -36,16 +36,16 @@ class UserService {
 
         const errors = new Map<string, { message: string | undefined }>()
         if (!user) {
-            errors.set('email', {'message': `Email or password is incorrect`})
+            errors.set('email', {'message': `Email ou mot de passe incorrect`})
 
         } else {
             if (user && !user.isVerified) {
-                errors.set('email', {'message': `Please verify your email to login`})
+                errors.set('email', {'message': `Veuillez confirmer votre adresse email pour vous connecter`})
 
             }
             const verifiedPassword = await argon2.verify(user.password, password);
             if (!verifiedPassword) {
-                errors.set('email', {'message': `Email or password is incorrect`})
+                errors.set('email', {'message': `Email ou mot de passe incorrect`})
 
             }
         }

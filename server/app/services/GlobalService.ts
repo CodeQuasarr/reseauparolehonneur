@@ -11,7 +11,7 @@ class GlobalService {
 
         for (const [key, value] of Object.entries(data)) {
             const password = data.password
-            let val: InputValidation = await GlobalService.validateRegistration(key, value, password)
+            let val: InputValidation = await GlobalService.validateRegistration(key, value as string, password)
             if (val.hasError) {
                 errors.set(key, {'message': val.errorMessage})
             }

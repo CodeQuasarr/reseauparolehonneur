@@ -35,8 +35,17 @@ const onSubmit = async () => {
         return;
     }
 
-    response = await registerWithEmail(user.value);
-    errors.value = response.errors
+    try {
+        loading.value = true;
+        response = await registerWithEmail(user.value);
+        errors.value = response.errors
+    } catch (e: any) {
+        error.value = e.message
+    } finally {
+        loading.value = false;
+    }
+
+
 }
 
 </script>
@@ -65,7 +74,9 @@ const onSubmit = async () => {
                     </li>
                 </ul>
             </div>
-            <Form class="mt-8 space-y-6" @submit="onSubmit">
+            <div class="relative">
+                <LoadingComponent v-if="loading"/>
+                <Form class="mt-8 space-y-6" @submit="onSubmit">
                 <div>
                     <label class="block mb-2 text-sm font-medium text-gray-900 dark:text-white" for="lastName">
                         Nom
@@ -183,6 +194,7 @@ const onSubmit = async () => {
                 </NuxtLink>
                 </div>
             </Form>
+            </div>
         </div>
 
         <div class="col-span-6 sm:col-full mt-10 pb-5 text-start">

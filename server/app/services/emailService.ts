@@ -2,6 +2,8 @@ import * as nodemailer from "nodemailer";
 import verifyEmailTemplate from "~/mails/templates/verifyEmailTemplate";
 import surveyEmailTemplate from "~/mails/templates/sondageTemplate";
 import resetPasswordTemplate from "~/mails/templates/resetPasswordTemplate";
+import TokenService from "~/server/app/services/TokenService";
+import {createVerifyEmailData} from "~/server/database/repositories/emailRepository";
 
 const transport = nodemailer.createTransport({
     // @ts-ignore
@@ -15,7 +17,17 @@ const transport = nodemailer.createTransport({
 });
 class EmailService {
 
-    public static async sendVerifyEmail(email: string, url: string, firstName: string) {
+
+    public static async sendVerificationEmail(user: any) {
+        // Create email verification token
+        const token: string = TokenService.generateToken({userId: user.id}, 300) // 5 minutes
+        const url: string = `${useRuntimeConfig().baseUrl}/verify-email?token=${token}`;
+        const mail = await this.sendVerificationEmailInternal(user.email, url, user.firstName);
+
+        await createVerifyEmailData(user.email, token);
+    }
+
+    public static async sendVerificationEmailInternal(email: string, url: string, firstName: string) {
         try {
             const mail = await transport.sendMail({
                 from: useRuntimeConfig().mail.auth.user,
@@ -70,4 +82,4 @@ class EmailService {
     }
 }
 
-export default new EmailService();
+export default EmailService;
