@@ -4,7 +4,7 @@ generator client {
 
 datasource db {
     provider = "mongodb"
-    url      = "mongodb+srv://rodriguereseau:vVBxZfU2lo3q8HNo@rph.kc2scxt.mongodb.net/test"
+    url      = "mongodb+srv://rodriguereseau:vVBxZfU2lo3q8HNo@rph.kc2scxt.mongodb.net/staging"
 }
 
 enum Role {
